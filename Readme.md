@@ -1,6 +1,5 @@
 # login-page
-
-Description-login page which uses react for frontend for UI styling and form validation and node/express js for backend Api integration
+login page which uses react for frontend for UI styling and form validation and node/express js for backend Api integration
 
 # to run it locally in your system
  1-clone the repo
