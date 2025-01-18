@@ -1,23 +1,16 @@
-
+import { useFormdata } from '../component/useFormdata'
 import { useState } from 'react'
 import './App.css'
 import axios from 'axios'
 import { Forgetpassword } from './forget password'
+import { Dashboard } from '../component/dashboard'
 
  // eslint-disable-next-line react/prop-types
  export function Signin({onSwitch}) {
-const [formdata,setformdata]=useState({
-  email:"",
-  password:""
-})
-const [signinsuccess,setsigninsuccess]=useState(false)
-const [forgot,setforgot]=useState(false)
+  const {formdata,handlechange}=useFormdata()
+  const [signinsuccess,setsigninsuccess]=useState(false)
+  const [forgot,setforgot]=useState(false)
 
-
-function handlechange(event){
-   const {name,value}=event.target
-   setformdata({...formdata,[name]:value})
-}
  async function submit(event){
   event.preventDefault()
    try{
@@ -30,14 +23,7 @@ localStorage.setItem("jwt token",accesstoken)
    }
 }
 
-  return <>{forgot?<Forgetpassword></Forgetpassword>:<>{signinsuccess?<div className='homepage'>
-    <div className='icon'></div>
-<h1>Success!</h1>
-<p>You have successfully signed in.</p>
-<button onClick={()=>{
-  window.location.href="/home"
-}}>Go to dashboard</button>
-  </div>:
+  return <>{forgot?<Forgetpassword></Forgetpassword>:<>{signinsuccess?<Dashboard   str={"in"}></Dashboard>:
   <div className='outerlayer'>
     <h1 className='heading'>Sign in</h1>
     <p>Stay updated</p>

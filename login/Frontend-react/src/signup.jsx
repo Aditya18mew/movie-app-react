@@ -2,19 +2,15 @@
 import { useState } from 'react'
 import './App.css'
 import axios from 'axios'
+import { useFormdata } from '../component/useFormdata'
+import { Dashboard } from '../component/dashboard'
+
 
  // eslint-disable-next-line react/prop-types
  export function Signup({onSwitch}) {
-const [formdata,setformdata]=useState({
-  email:"",
-  password:""
-})
+const {formdata,handlechange}=useFormdata()
 const [signupsuccess,setsignupsuccess]=useState(false)
 
-function handlechange(event){
-   const {name,value}=event.target
-   setformdata({...formdata,[name]:value})
-}
 async function submit(event){
   event.preventDefault()
    try{
@@ -25,14 +21,7 @@ setsignupsuccess(response.data.success)
    }
    
 }
-  return <>{signupsuccess?<div className='homepage'>
-    <div className='icon'></div>
-<h1>Success!</h1>
-<p>You have successfully signed up.</p>
-<button onClick={()=>{
-   window.location.href="/home"
-}}>Go to dashboard</button>
-  </div>:<div className='outerlayer'>
+  return <>{signupsuccess?<Dashboard str={"up"}></Dashboard>:<div className='outerlayer'>
     <h1 className='heading'>Sign up</h1>
     <p>Stay updated</p>
     <form onSubmit={submit} action="/login" className='form'>
