@@ -17,7 +17,7 @@ async function submit(event){
       const response=await axios.post("http://localhost:5000/api/signup",{email:formdata.email,password:formdata.password})
 setsignupsuccess(response.data.success)
    }catch(err){
-    console.log(err)
+    throw new Error(`there is in Error:${err}`)
    }
    
 }
