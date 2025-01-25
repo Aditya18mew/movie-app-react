@@ -10,6 +10,6 @@ export function useFormdata(){
     function handlechange(event){
         const {name,value}=event.target
         setformdata({...formdata,[name]:value})
-     }
-     return {formdata,handlechange}
+    }
+        return {formdata,handlechange}
 }

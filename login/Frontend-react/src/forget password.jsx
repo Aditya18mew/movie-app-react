@@ -1,36 +1,55 @@
-import { useState } from "react"
+import {useReducer} from "react"
 import axios from "axios"
+const HANDLECHANGE="HANDLECHANGE"
+const SETLOADING="SETLOADING"
+const SETMESSAGE="SETMESSAGE"
+
+const defaultstate={
+    email:"",
+    message:"",
+    loading:false,
+}
+const reducer=(state,action)=>{
+if(action.type===HANDLECHANGE){
+    return {...state,email:action.value}
+}
+if(action.type===SETLOADING){
+    return {...state,loading:action.value}
+}
+if(action.type===SETMESSAGE){
+    return {...state,message:action.value}
+}
+}
 
 export function Forgetpassword(){
-    const [email,setemail]=useState("")
-    const [message,setmessage]=useState("")
-    const [loading,setloading]=useState(false)
+    const [state,dispatch]=useReducer(reducer,defaultstate)
 
-function handlechange(event){
-const {value}=event.target
-setemail(value)
-}
- async function forgetpasswordhandle(event){
-    event.preventDefault()
-    setloading(true)
+    function handlechange(event){
+        dispatch({type:HANDLECHANGE,value:event.target.value})
+    }
+
+    async function forgetpasswordhandle(event){
+        event.preventDefault()
+        dispatch({type:SETLOADING,value:true})
+
     try{
-    const response=await axios.post("http://localhost:5000/api/forgetpassword",{Email:email})
-    setloading(false)
-    setmessage(response.data.message)
-    console.log(response.data)
+        const response=await axios.post("http://localhost:5000/api/forgetpassword",{Email:state.email})
+        dispatch({type:SETLOADING,value:false})
+        dispatch({type:SETMESSAGE,value:response.data.message})
     }catch(err){
-        setloading(false)
-        setmessage("Error:Unable to send reset link!")
-        console.log(err)
+        dispatch({type:SETLOADING,value:false})
+        dispatch({type:SETMESSAGE,value:`Error:Unable to send reset link`})
+        throw new Error(`there is a Error:${err}`)
     }
 }
 
+
     return <div className="forgetpassworddiv">
-        <h1>Forget password</h1>
-  <form action="forgot" className="form">
-    <input type="email" value={email} onChange={handlechange} name="email" id="email" placeholder="Email"/>
-   <button onClick={forgetpasswordhandle}>{loading?"Sending...":"Send Reset Link"}</button>
-  </form>
-  <p>{message}</p>
-    </div>
+            <h1>Forget password</h1>
+            <form action="forgot" className="form">
+            <input type="email" value={state.email} onChange={handlechange} name="email" id="email" placeholder="Email"/>
+            <button onClick={forgetpasswordhandle}>{state.loading?"Sending...":"Send Reset Link"}</button>
+            </form>
+            <p>{state.message}</p>
+        </div>
 }
