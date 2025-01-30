@@ -1,9 +1,9 @@
-import { useFormdata } from '../component/useFormdata'
 import { useState } from 'react'
-import './App.css'
+import './../App.css'
 import axios from 'axios'
+import { useFormdata } from './useFormdata'
 import { Forgetpassword } from './forget password'
-import { Dashboard } from '../component/dashboard'
+import { Dashboard } from './dashboard'
 
  // eslint-disable-next-line react/prop-types
  export function Signin({onSwitch}) {

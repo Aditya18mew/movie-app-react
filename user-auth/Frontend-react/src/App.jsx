@@ -1,8 +1,9 @@
 
 import { useState } from 'react'
 import './App.css'
-import { Signin } from './signin'
-import { Signup } from './signup'
+import { Signin } from './component/signin';
+import { Signup } from './component/signup';
+
 
 
 

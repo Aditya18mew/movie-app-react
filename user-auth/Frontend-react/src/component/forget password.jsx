@@ -19,6 +19,7 @@ if(action.type===SETLOADING){
 if(action.type===SETMESSAGE){
     return {...state,message:action.value}
 }
+throw new Error(`action-${action.type} is not there`)
 }
 
 export function Forgetpassword(){

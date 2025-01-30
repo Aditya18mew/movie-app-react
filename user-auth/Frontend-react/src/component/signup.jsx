@@ -1,9 +1,9 @@
-
 import { useState } from 'react'
-import './App.css'
+import './../App.css'
 import axios from 'axios'
-import { useFormdata } from '../component/useFormdata'
-import { Dashboard } from '../component/dashboard'
+import { useFormdata } from './useFormdata'
+import { Dashboard } from './dashboard'
+
 
 
  // eslint-disable-next-line react/prop-types
