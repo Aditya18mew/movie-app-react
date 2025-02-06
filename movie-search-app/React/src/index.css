@@ -60,6 +60,42 @@ button:focus-visible {
   flex-direction: column;
   justify-content: center;
 }
+.loading{
+  width: 88vw;
+  height:80vh ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadicon{
+  width: 30px;
+  height: 30px;
+  border: 1px solid white;
+  mask: conic-gradient(
+    white 0deg 120deg,
+    transparent 120deg 360deg 
+  );
+  -webkit-mask: conic-gradient(
+    white 0deg 120deg, 
+    transparent 120deg 360deg
+  );
+border-radius: 50%;
+animation: rotate 2s ease-in-out infinite ;
+}
+
+@keyframes rotate{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+
+
 
 .navbar{
 margin-top: 0;
@@ -94,6 +130,8 @@ width: 100%;
 background: none;
   padding-left: 10px;
 }
+
+
 
 
 .currentmoviescard{
