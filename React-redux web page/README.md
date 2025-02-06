@@ -17,7 +17,9 @@ A simple web page built with **React and Redux** to manage state efficiently. Th
 
 
 React-redux web page/
+
 │-- src/
+
 │   ├──data/
 │   ├── features/
 │   ├── components/     # UI components  
