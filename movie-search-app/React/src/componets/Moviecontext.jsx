@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Moviecontext } from "./usecustomcontext";
 
@@ -9,25 +9,27 @@ import { Moviecontext } from "./usecustomcontext";
 
 
 // eslint-disable-next-line react/prop-types
-export function MovieSearch({setisloading,children}){
+export function MovieSearch({setisloading,children,setiserror,setmessage}){
 const [current,setcurrent]=useState([])
 
 
-
-async function fetchpopularmovies() {
+const fetchpopularmovies=useCallback(
+  async ()=> {
     try{
   const response=await axios.post("http://localhost:5000/api/popularmovies",{name:"aditya"})
      if(!response.data.success){
-      setisloading(true)
+      setiserror(true)
+      setmessage("Netwrok error")
       return
      }
   setcurrent([...current,...response.data.arr])
   setisloading(false)
     }catch(err){
-      setisloading(true)
-         console.log(err)
+      setiserror(true)
+      setmessage(`Network error`)
     }
-}
+},[])
+
 useEffect(()=>{
     fetchpopularmovies()
 },[])

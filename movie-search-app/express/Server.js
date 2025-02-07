@@ -28,8 +28,8 @@ server.post("/api/searchmovie", async (req,res)=>{
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${name}&language=en-US`
     try{
      const response=await axios(url)
-     const arr=response.data.results
-     res.json({success:true,arr})
+        const arr=response.data.results
+        res.json({success:true,arr})
     }catch(err){
         res.json({success:false,err})
     }
