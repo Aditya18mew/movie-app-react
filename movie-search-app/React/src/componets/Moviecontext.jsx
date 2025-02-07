@@ -14,7 +14,7 @@ const [current,setcurrent]=useState([])
 
 
 const fetchpopularmovies=useCallback(
-  async ()=> {
+  async (current)=> {
     try{
   const response=await axios.post("http://localhost:5000/api/popularmovies",{name:"aditya"})
      if(!response.data.success){
@@ -31,7 +31,7 @@ const fetchpopularmovies=useCallback(
 },[])
 
 useEffect(()=>{
-    fetchpopularmovies()
+    fetchpopularmovies(current)
 },[])
 
 

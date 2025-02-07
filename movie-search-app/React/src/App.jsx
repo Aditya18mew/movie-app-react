@@ -16,6 +16,9 @@ function App() {
 const [isloading,setisloading]=useState(true)
 const [iserror,setiserror]=useState(false)
 const [message,setmessage]=useState("")
+
+
+
   return <div className='maincotainer'>
  <MovieSearch {...{setisloading,setiserror,setmessage}}>
  <MemorizedNavbar {...{setisloading,setiserror,setmessage}}></MemorizedNavbar>
