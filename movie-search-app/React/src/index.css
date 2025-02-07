@@ -61,7 +61,7 @@ button:focus-visible {
   justify-content: center;
 }
 .loading{
-  width: 88vw;
+  width: 89.5vw;
   height:80vh ;
   display: flex;
   flex-direction: column;
@@ -74,15 +74,23 @@ button:focus-visible {
   height: 30px;
   border: 1px solid white;
   mask: conic-gradient(
-    white 0deg 120deg,
-    transparent 120deg 360deg 
+    white 0deg 60deg,
+    transparent 60deg 120deg, 
+    white 120deg 180deg,
+    transparent 180deg 240deg, 
+    white 240deg 300deg,
+    transparent 300deg 360deg 
   );
   -webkit-mask: conic-gradient(
-    white 0deg 120deg, 
-    transparent 120deg 360deg
+    white 0deg 60deg,
+    transparent 60deg 120deg, 
+    white 120deg 180deg,
+    transparent 180deg 240deg, 
+    white 240deg 300deg,
+    transparent 300deg 360deg 
   );
 border-radius: 50%;
-animation: rotate 2s ease-in-out infinite ;
+animation: rotate 1.5s ease-in-out infinite ;
 }
 
 @keyframes rotate{
@@ -94,16 +102,46 @@ animation: rotate 2s ease-in-out infinite ;
   }
 }
 
+.showerror{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.showerror h4{
+  color:rgb(255,44,44) ;
+  margin-bottom: 0;
+}
+
+.showerror div{
+  border-radius: 8px;
+  border: 1px solid transparent;
+  height: 2em;
+  padding: 0.3em 0.6em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.refreshicon{
+  display: block;
+  background: url("../src//assets/rotate.svg");
+  background-repeat: no-repeat;
+  background-size: 28px;
+  background-position: center;
+}
 
 
 
 .navbar{
 margin-top: 0;
 padding-top:0 ;
-  top: 0;
  display: flex;
  flex-direction: row;
  justify-content: space-between;
+ align-items: center;
+ gap: 5px;
 width: 100%;
 }
 
@@ -118,6 +156,24 @@ width: 100%;
   border: none;
   background-color:#363636;
 }
+
+.navbar h2{
+  font-size: 1.5em;
+}
+
+.navbar h2:hover{
+cursor: pointer;
+}
+.navbar h3:hover{
+cursor: pointer;
+opacity: 0.8;
+}
+.navbar h3:active{
+transform: scale(0.95);
+}
+
+
+
 .input-with-icon {
   display: block;
   background: url('./assets/searchicon.svg');
@@ -135,11 +191,30 @@ background: none;
 
 
 .currentmoviescard{
+  align-self: center;
 display: flex;
+flex-wrap: wrap;
+width: 89.5vw;
+height:80vh ;
+justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.moviescard{
+  display: flex;
 flex-wrap: wrap;
 justify-content: center;
   gap: 20px;
   padding: 20px;
+}
+.btn:hover{
+ opacity: 0.8;
+ background-color:#1c1c1c ;
+ border: none;
+}
+.btn:active{
+  transform: scale(0.95);
 }
 
 .moviecard{
