@@ -1,8 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-/* lnik for fetching items const url="http://course-api.com/react-useReducer-cart-project" */
-
 const initialState={
     cartitems:[],
     amount:0,
@@ -10,11 +8,10 @@ const initialState={
     isloading:false,
 }
 
-//you need a backend proxy server to bypass cors
 export const getCartItems=createAsyncThunk("cart/getCartItems",async (name,thunkAPI)=>{
    try{
-    const resp=await axios("http://localhost:3000/api")
-    return resp.data
+    const resp=await axios("http://localhost:5000/api")
+    return resp.data.dataarr
    }catch(err){
     console.log(err)
    }
