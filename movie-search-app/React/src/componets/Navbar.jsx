@@ -51,10 +51,10 @@ if(debounce){
         <h2 onClick={()=>{
           window.location.href="/home"
         }}>Movie search</h2>
-     <input type="search" value={search.value} id="search" onChange={handlechange} name="search" className="input-with-icon" />
-        <h3>Wishlist</h3>
-        <h3>Favorites</h3>
-        
+   <div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
+       <div className="input-with-icon"></div> </div> 
+        <div className="div_btn">Wishlist</div>
+        <div className="div_btn">Favorites</div>
     </nav>
 }
 
