@@ -8,22 +8,24 @@ const userSchema = new mongoose.Schema({
 })
 
 
-const user=mongoose.model("User",userSchema)
+const user=mongoose.model("user",userSchema)
 
 
-const connectdb= async (user_details)=>{
+const connectdb= async ()=>{
   try{
-    await mongoose.connect("mongodb://localhost:27017/database")
-    const newuser=new user(user_details)
-    await newuser.save()
-    const dec=await user.find()
-    console.log(dec)
+   await mongoose.connect("mongodb://localhost:27017/database")
   }catch(err){
     console.log(err)
+    process.exit(1)
   }
 }
 
 
-module.exports={connectdb}
+
+
+
+
+module.exports={connectdb,user}
+
 
 
