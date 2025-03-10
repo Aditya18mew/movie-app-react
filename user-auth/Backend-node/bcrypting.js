@@ -1,5 +1,6 @@
 const bcrypt=require("bcrypt")
 const {v4:uuidv4}=require("uuid")
+const {connectdb}=require("./login details/db")
 const logindetails={
     users:require("./login details/people.json"),
     setusers: function(data) {this.users=data}
@@ -16,6 +17,7 @@ async function bcrypting(email,password){
         Email:email,
         Password:hasspassword
     }
+    connectdb(newuser)
     logindetails.setusers([...logindetails.users,newuser])
     fs.writeFile("./login details/people.json",JSON.stringify(logindetails.users,null,2),(err)=>{
    if(err){
