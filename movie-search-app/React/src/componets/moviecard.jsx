@@ -21,5 +21,9 @@ const istoolong=overview.length>90
                 <span  onClick={()=>{setisexpanded(!isexpanded)}}>{!isexpanded ?"show more":"show less"}</span>
             </p>
           </div>
+            <div className="additionaloption">
+                <div className="wishlist_btn"></div>
+                <button className="favorite_btn"></button>
+            </div>
     </div>
 }

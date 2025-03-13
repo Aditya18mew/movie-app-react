@@ -265,10 +265,22 @@ justify-content: center;
   gap: 20px;
   padding: 20px;
 }
+.btn {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  border-radius: 25px;
+}
 .btn:hover{
- opacity: 0.8;
- background-color:#1c1c1c ;
- border: none;
+ cursor: pointer;
+opacity: 0.8;
+background-color:#474747;
 }
 .btn:active{
   transform: scale(0.95);
@@ -323,6 +335,37 @@ font-weight: 600;
 .moviecard span:hover{
  color: cyan;
 }
+
+ .additionaloption {
+  width: 240px;
+  padding-left: 10px;
+  padding-right: 10px;
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+}
+
+.wishlist_btn{
+display: block;
+width: 35px;
+height: 35px;
+background: url("./assets/wishlist.svg");
+background-size: 24px;
+background-repeat: no-repeat;
+background-position: center center;
+cursor: pointer;
+}
+.favorite_btn{
+display: block;
+width: 35px;
+height: 35px;
+background: url("./assets/favorite.svg");
+background-size: 24px;
+background-repeat: no-repeat;
+background-position: center center;
+cursor: pointer;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
