@@ -1,4 +1,5 @@
 const express=require("express")
+const {connectdb,user}=require("./mongoosedb")
 require("dotenv").config()
 const key=process.env. API_KEY
 const cors=require("cors")
@@ -10,6 +11,7 @@ const server=express()
 
 server.use(express.json())
 server.use(cors())
+connectdb()
 
 server.post("/api/popularmovies", async (req,res)=>{
     const {page}=req.body
