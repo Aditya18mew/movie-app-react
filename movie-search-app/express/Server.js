@@ -37,6 +37,56 @@ server.post("/api/searchmovie", async (req,res)=>{
     }
 })
 
+server.post("/api/setwishlist", async (req,res)=>{
+    const {id,title,poster_path,overview}=req.body
+     try{
+        const newuser=await user.findOne()
+        if(!newuser){
+           await user.create({Wishlist:[{id:id,title:title,poster_path:poster_path,overview:overview}]})
+           res.status(200).json({success:true,message:"created a new user"})
+        }else{
+            const checkid=await user.exists({"Wishlist.id":id})
+            if(!checkid){newuser.Wishlist.push({id:id,title:title,poster_path:poster_path,overview:overview})
+                await newuser.save()
+            res.status(200).json({success:true,message:"added to Wishlist"})
+            }else{
+                await user.updateOne({},{$pull:{Wishlist:{id:id}}})
+                res.status(200).json({success:true,message:"removed from Wishlist"})
+            }
+        }
+    }
+     catch(err){
+        res.json({success:false,message:`${err}`})
+     }
+})
+server.post("/api/setfavorites", async (req,res)=>{
+    const {id,title,poster_path,overview}=req.body
+     try{
+        const newuser=await user.findOne()
+        if(!newuser){
+           await user.create({Favorites:[{id:id,title:title,poster_path:poster_path,overview:overview}]}) 
+           res.status(200).json({success:true,message:"created a new user"})
+        }else{
+            const checkid=await user.exists({"Favorites.id":id})
+            if(!checkid){
+                newuser.Favorites.push({id:id,title:title,poster_path:poster_path,overview:overview})
+                await newuser.save()
+                res.status(200).json({success:true,message:"added to favorites"})
+            }else{
+                await user.updateOne({},{$pull:{Favorites:{id:id}}})
+                res.status(200).json({success:true,message:"removed from Wishlist"})
+            }  
+        }
+    }
+     catch(err){
+        res.json({success:false,message:`${err}`})
+     }
+})
+
+
+
+
+
 server.listen(5000,()=>{
     console.log("listening")
 })

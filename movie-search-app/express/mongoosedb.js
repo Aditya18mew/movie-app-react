@@ -2,8 +2,18 @@ const mongoose=require("mongoose")
 
 
 const userschema=mongoose.Schema({
-    Wishlist:Array,
-    Favorites:Array
+    Wishlist:[{
+        id:Number,
+        title:String,
+        poster_path:String || null,
+        overview:String || null
+    }],
+    Favorites:[{
+        id:Number,
+        title:String ,
+        poster_path:String || null,
+        overview:String || null
+    }]
 })
 
 
