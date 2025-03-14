@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import axios from "axios";
 import { useState } from "react";
 
 
@@ -6,11 +7,28 @@ import { useState } from "react";
 const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
 
-export function Moviecard({title,poster_path,overview}){
+export function Moviecard({id,title,poster_path,overview}){
     const [isexpanded,setisexpanded]=useState(false)
  
 const img=`${imageBaseUrl}${poster_path}`
 const istoolong=overview.length>90
+
+async function addtowishlist(){
+    try{
+    const response=await axios.post("http://localhost:5000/api/setwishlist",{id:id,title:title,poster_path:poster_path,overview:overview})
+    console.log(response.data.success)
+    }catch(err){
+        console.log(err)
+    }
+}
+async function addtofavorites(){
+    try{
+    const response=await axios.post("http://localhost:5000/api/setfavorites",{id:id,title:title,poster_path:poster_path,overview:overview})
+    console.log(response.data.success)
+    }catch(err){
+        console.log(err)
+    }
+}
 
 
     return <div className="moviecard">
@@ -22,8 +40,8 @@ const istoolong=overview.length>90
             </p>
           </div>
             <div className="additionaloption">
-                <div className="wishlist_btn"></div>
-                <button className="favorite_btn"></button>
+                <div className="wishlist_btn" onClick={addtowishlist}></div>
+                <button className="favorite_btn" onClick={addtofavorites}></button>
             </div>
     </div>
 }
