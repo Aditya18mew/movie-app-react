@@ -20,7 +20,7 @@ import { useCallback } from "react"
        const {name,value}=event.target
        setsearch({name:name,value:value})
     }
-
+    
    const fetchsearch=useCallback(
     async (name)=>{
         try{
@@ -39,6 +39,39 @@ import { useCallback } from "react"
         }
     },[]) 
 
+  async function fetchwishlist(){
+    try {
+      setisloading(true)
+          const   response=await axios.post("http://localhost:5000/api/getwishlist",{name:"user"})
+      if(!response.data.success){
+        setiserror(false)
+        setmessage('Network error')
+      }
+      setcurrent(response.data.results)
+      setisloading(false)
+    } catch (err) {
+      setiserror(true)
+      setmessage("Network error")
+    }
+  }
+  async function fetchfavorites(){
+    try {
+      setisloading(true)
+          const   response=await axios.post("http://localhost:5000/api/getfavorites",{name:"user"})
+      if(!response.data.success){
+        setiserror(false)
+        setmessage('Network error')
+      }
+      setcurrent(response.data.results)
+      setisloading(false)
+    } catch (err) {
+      setiserror(true)
+      setmessage("Network error")
+    }
+  }
+
+
+
 useEffect(()=>{
 if(debounce){
     fetchsearch(debounce)
@@ -53,8 +86,12 @@ if(debounce){
         }}>Movie search</h2>
    <div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
         <div className="input-with-icon"></div> </div> 
-        <div className="div_btn">Wishlist</div>
-        <div className="div_btn">Favorites</div>
+        <div onClick={()=>{
+      fetchwishlist()
+        }} className="div_btn">Wishlist</div>
+        <div onClick={()=>{
+          fetchfavorites()
+        }} className="div_btn">Favorites</div>
     </nav>
 }
 
