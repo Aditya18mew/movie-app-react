@@ -83,6 +83,27 @@ server.post("/api/setfavorites", async (req,res)=>{
      }
 })
 
+server.post("/api/getwishlist", async (req,res)=>{
+    const {name}=req.body
+    try{
+        const olduser=await user.findOne()
+       const arr=olduser.Wishlist
+        res.status(200).json({success:true,results:arr})
+    }catch(err){
+        console.log(err)
+    }
+})
+server.post("/api/getfavorites", async (req,res)=>{
+    const {name}=req.body
+    try{
+        const olduser=await user.findOne()
+       const arr=olduser.Favorites
+        res.status(200).json({success:true,results:arr})
+    }catch(err){
+        console.log(err)
+    }
+})
+
 
 
 
