@@ -6,9 +6,9 @@ export function Dashboard(value){
     <div className='homepage'>
         <div className='icon'></div>
         <h1>Success!</h1>
-        <p>You have successfully signed {str}.</p>
+        <p>You have successfully {str}.</p>
         <button onClick={()=>{
-        window.location.href="/home"
+        window.location.href="/"
         }}>Go to dashboard</button>
   </div>
     )

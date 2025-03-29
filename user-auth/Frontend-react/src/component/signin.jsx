@@ -23,7 +23,7 @@ import { Dashboard } from './dashboard'
         }
     }
 
-  return <>{forgot?<Forgetpassword></Forgetpassword>:<>{signinsuccess?<Dashboard   str={"in"}></Dashboard>:
+  return <>{forgot?<Forgetpassword></Forgetpassword>:<>{signinsuccess?<Dashboard   str={"signed in"}></Dashboard>:
     <div className='outerlayer'>
         <h1 className='heading'>Sign in</h1>
         <p>Stay updated</p>

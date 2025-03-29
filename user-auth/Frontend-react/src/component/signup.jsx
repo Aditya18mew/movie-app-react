@@ -22,7 +22,7 @@ import { Dashboard } from './dashboard'
       }
 
 
-  return <>{signupsuccess?<Dashboard str={"up"}></Dashboard>:
+  return <>{signupsuccess?<Dashboard str={"signed up"}></Dashboard>:
       <div className='outerlayer'>
           <h1 className='heading'>Sign up</h1>
           <p>Stay updated</p>
