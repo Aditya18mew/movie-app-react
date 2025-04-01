@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Dashboard } from "./dashboard"
+import axios from "axios"
 
 
 
@@ -24,10 +25,14 @@ export const Resetpassword=()=>{
         }
       }
 
-    function handlesubmit(event){
+     async function handlesubmit(event){
     event.preventDefault()
-    if(newpassword.password===confirmnewpassword.password){
-        setsuccess(true)
+    try {
+         const response=await axios.post("http://localhost:5000/api/resetpassword",{newpass:newpassword.password,confirmnewpass:confirmnewpassword.password})
+        console.log(response.data)
+        setsuccess(response.data.success)
+    } catch (error) {
+      console.log(error)
     }
     }
 
