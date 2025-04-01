@@ -14,7 +14,9 @@ connectdb()
 server.post("/api/signin",async (req,res)=>{
   const {email,password}=req.body
 if(validatemail(email)){
-
+if(!validatepassword(password)){
+    return res.json({success:false,message:"Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
+}else{
 let olduser=await user.findOne({Email:email})
 
 if(!olduser){
@@ -30,6 +32,7 @@ if(!olduser){
  } else {
     return res.status(401).json({success:false,message:"incorrect password"})
  }
+}
 }
 }else{
     return res.status(401).json({success:false,message:"invalid email"})
@@ -84,6 +87,21 @@ server.post("/api/forgetpassword",(req,res)=>{
     }else{
         return res.json({success:false,message:"invalid email"})
        }
+})
+
+server.post("/api/resetpassword",async (req,res)=>{
+    const {newpass,confirmnewpass}=req.body
+    if(!validatepassword(newpass)){
+        return res.json({success:false,message:"new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
+    }else{
+        if(!validatepassword(confirmnewpass)){
+            return res.json({success:false,message:"confirm new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
+        }else if(newpass!==confirmnewpass){
+           return res.json({success:false,message:"confirm new-password does not match with new-password"})
+        }else{
+            res.json({success:true,message:"password has been reset"})
+        }
+    }
 })
 
 
