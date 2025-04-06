@@ -1,11 +1,28 @@
-# login-page
-login page which uses react for frontend for UI styling and form validation and node/express js for backend Api integration
+# User-Auth
 
-# to run it locally in your system
- 1-clone the repo
- 2-Navigate to the Frontend-react folder in your terminal -- run "npm install" then "npm run dev"
- 3-Navigate to the Backend-node folder -- create .env file and set your ACCESS_TOKEN_SECRET="your secret key" and then in your terminal run "npm install" then "npm run dev"
+  Overview-->
+The user-auth Page is a user authentication module designed to manage user registration and login functionality in a secure and scalable manner. Built as a full-stack solution, the frontend is developed using React, while the backend is structured using Node.js and Express.js. MongoDB, integrated via Mongoose, serves as the primary data store for user credentials and session data.
+
+
+
+
  
+
+ Tech Stack-->
+
+Frontend->
+-React.js
+-CSS
+-Axios (for API requests)
+
+Backend->
+-Node.js
+-Express.js
+-MongoDB & Mongoose
+-bcryptjs (for hashing passwords)
+-jsonwebtoken (for token generation)
+
+project structure-->
 
 user auth/
 |--Backend-node/
@@ -18,8 +35,6 @@ user auth/
 │-- package.json        # Dependencies & scripts  
 
 
-
-
 |--Frontend-react/
 │-- src/
 
@@ -29,3 +44,22 @@ user auth/
 │   ├── App.js        # Entry point  
 │-- public/             # Static assets  
 │-- package.json        # Dependencies & scripts  
+
+
+
+Installation & Setup
+
+Prerequisites->
+-Node.js installed
+-MongoDB running locally or through a cloud provider (like MongoDB Atlas)
+
+Backend Setup->
+-Navigate to the Backend-auth folder
+-Run npm install to install dependencies
+-create .env file and set your ACCESS_TOKEN_SECRET="your secret key"
+-Start the server using npm start
+
+Frontend Setup->
+-Navigate to the Frontend-auth folder
+-Run npm install to install dependencies
+-Start the app with npm run dev
