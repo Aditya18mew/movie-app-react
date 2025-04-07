@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema({
     id:String,
     Email:String,
     Password:String,
+    ResetToken:String,
+    TokenExpiry:Date,
 })
 
 

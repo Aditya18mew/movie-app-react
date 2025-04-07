@@ -11,7 +11,6 @@ async function bcrypting(email,password){
         Password:hasspassword
        })
        await newuser.save()
-    logindetails.setusers([...logindetails.users,newuser])
     }catch(err){
         console.log(err)
     }

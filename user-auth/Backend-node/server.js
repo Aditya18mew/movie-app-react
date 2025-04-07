@@ -3,6 +3,7 @@ const express =require("express")
 const {connectdb,user}=require("./login details/db")
 const {validatemail,validatepassword}=require("./regex/regex")
 const {bcrypting,comparehashpassword}=require("./bcrypting") 
+const {generateresetjwt}=require("./jwttokens")
 const cors =require("cors") 
 const server=express()
 server.use(express.json())
@@ -71,18 +72,15 @@ server.post("/api/signup",async (req,res)=>{
 
 
 
-server.post("/api/forgetpassword",(req,res)=>{
-    const {Email}=req.body
-    if(validatemail){
-         let user=logindetails.users.find((user)=>{
-            if(user.Email===Email){
-                return true
-            }
-         })
-         if(!user){
-            res.json({success:false,message:`No account with ${Email} email`})
+server.post("/api/forgetpassword",async (req,res)=>{
+    const {email}=req.body
+    if(validatemail(email)){
+        let User=await user.findOne({Email:email})
+         if(!User){
+            res.json({success:false,message:`No account with ${email} email`})
          }else{
-            res.json({success:true,message:`Email with a reset link has been sent to ${Email}`})
+           await generateresetjwt(email)
+           res.json({success:true,message:`Email with a reset link has been sent to ${email}`})
          }
     }else{
         return res.json({success:false,message:"invalid email"})

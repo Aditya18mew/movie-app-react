@@ -34,7 +34,7 @@ export function Forgetpassword(){
         dispatch({type:SETLOADING,value:true})
 
     try{
-        const response=await axios.post("http://localhost:5000/api/forgetpassword",{Email:state.email})
+        const response=await axios.post("http://localhost:5000/api/forgetpassword",{email:state.email})
         dispatch({type:SETLOADING,value:false})
         dispatch({type:SETMESSAGE,value:response.data.message})
     }catch(err){
