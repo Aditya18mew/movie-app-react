@@ -1,9 +1,9 @@
 const express =require("express")
-
+const bcrypt=require("bcrypt")
 const {connectdb,user}=require("./login details/db")
 const {validatemail,validatepassword}=require("./regex/regex")
 const {bcrypting,comparehashpassword}=require("./bcrypting") 
-const {generateresetjwt}=require("./jwttokens")
+const {generateresetjwt,checkresettoken}=require("./jwttokens")
 const cors =require("cors") 
 const server=express()
 server.use(express.json())
@@ -79,7 +79,9 @@ server.post("/api/forgetpassword",async (req,res)=>{
          if(!User){
             res.json({success:false,message:`No account with ${email} email`})
          }else{
-           await generateresetjwt(email)
+          let resetToken= await generateresetjwt(email)
+          let link=`http://localhost:5173/resetpassword?token=${resetToken}`
+          console.log(link)
            res.json({success:true,message:`Email with a reset link has been sent to ${email}`})
          }
     }else{
@@ -88,18 +90,29 @@ server.post("/api/forgetpassword",async (req,res)=>{
 })
 
 server.post("/api/resetpassword",async (req,res)=>{
-    const {newpass,confirmnewpass}=req.body
-    if(!validatepassword(newpass)){
-        return res.json({success:false,message:"new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
+    const {newpass,confirmnewpass,Token}=req.body
+   let foundUser= await checkresettoken(Token)
+    if(!foundUser){
+        return res.json({success:false,message:"User not found"})
     }else{
-        if(!validatepassword(confirmnewpass)){
-            return res.json({success:false,message:"confirm new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
-        }else if(newpass!==confirmnewpass){
-           return res.json({success:false,message:"confirm new-password does not match with new-password"})
+        if(!validatepassword(newpass)){
+            return res.json({success:false,message:"new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
         }else{
-            res.json({success:true,message:"password has been reset"})
+            if(!validatepassword(confirmnewpass)){
+                return res.json({success:false,message:"confirm new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
+            }else if(newpass!==confirmnewpass){
+               return res.json({success:false,message:"confirm new-password does not match with new-password"})
+            }else{
+                const hasspassword=await bcrypt.hash(newpass,10)
+                foundUser.Password=hasspassword
+                foundUser.ResetToken=""
+                foundUser.TokenExpiry=""
+                await foundUser.save()
+                res.json({success:true,message:"password has been reset"})
+            }
         }
     }
+   
 })
 
 

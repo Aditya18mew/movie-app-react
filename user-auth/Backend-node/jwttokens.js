@@ -31,8 +31,28 @@ async function generateresetjwt(email){
     User.TokenExpiry=new Date(Date.now()+10*60*1000)
     await User.save()
 
+    return resetToken
+
+}
+
+async function checkresettoken(token){ 
+try{
+  let decodedEmail=jwt.verify(token,process.env.RESET_TOKEN_SECRET).Email
+  let foundUser=await user.findOne({Email:decodedEmail})
+if(!foundUser){
+  return false
+}else{
+  if(foundUser.TokenExpiry<Date.now() || foundUser.ResetToken!==token){
+    return false
+  }else{
+    return foundUser
+  }
+}
+}catch(err){
+  console.log(err)
+}
 }
 
 
 
-module.exports={generatejwt,generateresetjwt}
+module.exports={generatejwt,generateresetjwt,checkresettoken}
