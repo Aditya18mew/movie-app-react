@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Dashboard } from "./dashboard"
 import axios from "axios"
 
@@ -14,6 +14,7 @@ export const Resetpassword=()=>{
         name:"confirmnewpass",
         password:""
       })
+      const [token,settoken]=useState("")
 
       function handlechange(event){
        const {name,value}=event.target
@@ -28,14 +29,18 @@ export const Resetpassword=()=>{
      async function handlesubmit(event){
     event.preventDefault()
     try {
-         const response=await axios.post("http://localhost:5000/api/resetpassword",{newpass:newpassword.password,confirmnewpass:confirmnewpassword.password})
+         const response=await axios.post("http://localhost:5000/api/resetpassword",{newpass:newpassword.password,confirmnewpass:confirmnewpassword.password,Token:token})
         console.log(response.data)
         setsuccess(response.data.success)
     } catch (error) {
       console.log(error)
     }
     }
-
+useEffect(()=>{
+const queryParams=new URLSearchParams(window.location.search)
+const resettoken=queryParams.get("token")
+settoken(resettoken)
+},[])
 
 
 
