@@ -1,7 +1,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Moviecontext } from "./usecustomcontext";
+import { MovieContext } from "./useCustomcontext";
+
+
 
 
 
@@ -9,23 +11,26 @@ import { Moviecontext } from "./usecustomcontext";
 
 
 // eslint-disable-next-line react/prop-types
-export function MovieSearch({setisloading,children,setiserror,setmessage}){
+export function MovieProvider({setisloading,children,setiserror,setmessage}){
 const [current,setcurrent]=useState([])
+const [isfetching,setisfetching]=useState(false)
 
 
 const fetchpopularmovies=useCallback(
   async (current)=> {
     try{
+      setisfetching(true)
   const response=await axios.post("http://localhost:5000/api/popularmovies",{name:"aditya"})
      if(!response.data.success){
       setiserror(true)
       setmessage("Netwrok error")
       return
      }
-  setcurrent([...current,...response.data.arr])
-  setisloading(false)
+     setisloading(false)
+     setisfetching(false)
+     setcurrent([...current,...response.data.arr])
     }catch(err){
-      setiserror(true)
+     setiserror(true)
       setmessage(`Network error`)
     }
 },[])
@@ -37,7 +42,7 @@ useEffect(()=>{
 
 
 
-return <Moviecontext.Provider  value={{current,setcurrent,fetchpopularmovies}}>
+return <MovieContext.Provider  value={{isfetching,current,setcurrent,fetchpopularmovies}}>
 {children}
-</Moviecontext.Provider>
+</MovieContext.Provider>
 }

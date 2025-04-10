@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import './App.css'
-import { MemorizedMiddlemen } from './componets/middlemen'
-import { MovieSearch } from './componets/Moviecontext'
+import { MemorizedMiddleware } from './componets/middleware'
+import { MovieProvider } from './componets/MovieProvider'
 import { MemorizedNavbar } from './componets/Navbar'
+
 
 
 
@@ -19,17 +20,18 @@ const [message,setmessage]=useState("")
 
 
 
-  return <div className='maincotainer'>
- <MovieSearch {...{setisloading,setiserror,setmessage}}>
- <MemorizedNavbar {...{setisloading,setiserror,setmessage}}></MemorizedNavbar>
+
+return <div className='maincotainer' id='mainbody'>
+<MovieProvider {...{setisloading,setiserror,setmessage}}>
+<MemorizedNavbar {...{setisloading,setiserror,setmessage}}></MemorizedNavbar>
 { isloading ? <div className='loading'>{iserror ? <div className='showerror'>
-  {message && <h4>{message}</h4>}
-  <div className='refreshicon' onClick={()=>{
-    window.location.href="/home"
-  }}></div>
-</div>:<div className='loadicon'></div>}</div> :<MemorizedMiddlemen></MemorizedMiddlemen>}
- </MovieSearch>
-  </div>
+ {message && <h4>{message}</h4>}
+ <div className='refreshicon' onClick={()=>{
+   window.location.href="/home"
+ }}></div>
+</div>:<div className='loadicon'></div>}</div> :<MemorizedMiddleware></MemorizedMiddleware>}
+</MovieProvider>
+ </div>
 }
 
 export default App

@@ -2,8 +2,8 @@ import { createContext } from "react";
 import { useContext } from "react";
 
 
-export const Moviecontext=createContext()
+export const MovieContext=createContext()
 
 export function useCustomcontext(){
-    return useContext(Moviecontext)
+    return useContext(MovieContext)
 }

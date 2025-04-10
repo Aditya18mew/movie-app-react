@@ -1,6 +1,6 @@
 import axios from "axios"
 import {memo, useEffect, useState } from "react"
-import { useCustomcontext } from "./usecustomcontext"
+import { useCustomcontext } from "./useCustomcontext"
 import { useCallback } from "react"
 
 
@@ -25,14 +25,15 @@ import { useCallback } from "react"
     async (name)=>{
         try{
         setisloading(true)
+        setiserror(false)
     const response=await axios.post("http://localhost:5000/api/searchmovie",{name:name})
        if(!response.data.success){
           setiserror(true)
           setmessage("Network error")
           return
        }
-        setcurrent(response.data.arr)
         setisloading(false)
+        setcurrent(response.data.arr)
         }catch(err){
             setiserror(true)
             setmessage(`Network error`)
@@ -42,13 +43,14 @@ import { useCallback } from "react"
   async function fetchwishlist(){
     try {
       setisloading(true)
+      setiserror(false)
           const   response=await axios.post("http://localhost:5000/api/getwishlist",{name:"user"})
       if(!response.data.success){
-        setiserror(false)
+        setiserror(true)
         setmessage('Network error')
       }
-      setcurrent(response.data.results)
       setisloading(false)
+      setcurrent(response.data.results)
     } catch (err) {
       setiserror(true)
       setmessage("Network error")
@@ -57,13 +59,14 @@ import { useCallback } from "react"
   async function fetchfavorites(){
     try {
       setisloading(true)
+      setiserror(false)
           const   response=await axios.post("http://localhost:5000/api/getfavorites",{name:"user"})
       if(!response.data.success){
-        setiserror(false)
+        setiserror(true)
         setmessage('Network error')
       }
-      setcurrent(response.data.results)
       setisloading(false)
+      setcurrent(response.data.results)
     } catch (err) {
       setiserror(true)
       setmessage("Network error")
