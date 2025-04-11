@@ -4,6 +4,7 @@ const {connectdb,user}=require("./login details/db")
 const {validatemail,validatepassword}=require("./regex/regex")
 const {bcrypting,comparehashpassword}=require("./bcrypting") 
 const {generateresetjwt,checkresettoken}=require("./jwttokens")
+const {sendresetpasswordemail}=require("./nodemailer")
 const cors =require("cors") 
 const server=express()
 server.use(express.json())
@@ -80,10 +81,13 @@ server.post("/api/forgetpassword",async (req,res)=>{
             res.json({success:false,message:`No account with ${email} email`})
          }else{
           let resetToken= await generateresetjwt(email)
-          let link=`http://localhost:5173/resetpassword?token=${resetToken}`
-          console.log(link)
+         let iserror= await sendresetpasswordemail(email,resetToken)
+         if(iserror){
+            res.json({success:false,message:"Unable to send a email"})
+         }else{
            res.json({success:true,message:`Email with a reset link has been sent to ${email}`})
          }
+        }
     }else{
         return res.json({success:false,message:"invalid email"})
        }
@@ -93,7 +97,7 @@ server.post("/api/resetpassword",async (req,res)=>{
     const {newpass,confirmnewpass,Token}=req.body
    let foundUser= await checkresettoken(Token)
     if(!foundUser){
-        return res.json({success:false,message:"User not found"})
+        return res.json({success:false,message:"reset link expired"})
     }else{
         if(!validatepassword(newpass)){
             return res.json({success:false,message:"new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
