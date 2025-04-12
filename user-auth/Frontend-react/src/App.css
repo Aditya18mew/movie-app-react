@@ -169,8 +169,7 @@ opacity: 0;
   flex-flow: column;
  align-items: flex-start;
  justify-content: center;
- border-radius: 20px;
-/*  position: relative; */
+
 }
 .resetpassworddiv{
   background-color: whitesmoke;
@@ -218,11 +217,9 @@ align-items: center;
 transition: all 0.3s ease-in-out; 
 }
 .forgetpassworddiv button:hover ,.resetpassworddiv button:hover{
- margin-bottom: 40px;
  transform: scale(1.02);
 }
 .forgetpassworddiv button:active,.resetpassworddiv button:active{
- margin-bottom: 40px;
  transform: scale(0.98);
 }
 

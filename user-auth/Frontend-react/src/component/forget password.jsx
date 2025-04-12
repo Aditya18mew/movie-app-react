@@ -52,5 +52,6 @@ export function Forgetpassword(){
             <button onClick={forgetpasswordhandle}>{state.loading?"Sending...":"Send Reset Link"}</button>
             </form>
             <p>{state.message}</p>
+   {/*optional */}  <button onClick={()=>window.location.href="/"}>go to dashboard</button>
         </div>
 }
