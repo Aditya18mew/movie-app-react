@@ -126,7 +126,7 @@ align-items: center;
 }
 
 
-.forminput,.resetform input{
+.forminput{
   width: 300px;
   height: 40px;
   background-color: white;
@@ -213,9 +213,7 @@ align-items: center;
 .forgetpassworddiv input ,.resetpassworddiv input{
  margin-bottom: 20px;
 }
-.resetpassworddiv input:focus{
-box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5);
-}
+
 .forgetpassworddiv button ,.resetpassworddiv button{
  border: 1px solid grey;
  width: 300px;
