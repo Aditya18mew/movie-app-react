@@ -126,11 +126,23 @@ align-items: center;
 }
 
 
-.form input,.resetform input{
+.forminput,.resetform input{
   width: 300px;
   height: 40px;
   background-color: white;
     border: 1px solid grey;
+    padding: 4px;
+    font-size: 1rem;
+    border-radius: 10px;
+    color: black;
+    outline: none;
+}
+
+.formerrorinput{
+  width: 300px;
+  height: 40px;
+  background-color: white;
+    border: 1px solid red;
     padding: 4px;
     font-size: 1rem;
     border-radius: 10px;
@@ -144,10 +156,15 @@ align-items: center;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-.outerlayer input:focus{
+.formerrorinput:focus{
+  box-shadow:0 0 5px rgba(255, 0, 0, 0.4);
+  ;
+}
+
+.forminput:focus{
 box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5);
 }
-.outerlayer input:focus::placeholder,.forgetpassworddiv input:focus::placeholder{
+.forminput:focus::placeholder{
 opacity: 0;
 }
 .outerlayer a:hover{
@@ -196,7 +213,7 @@ align-items: center;
 .forgetpassworddiv input ,.resetpassworddiv input{
  margin-bottom: 20px;
 }
-.forgetpassworddiv input:focus ,.resetpassworddiv input:focus{
+.resetpassworddiv input:focus{
 box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5);
 }
 .forgetpassworddiv button ,.resetpassworddiv button{
