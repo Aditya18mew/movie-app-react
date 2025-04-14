@@ -10,9 +10,20 @@ import { Dashboard } from './dashboard'
     const {formdata,handlechange}=useFormdata()
     const [signinsuccess,setsigninsuccess]=useState(false)
     const [forgot,setforgot]=useState(false)
+    const [errors,seterrors]=useState({
+        email:false,
+        password:false
+    })
 
     async function submit(event){
         event.preventDefault()
+        const newerrors={
+            email:formdata.email.trim()==="",
+            password:formdata.password.trim()===""
+        }
+        seterrors(newerrors)
+        if(errors.email || errors.password) return;
+
         try{
             const response= await axios.post("http://localhost:5000/api/signin",{email:formdata.email,password:formdata.password})
             const {accesstoken,success}=response.data
@@ -28,8 +39,14 @@ import { Dashboard } from './dashboard'
         <h1 className='heading'>Sign in</h1>
         <p>Stay updated</p>
         <form onSubmit={submit} action="/login" className='form'>
-            <input type='email' value={formdata.email} onChange={handlechange} name="email" id="email" placeholder='Email' required />
-            <input type="password" value={formdata.password} onChange={handlechange} name="password" id='password' placeholder='Password'/>
+            <input type='email' className={errors.email? "formerrorinput":"forminput"} value={formdata.email} onChange={(event)=>{
+                handlechange(event)
+                seterrors(prev=>({...prev,[event.target.name]:false}))
+            }} name="email" id="email" placeholder={errors.email? "❗ Email is required":"Email"} required />
+            <input type="password" className={errors.password? "formerrorinput":"forminput"} value={formdata.password} onChange={(event)=>{
+                handlechange(event)
+                seterrors(prev=>({...prev,[event.target.name]:false}))
+            }} name="password" id='password' placeholder={errors.password? "❗ Password is required" : "Password"} />
         </form>
         <a onClick={()=>{
           setforgot(true)
