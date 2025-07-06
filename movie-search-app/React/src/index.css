@@ -1,16 +1,20 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+html{
+  min-height: 100vh;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body{
+  margin: 0;
+  width: 100%;
+   min-height: 100vh;
+}
+.cotainer{
+  width: 100%;
+ min-height: 100vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 a {
@@ -18,17 +22,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
-a:hover {
-  color: #535bf2;
-}
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
 
 h1 {
   font-size: 3.2em;
@@ -48,6 +42,23 @@ button {
   border-radius: 25px;
 }
 
+.spinner{
+  border-left: 2px solid white;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  animation: rotate 2s linear infinite;
+  box-shadow: 0 2px 4px rgba(255, 255,255, 0.1);
+}
+
+@keyframes rotate{
+ from {
+  transform: rotate(0deg);
+ }
+ to {
+  transform: rotate(360deg);
+ }
+}
 
 
 
@@ -56,7 +67,15 @@ button {
   flex-direction: column;
   justify-content: center;
   position: relative;
+  background-color: #121212;
+  min-height: 100vh;
+  overflow-y: auto;
 }
+.maincotainer::-webkit-scrollbar{
+  display: none;
+}
+
+
 .loading{
   width: 89.5vw;
   height:80vh ;
@@ -144,7 +163,7 @@ z-index: 5;
 top: 0;
 align-self: center;
 position: fixed;
-background-color: #242424;
+background-color:#121212;
 }
 
 .div_input{
@@ -152,6 +171,7 @@ background-color: #242424;
   width: 40%;
   height: 35px;
   background-color:#232323;
+  color: white;
   border-radius: 25px;
   display: flex;
   flex-direction: row;
@@ -170,7 +190,8 @@ align-content: center;
   left: 0;
   width: 74%;
   height: 34px;
-  background-color:#232323 ;
+  background-color:#232323;
+  color: white;
   padding-left: 12px;
   padding-top: 1px;
   font-size: 0.9rem;
@@ -204,7 +225,7 @@ align-content: center;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #dcdcdc;
   cursor: pointer;
   transition: border-color 0.25s;
   border-radius: 25px;
@@ -213,7 +234,7 @@ align-content: center;
 
 .navbar h2{
   font-size: 1.5em;
-color: #FAF9F6;
+color: white;
 }
 
 
@@ -224,7 +245,6 @@ cursor: pointer;
 .div_btn:hover{
 cursor: pointer;
 opacity: 0.8;
-background-color:#474747;
 }
 
 .div_btn:active{
@@ -242,9 +262,6 @@ transform: scale(0.95);
   padding-left: 10px;
   cursor: pointer;
 }
-
-
-
 
 
 .currentmoviescard{
@@ -355,6 +372,7 @@ background-repeat: no-repeat;
 background-position: center center;
 cursor: pointer;
 }
+
 .favorite_btn{
 display: block;
 width: 35px;
@@ -378,4 +396,253 @@ cursor: pointer;
   button {
     background-color: #f9f9f9;
   }
+}
+
+.card {
+  padding: 2em;
+}
+
+
+
+.outerlayer{
+  background-color: whitesmoke;
+  height:450px;
+  border:1px solid grey;
+  padding-left: 40px;
+  width: 350px;
+  color: black;
+  display: flex;
+  flex-flow: column;
+ align-items: flex-start;
+ border-radius: 20px;
+ position: relative;
+}
+
+
+.homepage{
+  background-color: whitesmoke;
+  height:300px ;
+  border:1px solid grey;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: black;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+ justify-content: flex-start;
+ border-radius: 20px;
+}
+.homepage h1{
+font-size: 2.5rem;
+color: #4CAF50;
+margin-bottom: 20px;
+
+}
+.homepage p{
+font-size: 1.1rem;
+color: #555;
+margin-bottom: 30px;
+
+}
+.homepage .icon {
+  font-size: 50px;
+  color: #4CAF50;
+  margin-bottom: 20px;
+}
+.homepage button{
+border: none;
+padding: 12px 5px;
+font-size: 1.1rem;
+cursor: pointer;
+transition: background-color 0.3s ease;
+
+}
+.homepage button:hover{
+  transform: scale(1.02);
+}
+.homepage button:active{
+  transform: scale(0.98);
+}
+
+
+
+.heading{
+margin-bottom: 0;
+font-size: 2.5rem;
+}
+
+
+.form{
+  display: flex;
+  flex-flow: column;
+  gap: 1.2rem;
+}
+.resetform{
+  display: flex;
+  flex-direction: column;
+align-items: center;
+margin-top: 20px;
+gap: 10px;
+}
+
+.resetform span::before{
+  content: "• ";
+  color: rgb(19, 138, 19);
+  font-size: 1rem;
+  text-align: center;
+}
+.resetform span{
+  font-size: small;
+  color: gray
+}
+
+
+.forminput{
+  width: 300px;
+  height: 30px;
+  background-color: white;
+    border: 1px solid grey;
+    padding: 4px;
+    font-size: 1rem;
+    border-radius: 10px;
+    color: black;
+    outline: none;
+}
+
+.formerrorinput{
+  width: 300px;
+  height: 30px;
+  background-color: white;
+    border: 1px solid red;
+    padding: 4px;
+    font-size: 1rem;
+    border-radius: 10px;
+    color: black;
+    outline: none;
+}
+
+.formLink{
+  width: 100%;
+  text-align: start;
+  margin-top: -8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.formLink:hover{
+  color: rgb(87, 71, 227);
+
+}
+.formLink:active{
+  color: rgb(87, 71, 227);
+ transform: scale(0.99);
+}
+
+.formerrorinput:focus{
+  box-shadow:0 0 5px rgba(255, 0, 0, 0.4);
+  ;
+}
+
+.forminput:focus{
+box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5);
+}
+.forminput:focus::placeholder{
+opacity: 0;
+}
+
+.forgetpassworddiv{
+  background-color: whitesmoke;
+  height:320px;
+  border:1px solid grey;
+  width: 350px;
+  padding-left: 40px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+   border-radius: 20px;
+ align-items: flex-start;
+}
+
+.forgetform{
+  margin-top: 40px;
+  margin-bottom: 15px;
+}
+
+
+
+.resetpassworddiv{
+  background-color: whitesmoke;
+  height:300px;
+  border:1px solid grey;
+  padding: 2px;
+  padding-right: 4px;
+  width: 400px;
+  color: black;
+  display: flex;
+  flex-flow: column;
+align-items: center;
+ border-radius: 20px;
+}
+.resetpassworddiv h1{
+  align-self: self-start;
+   font-size: 1.5rem;
+  margin-bottom: 2px;
+  margin-left: 40px;
+}
+
+.forgetpassworddiv h1{
+  font-size: 1.5rem;
+  margin-bottom: 2px;
+}
+.forgetpassworddiv p{
+  margin:4px 0;
+  color: gray;
+}
+
+.forgetpassworddiv input {
+   margin-bottom: 15px;
+}
+
+.resetpassworddiv input{
+ margin-bottom: 5px;
+}
+
+
+.outerlayerbutton{
+  border: 1px solid grey;
+  width: 300px;
+  height: 40px;
+  color: white;
+  background-color: #121212;
+  margin-top: 2px;
+  margin-bottom: 2px;
+ border-top-left-radius: 18px;
+ border-top-right-radius: 18px;
+ border-bottom-left-radius: 18px;
+ border-bottom-right-radius: 18px;
+ 
+font-size: 1rem;
+display: flex;
+justify-content: center;
+align-items: center;
+transition: all 0.3s ease-in-out; 
+}
+
+.outerlayerbutton:hover{
+transform: scale(1.01);
+}
+.outerlayerbutton:active{
+transform: scale(0.91);
+}
+
+
+.signuptext{
+width: 90%;
+text-align: center;
+font-size: 1rem;
+}
+.signuptextsignup{
+width: 90%;
+text-align: center;
+font-size: 1rem;
 }

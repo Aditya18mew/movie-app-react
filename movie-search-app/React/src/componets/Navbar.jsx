@@ -38,7 +38,7 @@ import { useCallback } from "react"
             setiserror(true)
             setmessage(`Network error`)
         }
-    },[]) 
+    },[])
 
   async function fetchwishlist(){
     try {
@@ -89,12 +89,12 @@ if(debounce){
         }}>Movie search</h2>
    <div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
         <div className="input-with-icon"></div> </div> 
-        <div onClick={()=>{
+        <button onClick={()=>{
       fetchwishlist()
-        }} className="div_btn">Wishlist</div>
-        <div onClick={()=>{
+        }} className="div_btn">Wishlist</button>
+        <button onClick={()=>{
           fetchfavorites()
-        }} className="div_btn">Favorites</div>
+        }} className="div_btn">Favorites</button>
     </nav>
 }
 
