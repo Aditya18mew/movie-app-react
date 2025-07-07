@@ -2,6 +2,13 @@ const mongoose=require("mongoose")
 
 
 const userschema=mongoose.Schema({
+    id:String,
+    Email:String,
+    Password:String,
+    otp:String,
+    RefreshToken:String,
+    CreatedAt:Date,
+    ExpiredAt:Date,
     Wishlist:[{
         id:Number,
         title:String,
@@ -17,7 +24,7 @@ const userschema=mongoose.Schema({
 })
 
 
-const user=mongoose.model("user",userschema)
+const User=mongoose.model("user",userschema)
 
 
 
@@ -32,4 +39,18 @@ async function connectdb(){
 }
 
 
-module.exports={connectdb,user}
+async function verifyotp(email,otp){
+    try{
+     const user=await User.findOne({"Email":email})
+     if(user.otp===otp){
+        return true
+     }else{
+        return false
+     }
+    }catch(err){
+        console.log(err)
+    }
+}
+
+
+module.exports={verifyotp,connectdb,User}

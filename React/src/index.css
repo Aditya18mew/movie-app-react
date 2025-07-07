@@ -646,3 +646,33 @@ width: 90%;
 text-align: center;
 font-size: 1rem;
 }
+
+.otpdiv{
+   background-color: whitesmoke;
+  height:300px;
+  border:1px solid grey;
+  width: 350px;
+  padding-left: 30px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+   border-radius: 20px;
+ align-items: flex-start;
+}
+
+.otpdiv h1{
+  font-size: 1.5rem;
+  margin-bottom: 2px;
+}
+.otpdiv p{
+  margin:4px 0;
+  color: gray;
+}
+
+.otpdiv form{
+  display: flex;
+  flex-direction: column;
+align-items: center;
+margin-top: 40px;
+gap: 20px;
+}

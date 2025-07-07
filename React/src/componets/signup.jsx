@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useFormdata } from './useFormdata'
 import { Link } from 'react-router-dom'
 import { Spinner } from './buttons'
+import { Otpform } from './otpform'
 
 
 
@@ -42,7 +43,7 @@ import { Spinner } from './buttons'
       }
 
 
-  return  <div className='outerlayer'>
+  return  <>{signupsuccess ? <Otpform email={formdata.email}></Otpform> : <div className='outerlayer'>
           <h1 className='heading'>Sign up</h1>
           <p>Stay updated</p>
           <form onSubmit={submit} className='form'>
@@ -58,5 +59,6 @@ import { Spinner } from './buttons'
           </form>
           <p className='signuptextsignup'>Already have an account?</p>
           <Link className='outerlayerbutton' to="/sign-in" >Sign in</Link>
-      </div>
+      </div>}
+    </>
 }
