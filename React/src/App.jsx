@@ -8,6 +8,8 @@ import { Signin } from './componets/signin'
 import { Signup } from './componets/signup'
 import { Resetpassword } from './componets/resetpassword'
 import { Forgetpassword } from './componets/forget password'
+import { Dashboard } from './componets/dashboard'
+
 
 
 
@@ -16,15 +18,18 @@ import { Forgetpassword } from './componets/forget password'
 
 
 function App() {
+ 
 const [isloading,setisloading]=useState(true)
 const [iserror,setiserror]=useState(false)
 const [message,setmessage]=useState("")
 
 
+
+
  return (
    <Router>
     <Routes>
-     <Route path='/' element={ <div>hello</div>}></Route>
+     <Route path='/' element={<div className='cotainer'><Dashboard></Dashboard></div>}></Route>
     <Route path='/sign-in' element={<div className='cotainer'><Signin/></div>}></Route>
     <Route path='/sign-up' element={ <div className='cotainer'><Signup/></div>}></Route>
     <Route path='/forget-password' element={ <div className='cotainer'><Forgetpassword></Forgetpassword></div>}></Route>

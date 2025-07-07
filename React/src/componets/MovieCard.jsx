@@ -15,7 +15,9 @@ const istoolong=overview.length>90
 
 async function addtowishlist(){
     try{
-    const response=await axios.post("http://localhost:5000/api/setwishlist",{id:id,title:title,poster_path:poster_path,overview:overview})
+    const response=await axios.post("http://localhost:3000/api/setwishlist",{id:id,title:title,poster_path:poster_path,overview:overview},{
+        withCredentials:true
+    })
     console.log(response.data.success)
     }catch(err){
         console.log(err)
@@ -23,7 +25,9 @@ async function addtowishlist(){
 }
 async function addtofavorites(){
     try{
-    const response=await axios.post("http://localhost:5000/api/setfavorites",{id:id,title:title,poster_path:poster_path,overview:overview})
+    const response=await axios.post("http://localhost:3000/api/setfavorites",{id:id,title:title,poster_path:poster_path,overview:overview},{
+        withCredentials:true
+    })
     console.log(response.data.success)
     }catch(err){
         console.log(err)

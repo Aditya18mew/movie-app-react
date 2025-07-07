@@ -42,9 +42,8 @@ const message={
 
 
 
- async function sendresetpasswordemail(email,token){
+ async function sendresetotpemail(email,otp){
     try{
-
         let transporter=nodemailer.createTransport({
             service:"gmail",
             auth:{
@@ -63,10 +62,9 @@ const message={
     to:email,
     subject:"Reset Password",
    html: `
-        <p>click the link given below to reset your password</p>
-        <a href="${resetlink}">here</a>
+        <p><p>OTP:${otp}</p></p>
         `,
-    text:"This link will expire in 10 minutes"        
+    text:"This OTP will expire in 10 minutes"        
 }
     transporter.sendMail(message,(error,info)=>{
     if(error){
@@ -85,5 +83,5 @@ const message={
 
 
 
- module.exports={sendotpemail,sendresetpasswordemail}
+ module.exports={sendotpemail,sendresetotpemail}
 

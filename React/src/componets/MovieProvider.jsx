@@ -20,7 +20,9 @@ const fetchpopularmovies=useCallback(
   async (current)=> {
     try{
       setisfetching(true)
-  const response=await axios.post("http://localhost:5000/api/popularmovies",{name:"aditya"})
+  const response=await axios.post("http://localhost:3000/api/popularmovies",{name:'Aditya'},{
+    withCredentials:true
+  })
      if(!response.data.success){
       setiserror(true)
       setmessage("Netwrok error")

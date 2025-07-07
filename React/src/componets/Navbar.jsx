@@ -26,7 +26,9 @@ import { useCallback } from "react"
         try{
         setisloading(true)
         setiserror(false)
-    const response=await axios.post("http://localhost:5000/api/searchmovie",{name:name})
+    const response=await axios.post("http://localhost:3000/api/searchmovie",{name:name},{
+      withCredentials:true
+    })
        if(!response.data.success){
           setiserror(true)
           setmessage("Network error")
@@ -44,7 +46,9 @@ import { useCallback } from "react"
     try {
       setisloading(true)
       setiserror(false)
-          const   response=await axios.post("http://localhost:5000/api/getwishlist",{name:"user"})
+          const   response=await axios.post("http://localhost:5000/api/getwishlist",{name:"user"},{
+            withCredentials:true
+          })
       if(!response.data.success){
         setiserror(true)
         setmessage('Network error')
@@ -60,7 +64,9 @@ import { useCallback } from "react"
     try {
       setisloading(true)
       setiserror(false)
-          const   response=await axios.post("http://localhost:5000/api/getfavorites",{name:"user"})
+          const   response=await axios.post("http://localhost:5000/api/getfavorites",{name:"user"},{
+            withCredentials:true
+          })
       if(!response.data.success){
         setiserror(true)
         setmessage('Network error')

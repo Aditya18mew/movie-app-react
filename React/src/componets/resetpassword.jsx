@@ -45,7 +45,7 @@ export const Resetpassword=()=>{
       }
      
     try {
-         const response=await axios.post("http://localhost:5000/api/resetpassword",{newpass:newpassword.password,confirmnewpass:confirmnewpassword.password,Token:token})
+         const response=await axios.post("http://localhost:3000/api/resetpassword",{newpass:newpassword.password,confirmnewpass:confirmnewpassword.password,Token:token})
 
         setsuccess(response.data.success)
     } catch (error) {

@@ -23,8 +23,15 @@ const userschema=mongoose.Schema({
     }]
 })
 
+const unverifieduserschema=mongoose.Schema({
+    Email:String,
+    Password:String,
+    otp:String
+})
+
 
 const User=mongoose.model("user",userschema)
+const unverifiedUser=mongoose.model("unverifieduser",unverifieduserschema)
 
 
 
@@ -41,8 +48,14 @@ async function connectdb(){
 
 async function verifyotp(email,otp){
     try{
-     const user=await User.findOne({"Email":email})
+     const user=await unverifiedUser.findOne({"Email":email})
      if(user.otp===otp){
+         const newuser=new User({
+        Email:user.Email,
+        Password:user.Password,
+       })
+       await newuser.save()
+       await unverifiedUser.findByIdAndDelete(user._id)
         return true
      }else{
         return false
@@ -53,4 +66,6 @@ async function verifyotp(email,otp){
 }
 
 
-module.exports={verifyotp,connectdb,User}
+
+
+module.exports={verifyotp,unverifiedUser,connectdb,User}

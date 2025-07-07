@@ -33,7 +33,7 @@ import { Otpform } from './otpform'
         }
 
         try{
-            const response=await axios.post("http://localhost:5000/api/signup",{email:formdata.email,password:formdata.password})
+            const response=await axios.post("http://localhost:3000/api/signup",{email:formdata.email,password:formdata.password})
             setsignupsuccess(response.data.success)
         }catch(err){
             throw new Error(`there is in Error:${err}`)
@@ -43,7 +43,7 @@ import { Otpform } from './otpform'
       }
 
 
-  return  <>{signupsuccess ? <Otpform email={formdata.email}></Otpform> : <div className='outerlayer'>
+  return  <>{signupsuccess ? <Otpform From={true} email={formdata.email}></Otpform> : <div className='outerlayer'>
           <h1 className='heading'>Sign up</h1>
           <p>Stay updated</p>
           <form onSubmit={submit} className='form'>

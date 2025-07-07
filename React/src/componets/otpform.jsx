@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 
 
 // eslint-disable-next-line react/prop-types
-export function Otpform({email}){
+export function Otpform({email,From}){
     const navigate=useNavigate()
 const [otp,setotp]=useState("")
 const [error,seterror]=useState({
@@ -33,12 +33,13 @@ async function handlesubmit(e){
     return;
   }
    try{
-     const res=await axios.post("http://localhost:5000/api/verifyotp",{email:email,otp:otp})
+    const url=From===true ? "http://localhost:3000/api/verifyotp" : "http://localhost:3000/api/verifyresetotp"
+     const res=await axios.post(url,{email:email,otp:otp},{withCredentials:true})
      if(res.data.success===false){
     seterror({isError:true,Errmessage:res.data.message})
     return;
      }
-     navigate("/home")
+     navigate(From===true ? "/home" : '/resetpassword')
    }catch(err){
     console.log(err)
    }finally{
