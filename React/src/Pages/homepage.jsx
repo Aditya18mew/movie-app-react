@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 
 
-export function Dashboard(){
+export function HomePage(){
    const navigate=useNavigate()
     async function checkauthorization(){
     try{

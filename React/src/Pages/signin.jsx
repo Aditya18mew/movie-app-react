@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import './../App.css'
 import axios from 'axios'
-import { useFormdata } from './useFormdata'
 import { Link, useNavigate } from 'react-router-dom'
-import { Spinner } from './buttons'
+import { useFormdata } from '../components/useFormdata'
+import { Spinner } from '../components/buttons'
+
 
 
 

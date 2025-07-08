@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import './../App.css'
 import axios from 'axios'
-import { useFormdata } from './useFormdata'
 import { Link } from 'react-router-dom'
-import { Spinner } from './buttons'
-import { Otpform } from './otpform'
+import { useFormdata } from '../components/useFormdata'
+import { Spinner } from '../components/buttons'
+import { Otpform } from '../components/otpform'
 
 
 

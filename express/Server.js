@@ -224,7 +224,7 @@ server.post("/api/resetpassword",async (req,res)=>{
 
 
 server.get("/api/popularmovies",refreshtokens,verifyUser, async (req,res)=>{
-    const randomPage=page || Math.floor((Math.random()*50)+1)
+    const randomPage=Math.floor((Math.random()*50)+1)
     const url = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${randomPage}`
     try{
      const response=await axios(url)
@@ -234,6 +234,8 @@ server.get("/api/popularmovies",refreshtokens,verifyUser, async (req,res)=>{
         res.json({success:false,err})
     }
 })
+
+
 server.post("/api/searchmovie", refreshtokens,verifyUser, async (req,res)=>{
     const {name}=req.body
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${name}&language=en-US`
@@ -246,66 +248,59 @@ server.post("/api/searchmovie", refreshtokens,verifyUser, async (req,res)=>{
     }
 })
 
-server.post("/api/setwishlist", refreshtokens,verifyUser, async (req,res)=>{
+server.post("/api/setwishlist",verifyUser, async (req,res)=>{
     const {id,title,poster_path,overview}=req.body
+    const {Email}=req.user
      try{
-        const newuser=await User.findOne()
-        if(!newuser){
-           await User.create({Wishlist:[{id:id,title:title,poster_path:poster_path,overview:overview}]})
-           res.status(200).json({success:true,message:"created a new user"})
-        }else{
-            const checkid=await User.exists({"Wishlist.id":id})
-            if(!checkid){newuser.Wishlist.push({id:id,title:title,poster_path:poster_path,overview:overview})
+        const newuser=await User.findOne({"Email":Email})
+         const checkid=await newuser.Wishlist.some((item)=>item.id===id)
+             if(!checkid){
+                newuser.Wishlist.push({id:id,title:title,poster_path:poster_path,overview:overview})
                 await newuser.save()
-            res.status(200).json({success:true,message:"added to Wishlist"})
-            }else{
-                await User.updateOne({},{$pull:{Wishlist:{id:id}}})
+                res.status(200).json({success:true,message:"added to Wishlist"})
+             }else{
+                await User.updateOne({"Email":Email},{$pull:{Wishlist:{id:id}}})
                 res.status(200).json({success:true,message:"removed from Wishlist"})
             }
         }
-    }
      catch(err){
         res.json({success:false,message:`${err}`})
      }
 })
-server.post("/api/setfavorites", refreshtokens,verifyUser, async (req,res)=>{
+server.post("/api/setfavorites",verifyUser, async (req,res)=>{
     const {id,title,poster_path,overview}=req.body
+     const {Email}=req.user
      try{
-        const newuser=await User.findOne()
-        if(!newuser){
-           await User.create({Favorites:[{id:id,title:title,poster_path:poster_path,overview:overview}]}) 
-           res.status(200).json({success:true,message:"created a new user"})
-        }else{
-            const checkid=await User.exists({"Favorites.id":id})
+        const newuser=await User.findOne({"Email":Email})
+          const checkid=await newuser.Favorites.some((item)=>item.id===id)
             if(!checkid){
                 newuser.Favorites.push({id:id,title:title,poster_path:poster_path,overview:overview})
                 await newuser.save()
                 res.status(200).json({success:true,message:"added to favorites"})
             }else{
-                await User.updateOne({},{$pull:{Favorites:{id:id}}})
+                await User.updateOne({"Email":Email},{$pull:{Favorites:{id:id}}})
                 res.status(200).json({success:true,message:"removed from Wishlist"})
             }  
         }
-    }
      catch(err){
         res.json({success:false,message:`${err}`})
      }
 })
 
-server.post("/api/getwishlist",refreshtokens,verifyUser, async (req,res)=>{
-    const {name}=req.body
+server.get("/api/getwishlist",refreshtokens,verifyUser, async (req,res)=>{
+    const {Email}=req.user
     try{
-        const olduser=await User.findOne()
+        const olduser=await User.findOne({"Email":Email})
        const arr=olduser.Wishlist
         res.status(200).json({success:true,results:arr})
     }catch(err){
         console.log(err)
     }
 })
-server.post("/api/getfavorites", refreshtokens,verifyUser, async (req,res)=>{
-      
+server.get("/api/getfavorites", refreshtokens,verifyUser, async (req,res)=>{
+      const {Email}=req.user
     try{
-        const olduser=await User.findOne()
+        const olduser=await User.findOne({"Email":Email})
        const arr=olduser.Favorites
         res.status(200).json({success:true,results:arr})
     }catch(err){

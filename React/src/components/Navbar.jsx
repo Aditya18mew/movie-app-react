@@ -48,7 +48,7 @@ import { useNavigate } from "react-router-dom"
     try {
       setisloading(true)
       setiserror(false)
-          const   response=await axios.post("http://localhost:3000/api/getwishlist",{name:"user"},{
+          const   response=await axios.get("http://localhost:3000/api/getwishlist",{
             withCredentials:true
           })
       if(!response.data.success){
@@ -66,7 +66,7 @@ import { useNavigate } from "react-router-dom"
     try {
       setisloading(true)
       setiserror(false)
-          const   response=await axios.post("http://localhost:3000/api/getfavorites",{name:"user"},{
+          const   response=await axios.get("http://localhost:3000/api/getfavorites",{
             withCredentials:true
           })
       if(!response.data.success){

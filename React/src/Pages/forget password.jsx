@@ -1,8 +1,8 @@
 import {useReducer, useState} from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { Spinner } from "./buttons"
-import { Otpform } from "./otpform"
+import { Spinner } from "../components/buttons"
+import { Otpform } from "../components/otpform"
 
 
 const HANDLECHANGE="HANDLECHANGE"
