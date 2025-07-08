@@ -1,10 +1,11 @@
 const express=require("express")
 const cookieParser=require("cookie-parser")
+const bcrypt=require("bcrypt")
 const {verifyotp,connectdb,User}=require("./mongoosedb")
 const {validatemail,validatepassword}=require("./regex/regex")
 const {bcrypting,comparehashpassword}=require("./bcrypt")
 const {sendresetotpemail}=require("./nodemailer")
-const {verifyUser}=require("./middleware")
+const {verifyUser,refreshtokens}=require("./middleware")
 require("dotenv").config()
 const key=process.env. API_KEY
 const cors=require("cors")
@@ -24,7 +25,7 @@ server.use(cors({
 connectdb()
 
 
-server.get("/api/checkauthorization",verifyUser, async (req,res)=>{
+server.get("/api/checkauthorization",refreshtokens,verifyUser, async (req,res)=>{
     res.json({success:true})
 } )
 
@@ -60,7 +61,7 @@ server.post("/api/verifyotp",async (req,res)=>{
      if(result===true){
     const {AccessToken,RefreshToken}=await generatejwt(email)
      res.cookie("MovieappAccessToken",AccessToken,{
-        maxAge:15*60*60,
+        maxAge:15*60*1000,
         path:"/",
         secure:false,
         httpOnly:true,
@@ -68,7 +69,7 @@ server.post("/api/verifyotp",async (req,res)=>{
      })
 
      res.cookie("MovieappRefreshToken",RefreshToken,{
-        maxAge:60*60*24*7,
+        maxAge:60*60*24*7*1000,
         path:"/",
         secure:false,
         httpOnly:true,
@@ -82,6 +83,35 @@ server.post("/api/verifyotp",async (req,res)=>{
         console.log(err)
     }
 })
+
+server.get("/api/logout",refreshtokens,verifyUser, async (req,res)=>{
+    const {Email}=req.user
+     try{
+        const user=await User.findOne({"Email":Email})
+        res.clearCookie("MovieappAccessToken",{
+        path:"/",
+        secure:false,
+        httpOnly:true,
+        sameSite:"lax"
+     })
+
+     res.clearCookie("MovieappRefreshToken",{
+        path:"/",
+        secure:false,
+        httpOnly:true,
+        sameSite:"lax"
+     })
+
+        user.RefreshToken=""
+        user.CreatedAt=null
+        user.ExpiredAt=null
+        await user.save()
+        return res.json({success:true,message:"logout successful"})
+     }catch(err){
+        return res.json({success:false,message:"logout unsuccessful"})
+     }
+})
+
 
 server.post("/api/signin",async (req,res)=>{
   const {email,password}=req.body
@@ -99,14 +129,14 @@ if(!olduser){
 
  if(passwordmatch===true) {
       res.cookie("MovieappAccessToken",AccessToken,{
-        maxAge:15*60*60,
+        maxAge:15*60*1000,
         path:"/",
         secure:process.env.NODE_ENV==="production",
-        httpOnly:false,
+        httpOnly:true,
         sameSite:"lax"
      })
      res.cookie("MovieappRefreshToken",RefreshToken,{
-        maxAge:60*60*24*7,
+        maxAge:60*60*24*7*1000,
         path:"/",
         secure:false,
         httpOnly:true,
@@ -128,11 +158,13 @@ if(!olduser){
 server.post("/api/forgetpassword",async (req,res)=>{
     const {email}=req.body
     if(validatemail(email)){
-        let User=await User.findOne({Email:email})
-         if(!User){
+        let user=await User.findOne({Email:email})
+         if(!user){
             res.json({success:false,message:`No account with ${email} email`})
          }else{
             const otp=randomInt(100000,999999).toString()
+            user.otp=otp
+            await user.save()
             let iserror=await sendresetotpemail(email,otp)
          if(iserror){
             res.json({success:false,message:"Unable to send a email"})
@@ -191,8 +223,7 @@ server.post("/api/resetpassword",async (req,res)=>{
 
 
 
-server.post("/api/popularmovies",verifyUser, async (req,res)=>{
-    const {page}=req.body
+server.get("/api/popularmovies",refreshtokens,verifyUser, async (req,res)=>{
     const randomPage=page || Math.floor((Math.random()*50)+1)
     const url = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${randomPage}`
     try{
@@ -203,7 +234,7 @@ server.post("/api/popularmovies",verifyUser, async (req,res)=>{
         res.json({success:false,err})
     }
 })
-server.post("/api/searchmovie", verifyUser, async (req,res)=>{
+server.post("/api/searchmovie", refreshtokens,verifyUser, async (req,res)=>{
     const {name}=req.body
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${name}&language=en-US`
     try{
@@ -215,12 +246,12 @@ server.post("/api/searchmovie", verifyUser, async (req,res)=>{
     }
 })
 
-server.post("/api/setwishlist", verifyUser, async (req,res)=>{
+server.post("/api/setwishlist", refreshtokens,verifyUser, async (req,res)=>{
     const {id,title,poster_path,overview}=req.body
      try{
         const newuser=await User.findOne()
         if(!newuser){
-           await user.create({Wishlist:[{id:id,title:title,poster_path:poster_path,overview:overview}]})
+           await User.create({Wishlist:[{id:id,title:title,poster_path:poster_path,overview:overview}]})
            res.status(200).json({success:true,message:"created a new user"})
         }else{
             const checkid=await User.exists({"Wishlist.id":id})
@@ -228,7 +259,7 @@ server.post("/api/setwishlist", verifyUser, async (req,res)=>{
                 await newuser.save()
             res.status(200).json({success:true,message:"added to Wishlist"})
             }else{
-                await user.updateOne({},{$pull:{Wishlist:{id:id}}})
+                await User.updateOne({},{$pull:{Wishlist:{id:id}}})
                 res.status(200).json({success:true,message:"removed from Wishlist"})
             }
         }
@@ -237,21 +268,21 @@ server.post("/api/setwishlist", verifyUser, async (req,res)=>{
         res.json({success:false,message:`${err}`})
      }
 })
-server.post("/api/setfavorites", verifyUser, async (req,res)=>{
+server.post("/api/setfavorites", refreshtokens,verifyUser, async (req,res)=>{
     const {id,title,poster_path,overview}=req.body
      try{
         const newuser=await User.findOne()
         if(!newuser){
-           await user.create({Favorites:[{id:id,title:title,poster_path:poster_path,overview:overview}]}) 
+           await User.create({Favorites:[{id:id,title:title,poster_path:poster_path,overview:overview}]}) 
            res.status(200).json({success:true,message:"created a new user"})
         }else{
-            const checkid=await user.exists({"Favorites.id":id})
+            const checkid=await User.exists({"Favorites.id":id})
             if(!checkid){
                 newuser.Favorites.push({id:id,title:title,poster_path:poster_path,overview:overview})
                 await newuser.save()
                 res.status(200).json({success:true,message:"added to favorites"})
             }else{
-                await user.updateOne({},{$pull:{Favorites:{id:id}}})
+                await User.updateOne({},{$pull:{Favorites:{id:id}}})
                 res.status(200).json({success:true,message:"removed from Wishlist"})
             }  
         }
@@ -261,7 +292,7 @@ server.post("/api/setfavorites", verifyUser, async (req,res)=>{
      }
 })
 
-server.post("/api/getwishlist",verifyUser, async (req,res)=>{
+server.post("/api/getwishlist",refreshtokens,verifyUser, async (req,res)=>{
     const {name}=req.body
     try{
         const olduser=await User.findOne()
@@ -271,7 +302,7 @@ server.post("/api/getwishlist",verifyUser, async (req,res)=>{
         console.log(err)
     }
 })
-server.post("/api/getfavorites", verifyUser, async (req,res)=>{
+server.post("/api/getfavorites", refreshtokens,verifyUser, async (req,res)=>{
       
     try{
         const olduser=await User.findOne()

@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react"
+import {useState } from "react"
 import axios from "axios"
+import { useLocation, useNavigate } from "react-router-dom"
 
 
 
 export const Resetpassword=()=>{
-      const [success,setsuccess]=useState(false)
+  const navigate=useNavigate()
+  const location=useLocation()
+  const {email}=location.state
       const [newpassword,setnewpassword]=useState({
         name:"newpass",
         password:""  
@@ -13,7 +16,6 @@ export const Resetpassword=()=>{
         name:"confirmnewpass",
         password:""
       })
-      const [token,settoken]=useState("")
       const [errors,seterrors]=useState({
         newpass:false,
         confirmnewpass:false,
@@ -45,18 +47,15 @@ export const Resetpassword=()=>{
       }
      
     try {
-         const response=await axios.post("http://localhost:3000/api/resetpassword",{newpass:newpassword.password,confirmnewpass:confirmnewpassword.password,Token:token})
-
-        setsuccess(response.data.success)
+         const response=await axios.post("http://localhost:3000/api/resetpassword",{newpass:newpassword.password,confirmnewpass:confirmnewpassword.password,email:email})
+              if(response.data.success){
+                  navigate("/sign-in")
+              }
     } catch (error) {
       console.log(error)
     }
     }
-useEffect(()=>{
-const queryParams=new URLSearchParams(window.location.search)
-const resettoken=queryParams.get("token")
-settoken(resettoken)
-},[])
+
 
 
 

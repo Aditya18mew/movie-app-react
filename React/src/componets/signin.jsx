@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './../App.css'
 import axios from 'axios'
 import { useFormdata } from './useFormdata'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Spinner } from './buttons'
 
 
@@ -10,7 +10,7 @@ import { Spinner } from './buttons'
 
  export function Signin() {
     const {formdata,handlechange}=useFormdata()
-    const [signinsuccess,setsigninsuccess]=useState(false)
+    const navigate=useNavigate()
     const [errors,seterrors]=useState({
         email:false,
         password:false
@@ -31,10 +31,12 @@ import { Spinner } from './buttons'
         }
 
         try{
-            const response= await axios.post("http://localhost:3000/api/signin",{email:formdata.email,password:formdata.password})
-            const {accesstoken,success}=response.data
-            setsigninsuccess(success)
-            localStorage.setItem("jwt token",accesstoken)
+            const response= await axios.post("http://localhost:3000/api/signin",{email:formdata.email,password:formdata.password},{
+                withCredentials:true
+            })
+            if(response.data.success){
+                 navigate("/home")
+            }
         }catch(err){
             throw new Error(`there is in Error:${err}`)
         }finally{

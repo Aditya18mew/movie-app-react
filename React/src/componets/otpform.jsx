@@ -39,7 +39,7 @@ async function handlesubmit(e){
     seterror({isError:true,Errmessage:res.data.message})
     return;
      }
-     navigate(From===true ? "/home" : '/resetpassword')
+     navigate(From===true ? "/home" : '/resetpassword',{state:{email:email}})
    }catch(err){
     console.log(err)
    }finally{

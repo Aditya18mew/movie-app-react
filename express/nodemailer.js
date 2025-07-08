@@ -53,8 +53,6 @@ const message={
         
         })
 
-        let resetlink=`http://localhost:5173/resetpassword?token=${token}`
-
 
 
 const message={

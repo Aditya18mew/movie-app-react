@@ -2,6 +2,7 @@ import axios from "axios"
 import {memo, useEffect, useState } from "react"
 import { useCustomcontext } from "./useCustomcontext"
 import { useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -13,6 +14,7 @@ import { useCallback } from "react"
     name:"",
     value:""
   })
+  const navigate=useNavigate()
   const {setcurrent}=useCustomcontext()
   const debounce=useDebounce(search.value,500)
 
@@ -46,7 +48,7 @@ import { useCallback } from "react"
     try {
       setisloading(true)
       setiserror(false)
-          const   response=await axios.post("http://localhost:5000/api/getwishlist",{name:"user"},{
+          const   response=await axios.post("http://localhost:3000/api/getwishlist",{name:"user"},{
             withCredentials:true
           })
       if(!response.data.success){
@@ -64,7 +66,7 @@ import { useCallback } from "react"
     try {
       setisloading(true)
       setiserror(false)
-          const   response=await axios.post("http://localhost:5000/api/getfavorites",{name:"user"},{
+          const   response=await axios.post("http://localhost:3000/api/getfavorites",{name:"user"},{
             withCredentials:true
           })
       if(!response.data.success){
@@ -76,6 +78,19 @@ import { useCallback } from "react"
     } catch (err) {
       setiserror(true)
       setmessage("Network error")
+    }
+  }
+
+  async function logout(){
+    try{
+      const res=await axios.get("http://localhost:3000/api/logout",{
+        withCredentials:true
+      })
+      if(res.data.success){
+        navigate("/")
+      }
+    }catch(err){
+      console.log(err)
     }
   }
 
@@ -101,6 +116,7 @@ if(debounce){
         <button onClick={()=>{
           fetchfavorites()
         }} className="div_btn">Favorites</button>
+        <button onClick={()=>logout()} className="div_btn">logout</button>
     </nav>
 }
 
