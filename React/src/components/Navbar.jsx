@@ -3,6 +3,7 @@ import {memo, useEffect, useState } from "react"
 import { useCustomcontext } from "./useCustomcontext"
 import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
+import {Logout} from "./buttons"
 
 
 
@@ -44,55 +45,15 @@ import { useNavigate } from "react-router-dom"
         }
     },[])
 
-  async function fetchwishlist(){
-    try {
-      setisloading(true)
-      setiserror(false)
-          const   response=await axios.get("http://localhost:3000/api/getwishlist",{
-            withCredentials:true
-          })
-      if(!response.data.success){
-        setiserror(true)
-        setmessage('Network error')
-      }
-      setisloading(false)
-      setcurrent(response.data.results)
-    } catch (err) {
-      setiserror(true)
-      setmessage("Network error")
-    }
-  }
-  async function fetchfavorites(){
-    try {
-      setisloading(true)
-      setiserror(false)
-          const   response=await axios.get("http://localhost:3000/api/getfavorites",{
-            withCredentials:true
-          })
-      if(!response.data.success){
-        setiserror(true)
-        setmessage('Network error')
-      }
-      setisloading(false)
-      setcurrent(response.data.results)
-    } catch (err) {
-      setiserror(true)
-      setmessage("Network error")
-    }
-  }
-
-  async function logout(){
-    try{
-      const res=await axios.get("http://localhost:3000/api/logout",{
-        withCredentials:true
-      })
-      if(res.data.success){
-        navigate("/")
-      }
-    }catch(err){
-      console.log(err)
-    }
-  }
+     function navigatetoWishList(){
+    navigate("/WishList")
+   }
+   function navigatetoFavorites(){
+    navigate("/Favorites")
+   }
+  function navigatetoHome(){
+    navigate("/home")
+   }
 
 
 
@@ -105,18 +66,12 @@ if(debounce){
 
 
     return <nav className="navbar">
-        <h2 onClick={()=>{
-          window.location.href="/home"
-        }}>Movie search</h2>
+        <h2 onClick={navigatetoHome}>Movie search</h2>
    <div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
-        <div className="input-with-icon"></div> </div> 
-        <button onClick={()=>{
-      fetchwishlist()
-        }} className="div_btn">Wishlist</button>
-        <button onClick={()=>{
-          fetchfavorites()
-        }} className="div_btn">Favorites</button>
-        <button onClick={()=>logout()} className="div_btn">logout</button>
+        <div className="input-with-icon"></div></div>
+        <button onClick={navigatetoWishList} className="div_btn">Wishlist</button>
+        <button onClick={navigatetoFavorites} className="div_btn">Favorites</button>
+        <Logout></Logout>
     </nav>
 }
 

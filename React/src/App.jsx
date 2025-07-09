@@ -6,6 +6,8 @@ import { Dashboard } from './Pages/dashboard';
 import { HomePage } from './Pages/homepage';
 import { Signup } from './Pages/signup';
 import {Signin} from "./Pages/signin"
+import { WishList } from './Pages/wishlist';
+import { Favorites } from './Pages/favorites';
 
 
 
@@ -28,6 +30,8 @@ function App() {
     <Route path='/forget-password' element={ <div className='cotainer'><Forgetpassword></Forgetpassword></div>}></Route>
     <Route path='/resetpassword' element={<div className='cotainer'><Resetpassword></Resetpassword></div>}></Route>
     <Route path='/home' element={<Dashboard></Dashboard>}></Route>
+    <Route path='/WishList' element={<WishList></WishList>}></Route>
+    <Route path='/Favorites' element={<Favorites></Favorites>}></Route>
     </Routes>
    </Router>
   );
