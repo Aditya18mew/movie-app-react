@@ -6,11 +6,11 @@ Overview--The Movie Search App is a full-stack web application that allows users
 
 Features--
 <h3>authentication</h3>-<p>signup,signin,reset password </p> 
-<img src="./screenshots/login.png" width={400}/>
+<img src="./screenshots/login.png" width={400} height={400}/>
 <h3>Movie Search</h3>-<p> Search for movies using an API </p> 
-<img src="./screenshots/feed.png" width={400}/>
+<img src="./screenshots/feed.png" width={400} height={400}/>
 <h3>Movie Details</h3>-<p>  View movie descriptions, and other details.  </p> 
-<img src="./screenshots/moviedetails.png" width={400}/>
+<img src="./screenshots/moviedetails.png" width={400} height={400}/>
 <h3>Responsive UI</h3>-<p> Optimized for both mobile and desktop devices.</p> 
 
 
