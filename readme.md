@@ -5,8 +5,10 @@ API used-https://api.themoviedb.org
 Overview--The Movie Search App is a full-stack web application that allows users to search for movies, view details, and manage authentication. The frontend is built using React, and the backend is powered by Node.js with MongoDB for data storage.
 
 Features--
--Movie Search: Search for movies using an API.
--Movie Details: View movie descriptions, and other details.
+-authentication-signup,signin,reset password - ![login](./screenshots/login.png)
+-Movie Search: Search for movies using an API. ![feed](./screenshots/feed.png) 
+-Movie Details: View movie descriptions, and other details. ![moviedetails](./screenshots/moviedetails.png)
+
 -Responsive UI: Optimized for both mobile and desktop devices.
 
 Tech Stack---
@@ -28,6 +30,7 @@ Project Structure-->
 │   ├── src/
 │   │   ├── assets/
 │   │   ├── components/     # UI components  
+│   │   ├── Pages/          # routes  
 │   │   ├── main.js         # Main App component  
 │   │   ├── App.js          # Entry point  
 │   ├── public/             # Static assets  
