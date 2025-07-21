@@ -6,24 +6,21 @@ import { useCustomcontext } from "./useCustomcontext"
 
 
 
+
  function  Middleware(){
 
 const {isfetching,current,fetchpopularmovies}=useCustomcontext()
 const [page,setpage]=useState(0)
 
-useEffect(()=>{
-    function handlescroll(){
-      if(!isfetching && window.innerHeight+window.scrollY>=5*(document.body.offsetHeight-100)){
-            setpage(prev=>prev+1)
-        } 
-    }
-    window.addEventListener("scroll",handlescroll)
-    return ()=>window.removeEventListener("scroll",handlescroll)
-},[])
+
+
+
+
 
  useEffect(()=>{
  fetchpopularmovies(current)
 },[page])  
+
 
 
 

@@ -23,14 +23,9 @@ const fetchpopularmovies=useCallback(
   const response=await axios.get("http://localhost:3000/api/popularmovies",{
     withCredentials:true
   })
-     if(!response.data.success){
-      setiserror(true)
-      setmessage("Netwrok error")
-      return
-     }
+     setcurrent([...current,...response.data.arr])
      setisloading(false)
      setisfetching(false)
-     setcurrent([...current,...response.data.arr])
     }catch(err){
      setiserror(true)
       setmessage(`Network error`)

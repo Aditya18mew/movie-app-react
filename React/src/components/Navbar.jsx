@@ -4,6 +4,7 @@ import { useCustomcontext } from "./useCustomcontext"
 import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import {Logout} from "./buttons"
+import { useDebounce } from "../utils/debounce"
 
 
 
@@ -76,19 +77,7 @@ if(debounce){
 }
 
 
-function useDebounce(value,delay){
-  const [debounce,setdebounce]=useState(value)
 
-  useEffect(()=>{
-    const timer=setTimeout(()=>{
-          setdebounce(value)
-    },delay)
-
-  return ()=>clearTimeout(timer)
-  },[value,delay])
-
-  return debounce
-}
 
 
 

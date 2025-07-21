@@ -13,6 +13,11 @@ export function Favorites(){
    const [iserror,setiserror]=useState(false)
    const [message,setmessage]=useState("") 
 
+
+
+
+   
+
    function navigatetoWishList(){
     navigate("/WishList")
    }

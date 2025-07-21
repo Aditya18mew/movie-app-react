@@ -228,6 +228,7 @@ server.get("/api/popularmovies",refreshtokens,verifyUser, async (req,res)=>{
     const url = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${randomPage}`
     try{
      const response=await axios(url)
+     console.log(response.data)
      const arr=response.data.results
      res.json({success:true,arr})
     }catch(err){
