@@ -224,11 +224,10 @@ server.post("/api/resetpassword",async (req,res)=>{
 
 
 server.get("/api/popularmovies",refreshtokens,verifyUser, async (req,res)=>{
-    const randomPage=Math.floor((Math.random()*50)+1)
+    const randomPage=Math.floor((Math.random()*25)+1)
     const url = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${randomPage}`
     try{
      const response=await axios(url)
-     console.log(response.data)
      const arr=response.data.results
      res.json({success:true,arr})
     }catch(err){
@@ -242,7 +241,6 @@ server.post("/api/searchmovie", refreshtokens,verifyUser, async (req,res)=>{
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${name}&language=en-US`
     try{
      const response=await axios(url)
-        const arr=response.data.results
         res.json({success:true,arr})
     }catch(err){
         res.json({success:false,err})
