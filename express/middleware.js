@@ -11,7 +11,7 @@ const refreshtokens=(req,res,next)=>{
    }
        const RefreshToken=req.cookies.MovieappRefreshToken
   if(!RefreshToken){
-    return res.status(401).json({success:false,message:"UnAuthorized:No token provided"})
+    return res.status(200).json({success:false,message:"UnAuthorized:No token provided"})
 }
    try{
   const decoded=jwt.verify(RefreshToken,REFRESH_TOKEN_SECRET)

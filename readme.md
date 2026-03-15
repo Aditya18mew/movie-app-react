@@ -1,34 +1,56 @@
 API used-https://api.themoviedb.org
  
- Movie Search App
+# Movie Search App
 
-Overview--The Movie Search App is a full-stack web application that allows users to search for movies, view details, and manage authentication. The frontend is built using React, and the backend is powered by Node.js with MongoDB for data storage.
+## Overview
+The Movie Search App is a full-stack web application that allows users to search for movies, view movie details, and manage user authentication.  
+The frontend is built using React, while the backend is powered by Node.js and Express, with MongoDB used for storing user data.
 
-Features--
-<h3>authentication</h3>-<p>signup,signin,reset password </p> 
-<img src="./screenshots/login.png" width={400}/>
-<h3>Movie Search</h3>-<p> Search for movies using an API </p> 
-<img src="./screenshots/feed.png" width={400}/>
-<h3>Movie Details</h3>-<p>  View movie descriptions, and other details.  </p> 
-<img src="./screenshots/moviedetails.png" width={400}/>
-<h3>Responsive UI</h3>-<p> Optimized for both mobile and desktop devices.</p> 
+The application integrates the TMDB API to fetch movie information in real time.
+
+---
+
+## Features
+
+### Authentication
+- User signup and signin
+- Password reset functionality
+
+<img src="./screenshots/login.png" width="400"/>
+
+### Movie Search
+- Search for movies using an external API
+- View search results instantly
+
+<img src="./screenshots/feed.png" width="400"/>
+
+### Movie Details
+- View detailed movie information such as description and metadata
+
+<img src="./screenshots/moviedetails.png" width="400"/>
+
+### Responsive UI
+- Designed to work on both mobile and desktop devices
+
+---
+
+## Tech Stack
+
+### Frontend
+- React.js
+- CSS
+- Axios (API requests)
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+---
 
 
-
-Tech Stack---
-
-Frontend-
--React.js
--CSS
--Axios (for API requests)
-
-Backend-
--Node.js
--Express.js
--MongoDB & Mongoose
-
-
-Project Structure-->
+## Project Structure
 
 -- Frontend-react/
 │   ├── src/
@@ -45,27 +67,36 @@ Project Structure-->
 │   ├── mongoosedb.js     # Database connection  
 │   ├── package.json      # Dependencies & scripts  
 
+---
 
-Installation & Setup
+## Installation & Setup
 
-Prerequisites-
--Node.js installed
--MongoDB running locally or on a cloud service
+### Prerequisites
+- Node.js installed
+- MongoDB running locally or via cloud service
 
-backend setup
-1.navigate to the express folder
-2.npm install
-3.npm start
+### Backend Setup
+- navigate to the express folder
+- npm install
+- npm start
 
-frontend setup
-1.navigate to react folder
-2.npm install
-3.npm run dev
+### Backend Setup
+- navigate to react folder
+- npm install
+- npm run dev
 
+---
 
-API usage 
--Ensure you set the API key in the frontend .env file: API_KEY=your_api_key_here
+## API Usage
 
-Contributing
+This project uses **The Movie Database (TMDB) API**.
 
-Feel free to fork this repository and submit pull requests. Contributions are welcome!
+Add your API key in the Backend `.env` file:
+
+API_KEY=your_api_key_here
+
+---
+
+## Contributing
+
+Feel free to fork this repository and submit pull requests. Contributions are welcome.

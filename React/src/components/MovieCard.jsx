@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
-import { useState,useEffect, useRef } from "react";
+import { useState} from "react";
 import wishlist from "./../assets/wishlist.svg"
 import wishlist2 from "./../assets/wishlist2.svg"
 import favorite from "./../assets/favorite.svg"
 import favorite2 from "./../assets/favorite2.svg"
-import { useCustomcontext } from "./useCustomcontext";
+
 
 
 

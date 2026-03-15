@@ -27,6 +27,7 @@ import { useDebounce } from "../utils/debounce"
     
    const fetchsearch=useCallback(
     async (name)=>{
+        console.log("hello")
         try{
         setisloading(true)
         setiserror(false)

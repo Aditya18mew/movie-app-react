@@ -6,7 +6,6 @@ require("dotenv")
 
 async function sendotpemail(email,otp){
     try{
-
         let transporter=nodemailer.createTransport({
             service:"gmail",
             auth:{
@@ -17,7 +16,7 @@ async function sendotpemail(email,otp){
         })
 
 const message={
-    from:"aditionly18@gmail.com",
+    from:process.env.EMAIL_ADMIN,
     to:email,
     subject:"OTP for sign-up",
    html: `
@@ -25,13 +24,10 @@ const message={
         `,
     text:"This OTP will expire in 10 minutes"        
 }
-    transporter.sendMail(message,(error,info)=>{
-    if(error){
-        return true
-    }
-    console.log(`Email sent:`, info.response)
-    return false
-   })
+
+
+  const info= await transporter.sendMail(message)
+  console.log(`Email sent ${info.response}`)
 
     }catch(err){
         console.log(err)
