@@ -52,23 +52,22 @@ The application integrates the TMDB API to fetch movie information in real time.
 
 ## Project Structure
 
-Frontend (React)
-│
-├── src
-│ ├── assets
-│ ├── components
-│ ├── pages
-│ ├── App.js
-│ └── main.js
-│
-├── public
-└── package.json
+   # Frontend-react
+ - src/
+ - assets/
+ - components/     # UI components  
+ - Pages/          # routes  
+ - main.js         # Main App component  
+ - App.js          # Entry point  
+ - public/         # Static assets  
+ - package.json    # Dependencies & scripts 
 
-Backend (Node)
-│
-├── server.js
-├── mongoosedb.js
-└── package.json
+ # Backend-node
+ - server.js       # Entry point  
+ - mongoosedb.js   # Database connection  
+ - package.json    # Dependencies & scripts  
+
+---
 
 ## Installation & Setup
 
