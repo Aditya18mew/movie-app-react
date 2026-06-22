@@ -1,37 +1,44 @@
 const mongoose=require("mongoose")
 
+const movieItemSchema=mongoose.Schema({
+    tmdbId:{
+        type:String,
+        required:true
+    },
+    title:{
+        type:String,
+        required:true
+    },
+    poster_path:String,
+    overview:String
+},{_id:false})
 
-const userschema=mongoose.Schema({
-    id:String,
-    Email:String,
-    Password:String,
+
+const userSchema=mongoose.Schema({
+    Email:{
+        type:String,
+        required:true,
+        unique:true,
+        lowercase:true
+    },
+    Password:{
+       type:String,
+       required:true
+    },
     otp:String,
-    RefreshToken:String,
-    CreatedAt:Date,
-    ExpiredAt:Date,
-    Wishlist:[{
-        id:Number,
-        title:String,
-        poster_path:String || null,
-        overview:String || null
-    }],
-    Favorites:[{
-        id:Number,
-        title:String ,
-        poster_path:String || null,
-        overview:String || null
-    }]
+    wishlist:[movieItemSchema],
+    favorites:[movieItemSchema]
 })
 
-const unverifieduserschema=mongoose.Schema({
+const unverifiedUserSchema=mongoose.Schema({
     Email:String,
     Password:String,
     otp:String
 })
 
 
-const User=mongoose.model("user",userschema)
-const unverifiedUser=mongoose.model("unverifieduser",unverifieduserschema)
+const User=mongoose.model("user",userSchema)
+const unverifiedUser=mongoose.model("unverifieduser",unverifiedUserSchema)
 
 
 
@@ -68,4 +75,4 @@ async function verifyotp(email,otp){
 
 
 
-module.exports={verifyotp,unverifiedUser,connectdb,User}
+module.exports={unverifiedUser,connectdb,User}

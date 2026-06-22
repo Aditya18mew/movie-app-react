@@ -14,6 +14,7 @@ async function sendotpemail(email,otp){
             }
         
         })
+        
 
 const message={
     from:process.env.EMAIL_ADMIN,
@@ -60,6 +61,8 @@ const message={
         `,
     text:"This OTP will expire in 10 minutes"        
 }
+
+
     transporter.sendMail(message,(error,info)=>{
     if(error){
         return true
@@ -69,7 +72,8 @@ const message={
    })
 
     }catch(err){
-        console.log(err)
+        console.error(err)
+        return true
     }
    
  }
