@@ -15,11 +15,8 @@ async function generatejwt(email){
         id:user._id,
         Email:user.Email
     },REFRESH_TOKEN_SECRET,{expiresIn:"7d"})
-     
-     user.otp=""
-    /*  user.RefreshToken=RefreshToken
-     user.CreatedAt=Date.now()
-     user.ExpiredAt=Date.now() + 7*24*60*60 */
+    user.otp=""
+
 
        await user.save()
 

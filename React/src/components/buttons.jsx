@@ -13,7 +13,7 @@ export function Logout(){
 
       async function logout(){
     try{
-      const res=await axios.get("http://localhost:3000/api/logout",{
+      const res=await axios.post("http://localhost:3000/api/logout",null,{
         withCredentials:true
       })
       if(res.data.success){
@@ -24,5 +24,5 @@ export function Logout(){
     }
   }
   
-  return <button onClick={()=>logout()} className="div_btn">logout</button>
+  return <button onClick={logout} className="div_btn">logout</button>
 }

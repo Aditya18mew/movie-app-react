@@ -25,10 +25,10 @@ function App() {
    <Router>
     <Routes>
      <Route path='/' element={<div className='cotainer'><HomePage></HomePage></div>}></Route>
-    <Route path='/sign-in' element={<div className='cotainer'><Signin/></div>}></Route>
-    <Route path='/sign-up' element={ <div className='cotainer'><Signup/></div>}></Route>
-    <Route path='/forget-password' element={ <div className='cotainer'><Forgetpassword></Forgetpassword></div>}></Route>
-    <Route path='/resetpassword' element={<div className='cotainer'><Resetpassword></Resetpassword></div>}></Route>
+    <Route path='/sign-in' element={<div className='sContainer'><Signin/></div>}></Route>
+    <Route path='/sign-up' element={ <div className='sContainer'><Signup/></div>}></Route>
+    <Route path='/forget-password' element={ <div className='sContainer'><Forgetpassword></Forgetpassword></div>}></Route>
+    <Route path='/resetpassword' element={<div className='sContainer'><Resetpassword></Resetpassword></div>}></Route>
     <Route path='/home' element={<Dashboard></Dashboard>}></Route>
     <Route path='/WishList' element={<WishList></WishList>}></Route>
     <Route path='/Favorites' element={<Favorites></Favorites>}></Route>

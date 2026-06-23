@@ -16,6 +16,23 @@ body{
   justify-content: center;
   align-items: center;
 }
+.sContainer{
+  width: 100%;
+ min-height: 100vh;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content:left;
+  align-items:center;
+  background-color:#1a1a2e;
+background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+}
+
+.sContainer div{
+  margin: 4rem;
+}
+
+
 
 a {
   font-weight: 500;
@@ -663,3 +680,4 @@ align-items: center;
 margin-top: 40px;
 gap: 20px;
 }
+

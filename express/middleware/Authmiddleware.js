@@ -85,9 +85,9 @@ const logout= async (req,res,next)=>{
        try{
          res.clearCookie("MovieappAccessToken")
         res.clearCookie("MovieappRefreshToken")
-         return res.json({success:true,message:"logout successful"})
+         return res.status(200).json({success:true,message:"logout successful"})
        }catch(err){
-        return res.json({success:false,message:"logout unsuccessful"})
+        return res.status(500).json({success:false,message:"logout unsuccessful"})
      }
 }
 

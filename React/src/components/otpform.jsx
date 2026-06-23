@@ -9,10 +9,8 @@ import { useNavigate } from "react-router-dom"
 export function Otpform({email,From}){
     const navigate=useNavigate()
 const [otp,setotp]=useState("")
-const [error,seterror]=useState({
-    isError:false,
-    Errmessage:"OTP is required"
-})
+const [error,seterror]=useState(false)
+const [sMessage,setsMessage]=useState("Submit")
 const [loading,setloading]=useState(false)
 
 function handlechange(e){
@@ -22,26 +20,28 @@ function handlechange(e){
 async function handlesubmit(e){
  e.preventDefault()
  setloading(true)
- const newerror={
-    isError:otp.trim()==="",
-    Errmessage:"OTP is required"
- }
-  if(newerror.isError){
+ 
+ const newerror=otp.trim()===""
+  if(newerror){
     setotp("")
     seterror(newerror)
+    setsMessage("OTP is required")
     setloading(false)
     return;
   }
+
+
    try{
+
     const url=From===true ? "http://localhost:3000/api/verifyotp" : "http://localhost:3000/api/verifyresetotp"
      const res=await axios.post(url,{email:email,otp:otp},{withCredentials:true})
-     if(res.data.success===false){
-    seterror({isError:true,Errmessage:res.data.message})
-    return;
-     }
+    setsMessage(res.data.message)
+     if(res.data.success===false) return;
+     
      navigate(From===true ? "/home" : '/resetpassword',{state:{email:email}})
    }catch(err){
-    console.log(err)
+    console.error(err)
+    setsMessage(err.res.data.message)
    }finally{
     setloading(false)
    }
@@ -53,8 +53,8 @@ async function handlesubmit(e){
         <h1>Submit OTP</h1>
         <p>OTP was sent to mail {email}</p>
         <form onSubmit={handlesubmit}>
-            <input type="text" className={error.isError ? "formerrorinput":"forminput"} placeholder={error.isError ? error.Errmessage : "OTP"} maxLength={6} value={otp} onChange={handlechange}/>
-            <button className='outerlayerbutton' type="submit">{loading ? <Spinner></Spinner> :"Submit"}</button>
+            <input type="text" inputMode="numeric" required className={error.isError ? "formerrorinput":"forminput"} placeholder={"OTP"} maxLength={6} value={otp} onChange={handlechange}/>
+            <button className='outerlayerbutton' type="submit">{loading ? <Spinner></Spinner> :sMessage}</button>
         </form> 
     </div>
 }

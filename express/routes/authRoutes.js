@@ -19,24 +19,19 @@ const router=express.Router();
 router.post("/signup",async (req,res)=>{
     try{
     const {email,password}=req.body
-    if(validatemail(email)){
-       if(!validatepassword(password)){
-      return res.json({success:false,message:"Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
-       }else{
-        const olduser=await User.findOne({Email:email})
+    if(!validatemail(email))  return res.status(401).json({success:false,message:"invalid email"})
+    if(!validatepassword(password))   return res.json({success:false,message:"8 characters,1 uppercase or lowercase and 1 digit"})
+
+    const olduser=await User.findOne({Email:email})
     if(!olduser){
    const {success}=await registerUser(email,password)
-    return res.status(201).json({success:success,message:"otp sended via mail"})
+    return res.status(201).json({success:success,message:"check mail"})
 }else{
-    return res.status(409).json({success:false,message:`${email} already in use`})
+    return res.status(409).json({success:false,message:`already in use`})
 }
-
-}
-}else{
-     return res.json({success:false,message:"invalid email"})
-    }
 }catch(err){
-    console.log(err)
+    console.error(err)
+    return res.status(500).json({success:false,message:"signup failed try again"})
 }
 })
 
@@ -59,12 +54,13 @@ router.post("/verifyotp",async (req,res)=>{
         httpOnly:true,
         sameSite:"lax"
      })
-      return res.json({success:true,message:"sign-up successful"})
+      return res.status(200).json({success:true,message:"sign-up successful"})
      }else{
       return res.json({success:false,message:"Incorrect otp"})
      }
     }catch(err){
-        console.log(err)
+        console.error(err)
+        return res.status(500).json({success:false,message:"server error try again"})
     }
 })
 
