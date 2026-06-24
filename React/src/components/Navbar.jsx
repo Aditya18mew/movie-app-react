@@ -41,7 +41,7 @@ import { useDebounce } from "../utils/debounce"
        }
         setisloading(false)
         setcurrent(response.data.arr)
-        }catch(err){
+        }catch{
             setiserror(true)
             setmessage(`Network error`)
         }

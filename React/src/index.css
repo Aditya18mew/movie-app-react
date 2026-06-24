@@ -370,6 +370,11 @@ font-weight: 600;
  color: cyan;
 }
 
+.nextscroll{
+  height: 40px;
+  width: 100%;
+}
+
  .additionaloption {
   width: 240px;
   padding-left: 10px;

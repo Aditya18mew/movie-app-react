@@ -16,6 +16,7 @@ router.get("/popularmovies",authguard, async (req,res)=>{
     try{
      const response=await axios(url)
      const arr=response.data.results
+     console.log(arr.length)
      return res.status(200).json({success:true,arr})
     }catch(err){
         console.error(err)

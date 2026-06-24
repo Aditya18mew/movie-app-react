@@ -17,23 +17,26 @@ const [isfetching,setisfetching]=useState(false)
 
 
 const fetchpopularmovies=useCallback(
-  async (current)=> {
+  async ()=> {
     try{
       setisfetching(true)
   const response=await axios.get("http://localhost:3000/api/popularmovies",{
     withCredentials:true
   })
-     setcurrent([...current,...response.data.arr])
+     setcurrent(prev=>[...prev,...response.data.arr])
      setisloading(false)
      setisfetching(false)
-    }catch(err){
+    }catch{
      setiserror(true)
-      setmessage(`Network error`)
+    setmessage(`Network error`)
+     setisfetching(false)
     }
 },[])
 
+
 useEffect(()=>{
-    fetchpopularmovies(current)
+    fetchpopularmovies()
+    console.log(current.length)
 },[])
 
 

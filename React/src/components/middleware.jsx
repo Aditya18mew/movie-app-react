@@ -1,6 +1,7 @@
-import { memo, useEffect,useState } from "react"
+import { memo, useEffect,useRef,useState } from "react"
 import { Moviecard } from "./MovieCard"
 import { useCustomcontext } from "./useCustomcontext"
+import { Spinner } from "./buttons"
 
 
 
@@ -9,13 +10,26 @@ import { useCustomcontext } from "./useCustomcontext"
 
  function  Middleware(){
 
-const {isfetching,current,fetchpopularmovies}=useCustomcontext()
+ const {isfetching,current,fetchpopularmovies}=useCustomcontext()
  const [page,setpage]=useState(0)
+ const loaderRef=useRef(null)
 
 
  useEffect(()=>{
- fetchpopularmovies(current)
+ fetchpopularmovies()
 },[page])  
+
+  useEffect(()=>{
+      const observer=new IntersectionObserver((entries)=>{
+           console.log('intersecting:', entries[0].isIntersecting, 'fetching:', isfetching)
+        if(entries[0].isIntersecting && !isfetching){
+            setpage(prev=>prev+1)
+        }
+      },{threshold:0.1})
+
+      if(loaderRef.current) observer.observe(loaderRef.current)
+        return ()=> observer.disconnect()
+  },[])
 
 
 
@@ -25,7 +39,8 @@ const {isfetching,current,fetchpopularmovies}=useCustomcontext()
             return <div key={item.id}><Moviecard  {...item}></Moviecard></div>
         })}
         </div>
-        </div>    
+        <div className="nextscroll" ref={loaderRef}>{isfetching && <Spinner></Spinner>} </div>
+    </div>    
 }
 
 
