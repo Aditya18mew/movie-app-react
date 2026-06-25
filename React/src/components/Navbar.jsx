@@ -48,13 +48,16 @@ import { useDebounce } from "../utils/debounce"
     },[])
 
      function navigatetoWishList(){
-    navigate("/WishList")
+    navigate("/wishlist")
    }
    function navigatetoFavorites(){
-    navigate("/Favorites")
+    navigate("/favorites")
    }
   function navigatetoHome(){
     navigate("/home")
+   }
+  function navigatetoTrending(){
+    navigate("/trending")
    }
 
 
@@ -71,6 +74,7 @@ if(debounce){
         <h2 onClick={navigatetoHome}>Movie search</h2>
    <div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
         <div className="input-with-icon"></div></div>
+        <button onClick={navigatetoTrending} className="div_btn">Trending</button>
         <button onClick={navigatetoWishList} className="div_btn">Wishlist</button>
         <button onClick={navigatetoFavorites} className="div_btn">Favorites</button>
         <Logout></Logout>

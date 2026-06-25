@@ -3,20 +3,21 @@ const { default: axios } = require("axios")
 const key=process.env.API_KEY
 const {verifyUser,refreshtokens}=require("../middleware/Authmiddleware")
 const {User}=require("../utils/mongoosedb")
+const { apiLimiter } = require("../middleware/ratelimiter")
 const authguard=[refreshtokens,verifyUser]
+
 
 
 const router=express.Router()
 
 
 
-router.get("/popularmovies",authguard, async (req,res)=>{
+router.get("/popularmovies",apiLimiter,authguard, async (req,res)=>{
     const randomPage=Math.floor((Math.random()*25)+1)
     const url = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${randomPage}`
     try{
      const response=await axios(url)
      const arr=response.data.results
-     console.log(arr.length)
      return res.status(200).json({success:true,arr})
     }catch(err){
         console.error(err)
@@ -24,7 +25,19 @@ router.get("/popularmovies",authguard, async (req,res)=>{
     }
 })
 
-router.post("/searchmovie",authguard, async (req,res)=>{
+router.get("/trendingmovies",apiLimiter,authguard, async (req,res)=>{
+    const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${key}`
+    try{
+     const response=await axios(url)
+     const arr=response.data.results
+     return res.status(200).json({success:true,arr})
+    }catch(err){
+        console.error(err)
+        return res.status(500).json({success:false,err})
+    }
+})
+
+router.post("/searchmovie",apiLimiter,authguard, async (req,res)=>{
     const {name}=req.body
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${name}&language=en-US`
     try{

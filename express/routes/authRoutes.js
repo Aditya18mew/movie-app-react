@@ -7,6 +7,7 @@ const {sendresetotpemail}=require("../utils/nodemailer")
 const isproduction=process.env.NODE_ENV==="production"
 const {randomInt}=require("crypto")
 const {logout}=require("../middleware/Authmiddleware")
+const { authLimiter } = require("../middleware/ratelimiter")
 
 
 
@@ -16,7 +17,7 @@ const {logout}=require("../middleware/Authmiddleware")
 const router=express.Router();
 
 
-router.post("/signup",async (req,res)=>{
+router.post("/signup",authLimiter,async (req,res)=>{
     try{
     const {email,password}=req.body
     if(!validatemail(email))  return res.status(401).json({success:false,message:"invalid email"})
@@ -64,7 +65,7 @@ router.post("/verifyotp",async (req,res)=>{
     }
 })
 
-router.post("/signin",async (req,res)=>{
+router.post("/signin",authLimiter,async (req,res)=>{
         const {email,password}=req.body
 
      if(!validatemail(email))  return res.status(401).json({success:false,message:"Email format is incorrect"})
@@ -129,7 +130,7 @@ router.post("/signin",async (req,res)=>{
      }   
      })
 
-   router.post("/verifyresetotp",async (req,res)=>{
+   router.post("/verifyresetotp",authLimiter,async (req,res)=>{
         const {email,otp}=req.body
        try{
         const user=await User.findOne({"Email":email})

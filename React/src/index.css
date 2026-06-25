@@ -7,30 +7,128 @@ body{
   width: 100%;
    min-height: 100vh;
 }
-.cotainer{
-  width: 100%;
+
+
+
+.homepage{
+    width: 100%;
  min-height: 100vh;
-  background-color: white;
+  background-color:#141414;
+  display: flex;
+  flex-direction: column;
+  color: white;
+   font-family:'Inter','Segoe UI',sans-serif;
+}
+
+.homenavbar{
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.homeheader{
+   display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+}
+
+.title{
+    font-size: 1.5rem;
+    font-weight: 600;
+     background: linear-gradient(90deg, #ef4444, #a855f7, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.01em;
+}
+
+
+.bar{
+    font-size: 1.1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+}
+
+.loginbutton{
+  cursor: pointer;
+  color:#7c3aed;
+}
+
+.homebody{
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.sContainer{
-  width: 100%;
- min-height: 100vh;
-  background-color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content:left;
-  align-items:center;
-  background-color:#1a1a2e;
-background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background: transparent;
 }
 
-.sContainer div{
-  margin: 4rem;
+#scene {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  background: #141414;
+  overflow: hidden;
+  cursor: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
+.trail {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.4s;
+}
+#cursor {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #a78bfa;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s;
+  z-index: 10;
+  box-shadow: 0 0 12px #a78bfa88;
+}
+.star {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+  from { opacity: 0.2; }
+  to { opacity: 0.9; }
+}
+@keyframes pop {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  60% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+}
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #a78bfa;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  animation: pop 0.6s ease-out forwards;
+}
+.sceneh2 {
+  color: #ede9fe;
+  font-size: xx-large;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+
 
 
 
@@ -95,6 +193,14 @@ button {
 
 .loading{
   width: 89.5vw;
+  height:80vh ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.error{
+    width: 89.5vw;
   height:80vh ;
   display: flex;
   flex-direction: column;
@@ -236,22 +342,23 @@ align-content: center;
  
 
 .div_btn{
-  border-radius: 8px;
-  border: 1px solid transparent;
+  all: unset;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #dcdcdc;
   cursor: pointer;
-  transition: border-color 0.25s;
-  border-radius: 25px;
+  color:#7c3aed;
 }
 
 
 .navbar h2{
   font-size: 1.5em;
 color: white;
+ background: linear-gradient(90deg, #ef4444, #a855f7, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 
@@ -412,6 +519,23 @@ cursor: pointer;
 }
 
 
+.sContainer{
+  width: 100%;
+ min-height: 100vh;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content:left;
+  align-items:center;
+  background-color:#1a1a2e;
+background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+}
+
+.sContainer div{
+  margin: 4rem;
+}
+
+
 
 .outerlayer{
   background-color: whitesmoke;
@@ -428,19 +552,7 @@ cursor: pointer;
 }
 
 
-.homepage{
-  background-color: whitesmoke;
-  height:300px ;
-  border:1px solid grey;
-  width: 300px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  color: black;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
- justify-content: flex-start;
- border-radius: 20px;
-}
+
 .homepage h1{
 font-size: 2.5rem;
 color: #4CAF50;

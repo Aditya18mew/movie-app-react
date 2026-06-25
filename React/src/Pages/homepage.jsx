@@ -1,25 +1,31 @@
 import axios from "axios"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { Play } from "../utils/playful"
 
 
 
 
 export function HomePage(){
    const navigate=useNavigate()
+    function navigatetologin(){
+      navigate("/sign-in")
+    }
+
+     
+    
+
+
     async function checkauthorization(){
     try{
      const res=await axios.get("http://localhost:3000/api/checkauthorization", {
      withCredentials:true
      })
-     if(res.data.success===false){
-       navigate("/sign-in")
-     }
      if(res.data.success===true){
       navigate("/home")
-     }
+     } 
     }catch(err){
-      console.log(err)
+      console.error(err)
     }
  }
 
@@ -28,11 +34,20 @@ export function HomePage(){
  },[])
 
    return (
-    <div className='homepage'>
-        <div className='icon'></div>
-        <h1>Success!</h1>
-
-  </div>
+    <>
+     <nav className="homenavbar">
+    <div className="homeheader">
+      <div className="title">Movie Search</div>
+      <div className="bar">
+        <div>about</div>
+        <div className="loginbutton" onClick={navigatetologin}>Login</div> 
+      </div>
+    </div>
+  </nav>
+  <div className="homebody">
+    <Play></Play>
+  </div> 
+  </>
     )
        
     

@@ -14,13 +14,16 @@ export function WishList(){
    const [message,setmessage]=useState("") 
 
    function navigatetoWishList(){
-    navigate("/WishList")
+    navigate("/wishlist")
    }
    function navigatetoFavorites(){
-    navigate("/Favorites")
+    navigate("/favorites")
    }
     function navigatetoHome(){
     navigate("/home")
+   }
+    function navigatetoTrending(){
+    navigate("/trending")
    }
 
    
@@ -50,24 +53,26 @@ export function WishList(){
 
 
 return <div className='maincotainer' id='mainbody'>
+
     <nav className="navbar">
-        <h2 onClick={navigatetoHome}>Movie search</h2>
-   <div className="div_input"><input type="search"   id="search" onClick={navigatetoHome} name="search" placeholder="Search"/>
-        <div className="input-with-icon"></div> </div> 
+         <h2 onClick={navigatetoHome}>Movie search</h2>
+         <div className="div_input"><input type="search"   id="search" onClick={navigatetoHome} name="search" placeholder="Search"/>
+         <div className="input-with-icon"></div> </div> 
+        <button onClick={navigatetoTrending} className="div_btn">Trending</button>
         <button onClick={navigatetoWishList} className="div_btn">Wishlist</button>
         <button onClick={navigatetoFavorites} className="div_btn">Favorites</button>
-        <Logout></Logout>
+         <Logout></Logout>
     </nav>
-    {isloading ? <div className='loading'>{iserror ? <div className='showerror'>
- {message && <h4>{message}</h4>}
- <div className='refreshicon' onClick={navigatetoWishList}></div>
-</div>:<div className='loadicon'></div>}</div>: <div className="currentmoviescard">
-        <div className="moviescard">
-            {items.length>0 && items.map((item)=>{
-                return <Moviecard key={item.id} {...item}></Moviecard>
-            })}
-            </div>
-            </div>}
-    
+
+    {isloading ? 
+        <div className='loading'>{iserror ? <div className='showerror'>{message && <h4>{message}</h4>} <div className='refreshicon' onClick={fetchwishlist}></div></div>
+        :<div className='loadicon'></div>}</div>
+        :<div className="currentmoviescard">
+            <div className="moviescard">
+                {items.length>0 && items.map((item)=>{
+                 return <Moviecard key={item.id} {...item}></Moviecard>
+                    })}
+                </div>
+                </div>}  
 </div>
 }

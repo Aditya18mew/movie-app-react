@@ -9,9 +9,9 @@ import { Logout } from "../components/buttons";
 export function Favorites(){
     const navigate=useNavigate()
     const [items,setitems]=useState([])
-     const [isloading,setisloading]=useState(true)
-   const [iserror,setiserror]=useState(false)
-   const [message,setmessage]=useState("") 
+    const [isloading,setisloading]=useState(false)
+    const [iserror,setiserror]=useState(false)
+    const [message,setmessage]=useState("") 
 
 
 
@@ -19,14 +19,19 @@ export function Favorites(){
    
 
    function navigatetoWishList(){
-    navigate("/WishList")
+    navigate("/wishlist")
    }
    function navigatetoFavorites(){
-    navigate("/Favorites")
+    navigate("/favorites")
    }
    function navigatetoHome(){
     navigate("/home")
    }
+   function navigatetoTrending(){
+    navigate("/trending")
+   }
+
+
  async function fetchfavorites(){
     try {
       setisloading(true)
@@ -56,19 +61,20 @@ return <div className='maincotainer' id='mainbody'>
         <h2 onClick={navigatetoHome}>Movie search</h2>
    <div className="div_input"><input type="search"  id="search" onClick={navigatetoHome} name="search" placeholder="Search"/>
         <div className="input-with-icon"></div> </div> 
-        <button onClick={navigatetoWishList} className="div_btn">Wishlist</button>
-        <button onClick={navigatetoFavorites} className="div_btn">Favorites</button>
+        <button onClick={navigatetoTrending} className="div_btn">Trending</button>
+            <button onClick={navigatetoWishList} className="div_btn">Wishlist</button>
+            <button onClick={navigatetoFavorites} className="div_btn">Favorites</button>
         <Logout></Logout>
     </nav>
-    {isloading ? <div className='loading'>{iserror ? <div className='showerror'>
- {message && <h4>{message}</h4>}
- <div className='refreshicon' onClick={navigatetoFavorites}></div>
-</div>:<div className='loadicon'></div>}</div>: <div className="currentmoviescard">
-        <div className="moviescard">
-            {items.length>0 && items.map((item)=>{
-                return <Moviecard key={item.id} {...item}></Moviecard>
-            })}
-            </div>
-            </div>}
+    {isloading ? 
+        <div className='loading'>{iserror ? <div className='showerror'>{message && <h4>{message}</h4>} <div className='refreshicon' onClick={fetchfavorites}></div></div>
+        :<div className='loadicon'></div>}</div>
+        :<div className="currentmoviescard">
+            <div className="moviescard">
+                {items.length>0 && items.map((item)=>{
+                 return <Moviecard key={item.id} {...item}></Moviecard>
+                    })}
+                </div>
+                </div>}
 </div>
 }

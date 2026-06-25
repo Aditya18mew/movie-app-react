@@ -24,5 +24,5 @@ export function Logout(){
     }
   }
   
-  return <button onClick={logout} className="div_btn">logout</button>
+  return <button onClick={logout} className="div_btn">Logout</button>
 }
