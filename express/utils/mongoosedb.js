@@ -1,8 +1,8 @@
 const mongoose=require("mongoose")
 
 const movieItemSchema=mongoose.Schema({
-    tmdbId:{
-        type:String,
+    id:{
+        type:Number,
         required:true
     },
     title:{
@@ -15,13 +15,13 @@ const movieItemSchema=mongoose.Schema({
 
 
 const userSchema=mongoose.Schema({
-    Email:{
+    email:{
         type:String,
         required:true,
         unique:true,
         lowercase:true
     },
-    Password:{
+    password:{
        type:String,
        required:true
     },
@@ -31,8 +31,8 @@ const userSchema=mongoose.Schema({
 })
 
 const unverifiedUserSchema=mongoose.Schema({
-    Email:String,
-    Password:String,
+    email:String,
+    password:String,
     otp:String
 })
 
@@ -55,11 +55,11 @@ async function connectdb(){
 
 async function verifyotp(email,otp){
     try{
-     const user=await unverifiedUser.findOne({"Email":email})
+     const user=await unverifiedUser.findOne({email:email})
      if(user.otp===otp){
          const newuser=new User({
-        Email:user.Email,
-        Password:user.Password,
+        email:user.email,
+        password:user.password,
        })
        await newuser.save()
        await unverifiedUser.findByIdAndDelete(user._id)

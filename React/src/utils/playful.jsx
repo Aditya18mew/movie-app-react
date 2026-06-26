@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react'
 
+
+
+
+
+
 export function Play() {
     const sceneRef = useRef(null)
     const cursorRef = useRef(null)

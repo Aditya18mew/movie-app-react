@@ -1,13 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Logout } from "../components/buttons";
-import { Moviecard } from "../components/MovieCard";
-
-
+import { Section } from "../components/section";
 
 export function Trending(){
-   const navigate=useNavigate() 
+    return <Section URL={"http://localhost:3000/api/trendingmovies"}></Section>
+}
+
+
+
+
+
+
+
+/*  const navigate=useNavigate() 
    const [items,setitems]=useState([])
    const [isloading,setisloading]=useState(true)
    const [iserror,setiserror]=useState(false)
@@ -71,5 +74,4 @@ export function Trending(){
                     })}
                 </div>
                 </div>}
-  </div>
-}
+  </div> */

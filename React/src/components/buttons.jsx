@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 
 
+
 export function Spinner(){
     return <div className="spinner"></div>
 }
@@ -26,3 +27,7 @@ export function Logout(){
   
   return <button onClick={logout} className="div_btn">Logout</button>
 }
+
+
+
+

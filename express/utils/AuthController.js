@@ -13,8 +13,8 @@ async function registerUser(email,password){
        const hasspassword=await bcrypt.hash(password,10)
        const otp=randomInt(100000,999999).toString()
        const newuser=new unverifiedUser({
-        Email:email,
-        Password:hasspassword,
+        email:email,
+        password:hasspassword,
         otp:otp
        }) 
 
@@ -41,11 +41,11 @@ async function loginUser(email,password,hashpassword){
 
 async function verifyotp(email,otp){
     try{
-     const user=await unverifiedUser.findOne({"Email":email})
+     const user=await unverifiedUser.findOne({email:email})
      if(user.otp===otp){
          const newuser=new User({
-        Email:user.Email,
-        Password:user.Password,
+        email:user.email,
+        password:user.password,
        })
        await newuser.save()
        await unverifiedUser.findByIdAndDelete(user._id)

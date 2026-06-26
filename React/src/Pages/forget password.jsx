@@ -1,9 +1,9 @@
 import {useState} from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { Spinner } from "../components/buttons"
 import { Otpform } from "../components/otpform"
 import { validateEmail } from "../utils/regex"
+import { Spinner } from "../components/buttons"
 
 
 

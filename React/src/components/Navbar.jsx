@@ -2,10 +2,8 @@ import axios from "axios"
 import {memo, useEffect, useState } from "react"
 import { useCustomcontext } from "./useCustomcontext"
 import { useCallback } from "react"
-import { useNavigate } from "react-router-dom"
-import {Logout} from "./buttons"
 import { useDebounce } from "../utils/debounce"
-
+import { Navchild } from "./section"
 
 
 
@@ -16,7 +14,7 @@ import { useDebounce } from "../utils/debounce"
     name:"",
     value:""
   })
-  const navigate=useNavigate()
+ /*  const navigate=useNavigate() */
   const {setcurrent}=useCustomcontext()
   const debounce=useDebounce(search.value,500)
 
@@ -47,19 +45,6 @@ import { useDebounce } from "../utils/debounce"
         }
     },[])
 
-     function navigatetoWishList(){
-    navigate("/wishlist")
-   }
-   function navigatetoFavorites(){
-    navigate("/favorites")
-   }
-  function navigatetoHome(){
-    navigate("/home")
-   }
-  function navigatetoTrending(){
-    navigate("/trending")
-   }
-
 
 
 useEffect(()=>{
@@ -69,21 +54,22 @@ if(debounce){
 },[debounce,fetchsearch])
   
 
-
-    return <nav className="navbar">
-        <h2 onClick={navigatetoHome}>Movie search</h2>
-   <div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
+return ( <Navchild><div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
         <div className="input-with-icon"></div></div>
-        <button onClick={navigatetoTrending} className="div_btn">Trending</button>
-        <button onClick={navigatetoWishList} className="div_btn">Wishlist</button>
-        <button onClick={navigatetoFavorites} className="div_btn">Favorites</button>
-        <Logout></Logout>
-    </nav>
+        </Navchild>)
 }
 
 
-
-
-
-
 export const MemorizedNavbar=memo(Navbar)
+
+
+
+/* <nav className="navbar">
+        <h2 onClick={()=>navigate("/home")}>Movie search</h2>
+   <div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
+        <div className="input-with-icon"></div></div>
+        <button onClick={()=> navigate("/trending")} className="div_btn">Trending</button>
+        <button onClick={()=> navigate("/wishlist")} className="div_btn">Wishlist</button>
+        <button onClick={()=> navigate("/favorites")} className="div_btn">Favorites</button>
+        <Logout></Logout>
+</nav> */

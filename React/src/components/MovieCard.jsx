@@ -18,7 +18,6 @@ export function Moviecard({id,title,poster_path,overview}){
     const [isexpanded,setisexpanded]=useState(false)
     const [isfavorite,setisfavorite]=useState(false)
     const [iswishlist,setiswishlist]=useState(false)
-  
 
 
  
@@ -28,23 +27,21 @@ const istoolong=overview.length>90
 async function addtowishlist(){
     setiswishlist(!iswishlist)
     try{
-    const response=await axios.post("http://localhost:3000/api/setwishlist",{id:id,title:title,poster_path:poster_path,overview:overview},{
+    await axios.post("http://localhost:3000/api/setwishlist",{id:id,title:title,poster_path:poster_path,overview:overview},{
         withCredentials:true
     })
-    console.log(response.data.success)
     }catch(err){
-        console.log(err)
+        console.error(err)
     }
 }
 async function addtofavorites(){
     setisfavorite(!isfavorite)
     try{
-    const response=await axios.post("http://localhost:3000/api/setfavorites",{id:id,title:title,poster_path:poster_path,overview:overview},{
+    await axios.post("http://localhost:3000/api/setfavorites",{id:id,title:title,poster_path:poster_path,overview:overview},{
         withCredentials:true
     })
-    console.log(response.data.success)
     }catch(err){
-        console.log(err)
+        console.error(err)
     }
 }
 

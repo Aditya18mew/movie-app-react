@@ -23,7 +23,7 @@ router.post("/signup",authLimiter,async (req,res)=>{
     if(!validatemail(email))  return res.status(401).json({success:false,message:"invalid email"})
     if(!validatepassword(password))   return res.json({success:false,message:"8 characters,1 uppercase or lowercase and 1 digit"})
 
-    const olduser=await User.findOne({Email:email})
+    const olduser=await User.findOne({email:email})
     if(!olduser){
    const {success}=await registerUser(email,password)
     return res.status(201).json({success:success,message:"check mail"})
@@ -71,11 +71,11 @@ router.post("/signin",authLimiter,async (req,res)=>{
      if(!validatemail(email))  return res.status(401).json({success:false,message:"Email format is incorrect"})
      if(!validatepassword(password))  return res.json({success:false,message:"Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
      try{
-         const olduser=await User.findOne({Email:email})
+         const olduser=await User.findOne({email:email})
 
       if(!olduser)  return res.status(401).json({success:false,message:"Invalid Email"})
 
-        const  {success,reason,AccessToken,RefreshToken}= await loginUser(email,password,olduser.Password)
+        const  {success,reason,AccessToken,RefreshToken}= await loginUser(email,password,olduser.password)
           
         if(success){
              res.cookie("MovieappAccessToken",AccessToken,{
@@ -112,7 +112,7 @@ router.post("/signin",authLimiter,async (req,res)=>{
       if(!validatemail)  return res.json({success:false,message:"invalid email"})
       try{
         
-         const user=await User.findOne({Email:email})
+         const user=await User.findOne({email:email})
           if(!user)  return res.json({success:false,message:"invalid email"})
              
              const otp=randomInt(100000,999999).toString()
@@ -133,7 +133,7 @@ router.post("/signin",authLimiter,async (req,res)=>{
    router.post("/verifyresetotp",authLimiter,async (req,res)=>{
         const {email,otp}=req.body
        try{
-        const user=await User.findOne({"Email":email})
+        const user=await User.findOne({email:email})
         if(user.otp===otp){
            user.otp="";
          return res.status(200).json({success:true,message:"reset successful"})
@@ -149,14 +149,14 @@ router.post("/signin",authLimiter,async (req,res)=>{
    router.post("/resetpassword",async (req,res)=>{
      const {newpass,confirmnewpass,email}=req.body
     try{
-         const foundUser=await User.findOne({Email:email})
+         const foundUser=await User.findOne({email:email})
 
         if(!validatepassword(newpass))  return res.json({success:false,message:"new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
         if(!validatepassword(confirmnewpass))  return res.json({success:false,message:"confirm new-Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
         if(newpass!==confirmnewpass)   return res.json({success:false,message:"confirm new-password does not match with new-password"})
 
         const hasspassword=await bcrypt.hash(newpass,10)
-        foundUser.Password=hasspassword
+        foundUser.password=hasspassword
         await foundUser.save()
       return res.status(200).json({success:true,message:"password has been reset try login"})
             

@@ -54,14 +54,21 @@ router.post("/setwishlist",authguard, async (req,res)=>{
     const {id,title,poster_path,overview}=req.body
     const {Email}=req.user
      try{
-        const newuser=await User.findOne({"Email":Email})
-         const isthere=await newuser.wishlist.some((item)=>item.tmdbId===id)
+        const user = await User.findOne({ email: Email })
+    if (!user) return res.status(404).json({ success: false, message: "User not found" })
+    const isthere = user.wishlist.some(item => item.id === id)
              if(!isthere){
-                newuser.wishlist.push({tmdbId:id,title:title,poster_path:poster_path,overview:overview})
-                await newuser.save()
-              return  res.status(200).json({success:true,message:"added to Wishlist"})
+             await User.updateOne(
+                {email:Email},
+                {$push:{wishlist:{id:id,title:title,poster_path:poster_path,overview:overview}}}
+            )
+             return  res.status(200).json({success:true,message:"added to Wishlist"})
+
              }else{
-                await User.updateOne({"Email":Email},{$pull:{wishlist:{tmdbId:id}}})
+                await User.updateOne(
+                    {email:Email},
+                    {$pull:{wishlist:{id:id}}}
+            )
              return  res.status(200).json({success:true,message:"removed from Wishlist"})
             }
         }
@@ -75,17 +82,24 @@ router.post("/setfavorites",authguard, async (req,res)=>{
     const {id,title,poster_path,overview}=req.body
      const {Email}=req.user
      try{
-        const newuser=await User.findOne({"Email":Email})
-          const isthere=await newuser.favorites.some((item)=>item.tmdbId===id)
-            if(!isthere){
-                newuser.favorites.push({tmdbId:id,title:title,poster_path:poster_path,overview:overview})
-                console.log(newuser)
-                await newuser.save()
-                res.status(200).json({success:true,message:"added to favorites"})
-            }else{
-                await User.updateOne({"Email":Email},{$pull:{favorites:{tmdbId:id}}})
-                res.status(200).json({success:true,message:"removed from Wishlist"})
-            }  
+        const user = await User.findOne({ email: Email })
+    if (!user) return res.status(404).json({ success: false, message: "User not found" })
+
+        const isthere = user.favorites.some(item => item.id === id)
+             if(!isthere){
+             await User.updateOne(
+                {email:Email},
+                {$push:{favorites:{id:id,title:title,poster_path:poster_path,overview:overview}}}
+            )
+             return  res.status(200).json({success:true,message:"added to favorites"})
+
+             }else{
+                await User.updateOne(
+                    {email:Email},
+                    {$pull:{favorites:{id:id}}}
+            )
+             return  res.status(200).json({success:true,message:"removed from favorites"})
+            }
         }
      catch(err){
         console.error(err)
@@ -96,24 +110,24 @@ router.post("/setfavorites",authguard, async (req,res)=>{
 router.get("/getwishlist",authguard, async (req,res)=>{
     const {Email}=req.user
     try{
-        const olduser=await User.findOne({"Email":Email})
+        const olduser=await User.findOne({email:Email})
        const arr=olduser.wishlist
-        res.status(200).json({success:true,results:arr})
+        return res.status(200).json({success:true,arr})
     }catch(err){
         console.error(err)
-        return res.json({success:false,message:`${err}`})
+        return res.json({success:false,err})
     }
 })
 
 router.get("/getfavorites",authguard, async (req,res)=>{
       const {Email}=req.user
     try{
-        const olduser=await User.findOne({"Email":Email})
+        const olduser=await User.findOne({email:Email})
        const arr=olduser.favorites
-        res.status(200).json({success:true,results:arr})
+      return res.status(200).json({success:true,arr})
     }catch(err){
         console.error(err)
-        return res.json({success:false,message:`${err}`})
+        return res.json({success:false,err})
     }
 })
 
