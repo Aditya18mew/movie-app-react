@@ -36,7 +36,6 @@ const fetchpopularmovies=useCallback(
 
 useEffect(()=>{
     fetchpopularmovies()
-    console.log(current.length)
 },[])
 
 

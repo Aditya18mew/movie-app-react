@@ -21,7 +21,6 @@ import { Spinner } from "./buttons"
 
   useEffect(()=>{
       const observer=new IntersectionObserver((entries)=>{
-           console.log('intersecting:', entries[0].isIntersecting, 'fetching:', isfetching)
         if(entries[0].isIntersecting && !isfetching){
             setpage(prev=>prev+1)
         }

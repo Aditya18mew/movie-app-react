@@ -3,6 +3,7 @@ const envRequired = require("./config/config")
 envRequired()
 
 const express=require("express")
+require("./config/Redis")
 const cookieParser=require("cookie-parser")
 const {connectdb,User}=require("./utils/mongoosedb")
 const {verifyUser,refreshtokens}=require("./middleware/Authmiddleware")

@@ -21,6 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.1",
     "nodemailer": "^9.0.1",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "rate-limit-redis": "^5.0.0",
+    "redis": "^6.0.1"
   }
 }

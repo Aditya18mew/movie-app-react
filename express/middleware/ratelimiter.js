@@ -1,4 +1,6 @@
 const ratelimit=require("express-rate-limit")
+const  {RedisStore} = require("rate-limit-redis")
+const client = require("../config/Redis")
 
 const apiLimiter=ratelimit({
     windowMs:1*60*1000,
@@ -8,7 +10,11 @@ const apiLimiter=ratelimit({
     message:{
         success:false,
         message:"Too many requests"
-    }
+    },
+    store:new RedisStore({
+        sendCommand:(...args)=>client.sendCommand(args),
+        prefix:'movieapp:rl:api:'
+    })
 })
 
 
@@ -20,7 +26,11 @@ const authLimiter=ratelimit({
     message:{
         success:false,
         message:"Too many requests"
-    }
+    },
+    store:new RedisStore({
+        sendCommand:(...args)=>client.sendCommand(args),
+        prefix:'movieapp:rl:auth'
+    })
 })
 
 

@@ -10,7 +10,9 @@ const movieItemSchema=mongoose.Schema({
         required:true
     },
     poster_path:String,
-    overview:String
+    overview:String,
+    isInWishlist:Boolean,
+    isInFavorite:Boolean
 },{_id:false})
 
 

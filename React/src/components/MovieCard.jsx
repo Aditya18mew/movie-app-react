@@ -14,10 +14,10 @@ import favorite2 from "./../assets/favorite2.svg"
 const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
 
-export function Moviecard({id,title,poster_path,overview}){
+export function Moviecard({id,title,poster_path,overview,isInWishlist,isInFavorite}){
     const [isexpanded,setisexpanded]=useState(false)
-    const [isfavorite,setisfavorite]=useState(false)
-    const [iswishlist,setiswishlist]=useState(false)
+    const [isfavorite,setisfavorite]=useState(isInFavorite)
+    const [iswishlist,setiswishlist]=useState(isInWishlist)
 
 
  
@@ -27,17 +27,18 @@ const istoolong=overview.length>90
 async function addtowishlist(){
     setiswishlist(!iswishlist)
     try{
-    await axios.post("http://localhost:3000/api/setwishlist",{id:id,title:title,poster_path:poster_path,overview:overview},{
+    await axios.post("http://localhost:3000/api/setwishlist",{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:!iswishlist,isInFavorite:isfavorite},{
         withCredentials:true
     })
     }catch(err){
         console.error(err)
     }
 }
+
 async function addtofavorites(){
     setisfavorite(!isfavorite)
     try{
-    await axios.post("http://localhost:3000/api/setfavorites",{id:id,title:title,poster_path:poster_path,overview:overview},{
+    await axios.post("http://localhost:3000/api/setfavorites",{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:iswishlist,isInFavorite:!isfavorite},{
         withCredentials:true
     })
     }catch(err){
