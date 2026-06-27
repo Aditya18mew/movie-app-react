@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { MovieContext } from "./useCustomcontext";
-
+import {backendUrl} from "../utils/config"
 
 
 
@@ -20,7 +20,7 @@ const fetchpopularmovies=useCallback(
   async ()=> {
     try{
       setisfetching(true)
-  const response=await axios.get("http://localhost:3000/api/popularmovies",{
+  const response=await axios.get(`${backendUrl}/api/popularmovies`,{
     withCredentials:true
   })
      setcurrent(prev=>[...prev,...response.data.arr])

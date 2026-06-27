@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Spinner } from "./buttons"
+import {backendUrl} from "../utils/config"
 
 
 
@@ -33,7 +34,7 @@ async function handlesubmit(e){
 
    try{
 
-    const url=From===true ? "http://localhost:3000/api/verifyotp" : "http://localhost:3000/api/verifyresetotp"
+    const url=From===true ? `${backendUrl}/api/verifyotp` : `${backendUrl}/api/verifyresetotp`
      const res=await axios.post(url,{email:email,otp:otp},{withCredentials:true})
     setsMessage(res.data.message)
      if(res.data.success===false) return;

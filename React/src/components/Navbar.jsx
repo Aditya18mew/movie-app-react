@@ -4,6 +4,7 @@ import { useCustomcontext } from "./useCustomcontext"
 import { useCallback } from "react"
 import { useDebounce } from "../utils/debounce"
 import { Navchild } from "./section"
+import {backendUrl} from "../utils/config"
 
 
 
@@ -29,7 +30,7 @@ import { Navchild } from "./section"
         try{
         setisloading(true)
         setiserror(false)
-    const response=await axios.post("http://localhost:3000/api/searchmovie",{name:name},{
+    const response=await axios.post(`${backendUrl}/api/searchmovie`,{name:name},{
       withCredentials:true
     })
        if(!response.data.success){
@@ -61,15 +62,3 @@ return ( <Navchild><div className="div_input"> <input type="search" value={searc
 
 
 export const MemorizedNavbar=memo(Navbar)
-
-
-
-/* <nav className="navbar">
-        <h2 onClick={()=>navigate("/home")}>Movie search</h2>
-   <div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
-        <div className="input-with-icon"></div></div>
-        <button onClick={()=> navigate("/trending")} className="div_btn">Trending</button>
-        <button onClick={()=> navigate("/wishlist")} className="div_btn">Wishlist</button>
-        <button onClick={()=> navigate("/favorites")} className="div_btn">Favorites</button>
-        <Logout></Logout>
-</nav> */

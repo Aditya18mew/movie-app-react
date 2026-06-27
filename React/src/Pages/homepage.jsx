@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Play } from "../utils/playful"
+import {backendUrl} from "../utils/config"
 
 
 
@@ -18,7 +19,7 @@ export function HomePage(){
 
     async function checkauthorization(){
     try{
-     const res=await axios.get("http://localhost:3000/api/checkauthorization", {
+     const res=await axios.get(`${backendUrl}/api/checkauthorization`, {
      withCredentials:true
      })
      if(res.data.success===true){

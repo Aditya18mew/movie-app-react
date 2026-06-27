@@ -3,14 +3,15 @@ import axios from "axios"
 import { useLocation, useNavigate } from "react-router-dom"
 import { validatePassword } from "../utils/regex"
 import { Spinner } from "../components/buttons"
+import {backendUrl} from "../utils/config"
 
 
 
 export const Resetpassword=()=>{
 
-  const navigate=useNavigate()
-  const location=useLocation()
-  const {email}=location.state
+      const navigate=useNavigate()
+      const location=useLocation()
+      const {email}=location.state
 
       const [newpassword,setnewpassword]=useState({
         newpass:"",
@@ -21,15 +22,16 @@ export const Resetpassword=()=>{
         confirmnewpass:{valid:true,message:""},
         issame:true
       })
+
       const [sMessage,setsMessage]=useState("Submit")
       const [isloading,setisloading]=useState(false)
 
-      function handlechange(event){
-       const {name,value}=event.target
+    function handlechange(event){
+      const {name,value}=event.target
          setnewpassword({...newpassword,[name]:value})
       }
 
-     async function handlesubmit(event){
+    async function handlesubmit(event){
       event.preventDefault()
       setisloading(true)
 
@@ -53,10 +55,10 @@ export const Resetpassword=()=>{
       }
      
     try {
-         const response=await axios.post("http://localhost:3000/api/resetpassword",{newpass:newpassword.newpass,confirmnewpass:newpassword.confirmnewpass,email:email})
-         setsMessage(response.data.message)
-              if(response.data.success){
-                  navigate("/sign-in")
+      const response=await axios.post(`${backendUrl}/api/resetpassword`,{newpass:newpassword.newpass,confirmnewpass:newpassword.confirmnewpass,email:email})
+        setsMessage(response.data.message)
+          if(response.data.success){
+            navigate("/sign-in")
               }
     } catch (err) {
       console.error(err)

@@ -15,10 +15,6 @@ export function Dashboard(){
     return <div className='maincotainer' id='mainbody'>
 <MovieProvider {...{setisloading,setiserror,setmessage}}>
 <MemorizedNavbar {...{setisloading,setiserror,setmessage}}></MemorizedNavbar>
-{/* { isloading ? <div className='loading'>{iserror ? <div className='showerror'>
- {message && <h4>{message}</h4>}
- <div className='refreshicon' onClick={()=>navigate(0)}></div>
-</div>:<div className='loadicon'></div>}</div> :<MemorizedMiddleware></MemorizedMiddleware>} */}
 {iserror ? (
            <div className="error"><div className='showerror'>
                   {message && <h4>{message}</h4>}<div className='refreshicon' onClick={() => navigate(0)} />

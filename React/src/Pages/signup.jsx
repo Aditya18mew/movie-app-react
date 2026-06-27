@@ -6,6 +6,7 @@ import { useFormdata } from '../components/useFormdata'
 import { Spinner } from '../components/buttons'
 import { Otpform } from '../components/otpform'
 import { validateEmail, validatePassword } from '../utils/regex'
+import {backendUrl} from "../utils/config"
 
 
 
@@ -40,7 +41,7 @@ import { validateEmail, validatePassword } from '../utils/regex'
         }
 
         try{
-            const response=await axios.post("http://localhost:3000/api/signup",{email:formdata.email,password:formdata.password})
+            const response=await axios.post(`${backendUrl}/api/signup`,{email:formdata.email,password:formdata.password})
             setsignupsuccess(response.data.message)
             setsignupsuccess(response.data.success)
         }catch(err){

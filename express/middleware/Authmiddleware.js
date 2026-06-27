@@ -1,6 +1,7 @@
 const jwt=require("jsonwebtoken")
 const ACCESS_TOKEN_SECRET=process.env.ACCESS_TOKEN_SECRET
 const REFRESH_TOKEN_SECRET=process.env.REFRESH_TOKEN_SECRET
+const isproduction=process.env.NODE_ENV==="production"
 
 
 const verifyUser=(req,res,next)=>{
@@ -52,15 +53,15 @@ const refreshtokens=(req,res,next)=>{
          res.cookie("MovieappAccessToken",newAccessToken,{
         maxAge:15*60*1000,
         path:"/",
-        secure:false,
+        secure:isproduction,
         httpOnly:true,
         sameSite:"lax"
      })
 
         res.cookie("MovieappRefreshToken",newRefreshToken,{
-        maxAge:60*60*24*7*1000,
+        maxAge:7*60*60*24*1000,
         path:"/",
-        secure:false,
+        secure:isproduction,
         httpOnly:true,
         sameSite:"lax"
      })  

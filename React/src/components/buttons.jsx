@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import {backendUrl} from "../utils/config"
 
 
 
@@ -14,7 +15,7 @@ export function Logout(){
 
       async function logout(){
     try{
-      const res=await axios.post("http://localhost:3000/api/logout",null,{
+      const res=await axios.post(`${backendUrl}/api/logout`,null,{
         withCredentials:true
       })
       if(res.data.success){

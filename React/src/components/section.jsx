@@ -77,15 +77,3 @@ export function Navchild({children}){
              </nav>)
 }
 
-
-
-
- /*  <nav className="navbar">
-               <h2 onClick={()=>navigate("/home")}>Movie search</h2>
-              <div className="div_input"><input type="search"  id="search" onClick={()=>navigate("/home")} name="search" placeholder="Search"/>
-               <div className="input-with-icon"></div> </div>
-               <button onClick={()=>navigate("/trending")} className="div_btn">Trending</button>
-               <button onClick={()=>navigate("/wishlist")} className="div_btn">Wishlist</button>
-               <button onClick={()=> navigate("/favorites")} className="div_btn">Favorites</button>
-               <Logout></Logout>
-             </nav> */

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
 import { useState} from "react";
+import {backendUrl,imageBaseUrl} from "../utils/config"
 import wishlist from "./../assets/wishlist.svg"
 import wishlist2 from "./../assets/wishlist2.svg"
 import favorite from "./../assets/favorite.svg"
@@ -11,7 +12,6 @@ import favorite2 from "./../assets/favorite2.svg"
 
 
 
-const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
 
 export function Moviecard({id,title,poster_path,overview,isInWishlist,isInFavorite}){
@@ -27,7 +27,7 @@ const istoolong=overview.length>90
 async function addtowishlist(){
     setiswishlist(!iswishlist)
     try{
-    await axios.post("http://localhost:3000/api/setwishlist",{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:!iswishlist,isInFavorite:isfavorite},{
+    await axios.post(`${backendUrl}/api/setwishlist`,{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:!iswishlist,isInFavorite:isfavorite},{
         withCredentials:true
     })
     }catch(err){
@@ -38,7 +38,7 @@ async function addtowishlist(){
 async function addtofavorites(){
     setisfavorite(!isfavorite)
     try{
-    await axios.post("http://localhost:3000/api/setfavorites",{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:iswishlist,isInFavorite:!isfavorite},{
+    await axios.post(`${backendUrl}/api/setfavorites`,{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:iswishlist,isInFavorite:!isfavorite},{
         withCredentials:true
     })
     }catch(err){

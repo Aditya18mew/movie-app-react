@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { Otpform } from "../components/otpform"
 import { validateEmail } from "../utils/regex"
 import { Spinner } from "../components/buttons"
+import {backendUrl} from "../utils/config"
 
 
 
@@ -36,7 +37,7 @@ export function Forgetpassword(){
 
     try{
 
-        const response=await axios.post("http://localhost:3000/api/forgetpassword",{email:email})
+        const response=await axios.post(`${backendUrl}/api/forgetpassword`,{email:email})
         setsMessage(response.data.message)
         setsuccess(response.data.success)
     }catch(err){

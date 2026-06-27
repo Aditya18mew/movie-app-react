@@ -1,5 +1,6 @@
 import {Section } from "../components/section";
+import {backendUrl} from "../utils/config"
 
 export function WishList(){
-    return <Section URL={"http://localhost:3000/api/getwishlist"}></Section>
+    return <Section URL={`${backendUrl}/api/getwishlist`}></Section>
 }

@@ -74,7 +74,7 @@ router.get("/trendingmovies",apiLimiter,authguard, async (req,res)=>{
          isInFavorite:false
        }))
        
-     await client.setEx(cacheKey,600,JSON.stringify(arr))
+     await client.setEx(cacheKey,1800,JSON.stringify(arr))
 
      return res.status(200).json({success:true,arr})
     }catch(err){
