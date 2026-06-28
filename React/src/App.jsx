@@ -9,6 +9,7 @@ import {Signin} from "./Pages/signin"
 import { WishList } from './Pages/wishlist';
 import { Favorites } from './Pages/favorites';
 import { Trending } from './Pages/trending';
+import {MovieDetails } from './Pages/moviedetails';
 
 
 
@@ -23,9 +24,9 @@ import { Trending } from './Pages/trending';
 function App() {
  
  return (
-   <Router>
-    <Routes>
-     <Route path='/' element={<div className='homepage'><HomePage></HomePage></div>}></Route>
+<Router>
+  <Routes>
+    <Route path='/' element={<div className='homepage'><HomePage></HomePage></div>}></Route>
     <Route path='/sign-in' element={<div className='sContainer'><Signin/></div>}></Route>
     <Route path='/sign-up' element={ <div className='sContainer'><Signup/></div>}></Route>
     <Route path='/forget-password' element={ <div className='sContainer'><Forgetpassword></Forgetpassword></div>}></Route>
@@ -34,8 +35,9 @@ function App() {
     <Route path='/trending' element={<Trending></Trending>}></Route>
     <Route path='/wishlist' element={<WishList></WishList>}></Route>
     <Route path='/favorites' element={<Favorites></Favorites>}></Route>
-    </Routes>
-   </Router>
+    <Route path='/movie/:id' element={<MovieDetails></MovieDetails>}></Route>
+  </Routes>
+</Router>
   );
 
 

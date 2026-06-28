@@ -48,7 +48,6 @@ router.get("/popularmovies",apiLimiter,authguard, async (req,res)=>{
        }))
 
      await client.setEx(cacheKey,600,JSON.stringify(arr))
-
      return res.status(200).json({success:true,arr})
     }catch(err){
         console.error(err)
@@ -79,12 +78,56 @@ router.get("/trendingmovies",apiLimiter,authguard, async (req,res)=>{
      return res.status(200).json({success:true,arr})
     }catch(err){
         console.error(err)
-          console.log('status:', err.response?.status)
-    console.log('data:', err.response?.data)
-    console.log('code:', err.code)
         return res.status(500).json({success:false,err})
     }
 })
+
+router.get("/movie/:id",apiLimiter,authguard,async (req,res)=>{
+      const {id}=req.params
+      const url=`https://api.themoviedb.org/3/movie/${id}?api_key=${key}&language=en-US`
+      try{
+      const response=await axios(url)
+      const data=response.data
+      const details={
+         id:data.id,
+         title:data.title,
+         overview:data.overview,
+         poster_path:data.poster_path,
+         backdrop_path:data.backdrop_path,
+         release_date:data.release_date,
+         runtime:data.runtime,
+         vote_average:data.vote_average,
+         genres:data.genres,
+         tagline:data.tagline
+      }
+       return res.status(200).json({success:true,details})
+      }catch(err){
+            console.error(err)
+        return res.status(500).json({success:false,err})
+      }
+})
+
+
+router.get("/movie/:id/recommendations",apiLimiter,authguard,async (req,res)=>{
+    const {id}=req.params
+    const url=`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${key}&language=en-US`
+    try{
+       const response=await axios(url)
+       const arr=response.data.results.map(movie=>({
+         id:movie.id,
+         title:movie.title,
+         poster_path:movie.poster_path,
+         overview:movie.overview,
+         isInWishlist:false,
+         isInFavorite:false
+       }))
+       res.status(200).json({success:true,arr})
+    }catch(err){
+           console.error(err)
+        return res.status(500).json({success:false,err})
+    }
+})
+
 
 
 router.post("/searchmovie",apiLimiter,authguard, async (req,res)=>{

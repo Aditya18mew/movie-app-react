@@ -6,6 +6,7 @@ import wishlist from "./../assets/wishlist.svg"
 import wishlist2 from "./../assets/wishlist2.svg"
 import favorite from "./../assets/favorite.svg"
 import favorite2 from "./../assets/favorite2.svg"
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -15,6 +16,7 @@ import favorite2 from "./../assets/favorite2.svg"
 
 
 export function Moviecard({id,title,poster_path,overview,isInWishlist,isInFavorite}){
+    const navigate=useNavigate()
     const [isexpanded,setisexpanded]=useState(false)
     const [isfavorite,setisfavorite]=useState(isInFavorite)
     const [iswishlist,setiswishlist]=useState(isInWishlist)
@@ -47,7 +49,7 @@ async function addtofavorites(){
 }
 
 
-    return <div  className="moviecard">
+    return <div  className="moviecard" onClick={()=>navigate(`/movie/${id}`)}>
 <img src={img} alt={title} width="200"  height="250"/>
           <div className="movieinfo">
             <h4>{title}</h4>

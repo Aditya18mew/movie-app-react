@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -52,7 +53,7 @@ async function handlesubmit(e){
 
     return <div className="otpdiv">
         <h1>Submit OTP</h1>
-        <p>OTP was sent to mail {email}</p>
+        <p>OTP was sent to mail {`${email.slice(0,3)}****@gmail.com`}</p>
         <form onSubmit={handlesubmit}>
             <input type="text" inputMode="numeric" required className={error.isError ? "formerrorinput":"forminput"} placeholder={"OTP"} maxLength={6} value={otp} onChange={handlechange}/>
             <button className='outerlayerbutton' type="submit">{loading ? <Spinner></Spinner> :sMessage}</button>
