@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Moviecard } from "./MovieCard"
 import { Logout } from "./buttons"
+import { Skeleton } from "./skeleton"
 
 
 
@@ -46,9 +47,7 @@ export function Section({URL}){
                     <div className='refreshicon' onClick={fetchData} />
                 </div></div> 
             ) : isloading ? (
-                <div className='loading'>
-                    <div className='loadicon' />
-                </div>
+                 <Skeleton></Skeleton>
             ) : (
                 <div className="currentmoviescard">
                     <div className="moviescard">

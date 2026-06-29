@@ -3,6 +3,7 @@ import { MovieProvider } from "../components/MovieProvider"
 import { MemorizedNavbar } from "../components/Navbar"
 import { MemorizedMiddleware } from "../components/middleware"
 import { useNavigate } from "react-router-dom"
+import { Skeleton } from "../components/skeleton"
 
 export function Dashboard(){
    const navigate=useNavigate()
@@ -20,11 +21,9 @@ export function Dashboard(){
                   {message && <h4>{message}</h4>}<div className='refreshicon' onClick={() => navigate(0)} />
                   </div></div>
  ) : isloading ? (
-                    <div className='loading'>
-                        <div className='loadicon' />
-                    </div>
+                 <Skeleton></Skeleton>
                 ) : (
-                    <MemorizedMiddleware />
+                   <MemorizedMiddleware></MemorizedMiddleware>
                 )}
 </MovieProvider>
  </div>

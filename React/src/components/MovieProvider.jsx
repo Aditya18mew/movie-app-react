@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { MovieContext } from "./useCustomcontext";
 import {backendUrl} from "../utils/config"
-
+import toast from "react-hot-toast";
 
 
 
@@ -29,6 +29,7 @@ const fetchpopularmovies=useCallback(
     }catch{
      setiserror(true)
     setmessage(`Network error`)
+    toast.error("Network error")
      setisfetching(false)
     }
 },[])

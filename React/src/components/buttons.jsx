@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import {backendUrl} from "../utils/config"
+import toast from "react-hot-toast"
 
 
 
@@ -22,7 +23,8 @@ export function Logout(){
         navigate("/")
       }
     }catch(err){
-      console.log(err)
+      console.error(err)
+      toast.error("Something went wrong")
     }
   }
   

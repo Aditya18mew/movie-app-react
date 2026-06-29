@@ -86,8 +86,8 @@ router.get("/movie/:id",apiLimiter,authguard,async (req,res)=>{
       const {id}=req.params
       const url=`https://api.themoviedb.org/3/movie/${id}?api_key=${key}&language=en-US`
       try{
-      const response=await axios(url)
-      const data=response.data
+    /*   const response=await axios(url) */
+      const data=await fetchFromApi(url)
       const details={
          id:data.id,
          title:data.title,
@@ -112,8 +112,8 @@ router.get("/movie/:id/recommendations",apiLimiter,authguard,async (req,res)=>{
     const {id}=req.params
     const url=`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${key}&language=en-US`
     try{
-       const response=await axios(url)
-       const arr=response.data.results.map(movie=>({
+       const data=await fetchFromApi(url)
+       const arr=data.results.map(movie=>({
          id:movie.id,
          title:movie.title,
          poster_path:movie.poster_path,

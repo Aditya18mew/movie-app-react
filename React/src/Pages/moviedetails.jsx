@@ -4,6 +4,7 @@ import { Moviecard } from "../components/MovieCard"
 import { useEffect, useState } from "react"
 import { backendUrl,imageBaseUrl ,backdropBaseUrl} from "../utils/config"
 import axios from "axios"
+import { SkeletonMovieCard } from "../components/skeleton"
 
 
 
@@ -12,15 +13,18 @@ export function MovieDetails(){
    const navigate=useNavigate()
    const [movie,setmovie]=useState(null)
    const [items,setitems]=useState([])
+   const [isloading,setisloading]=useState(false)
 
 useEffect(() => {
     async function fetchAll() {
+        setisloading(true)
         const [movieRes, recRes] = await Promise.all([
             axios.get(`${backendUrl}/api/movie/${id}`, { withCredentials: true }),
             axios.get(`${backendUrl}/api/movie/${id}/recommendations`, { withCredentials: true })
         ])
         setmovie(movieRes.data.details)
         setitems(recRes.data.arr)
+        setisloading(false)
     }
     fetchAll()
 }, [id])
@@ -29,6 +33,7 @@ useEffect(() => {
     return <div className="maincotainer" style={{"paddingTop":"80px"}}id="mainbody">
           <Navchild><div className="div_input"><input type="search"  id="search" onClick={()=>navigate("/home")} name="search" placeholder="Search"/>
                <div className="input-with-icon"></div> </div></Navchild>
+               {isloading ? <SkeletonMovieCard></SkeletonMovieCard> : ( <>
                <div className="moviedetailcard">
                      {movie && ( <>
 
@@ -68,7 +73,7 @@ useEffect(() => {
                 <p className="overview">{movie.overview}</p>
             </>
         )}
-               </div>
+             </div></>)}
                 <div className="currentmoviescard">
                     <div className="moviescard">
                       {items.map((item) => (

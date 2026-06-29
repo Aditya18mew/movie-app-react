@@ -8,7 +8,7 @@ body{
    min-height: 100vh;
 }
 
-
+/* homepage */
 
 .homepage{
     width: 100%;
@@ -66,6 +66,9 @@ body{
   align-items: center;
   background: transparent;
 }
+
+
+/* homepage fun feature */
 
 #scene {
   flex: 1;
@@ -399,11 +402,53 @@ justify-content: space-between;
   padding: 20px;
 }
 
+.skeletonmoviecard{
+   align-self: center;
+    width: 89.5vw;
+    min-height: 50vh;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background-color: #1a1a2e;
+}
+
+.skeletonbackdrop{
+   width: 100%;
+    height: 220px;
+    background-size: cover;
+    background-position: center top;
+    position: relative;
+     background: linear-gradient(90deg, #2c2b30 25%, #2c2b31 50%, #2f2c35 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeletontagline,.skeletonmovietitle{
+   width: 40%;
+  height: 16px;
+  border-radius: 4px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, #2a2931 25%, #292831 50%, #352f3f 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeletonmovieposter{
+   width: 200px;
+    height: 250px;
+    border: 1px solid grey;
+    border-radius: 1.2rem;
+    background: linear-gradient(90deg, #2a2931 25%, #292831 50%, #352f3f 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+
+
 .moviedetailcard{
   align-self: center;
     width: 89.5vw;
     min-height: 50vh;
-    color: white;
     border-radius: 12px;
     overflow: hidden;
     position: relative;
@@ -510,6 +555,55 @@ background-color:#474747;
   transform: scale(0.95);
 }
 
+.skeletoncard{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  background: #1c1c1c;
+  width: 260px;
+  padding: 15px;
+  border-radius: 1rem;
+}
+
+.skeletonposter{
+   width: 100%;
+    height: 250px;
+    border-radius: 1.2rem;
+    background: linear-gradient(90deg, #2c2b30 25%, #2c2b31 50%, #2f2c35 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+
+
+.skeletontitle{
+  width: 100%;
+  height: 16px;
+  border-radius: 4px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, #2c2b30 25%, #2c2b31 50%, #2f2c35 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+
+.skeleton-overview {
+  width: 100%;
+    height: 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+    width: 70%;
+    background: linear-gradient(90deg, #2c2b30 25%, #2c2b31 50%, #2f2c35 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+
 .moviecard{
   display: flex;
   flex-flow: column;
@@ -521,6 +615,8 @@ background-color:#474747;
   box-shadow: 0 4px 10px rgba(128, 0, 128, 0.3);
   transition: transform 0.3s ease-in-out , box-shadow 0.3s ease-in-out;
 }
+
+
 .moviecard:hover{
 transform: scale(1.01);
 box-shadow: 0 6px 15px rgba(128, 0, 128, 0.5);   
@@ -576,10 +672,12 @@ font-weight: 600;
 }
 
 .wishlist_btn{
+all:unset;
 cursor: pointer;
 }
 
 .favorite_btn{
+  all:unset;
 cursor: pointer;
 }
 
