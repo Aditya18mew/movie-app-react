@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { backendUrl,imageBaseUrl ,backdropBaseUrl} from "../utils/config"
 import axios from "axios"
 import { SkeletonMovieCard } from "../components/skeleton"
+import toast from "react-hot-toast"
 
 
 
@@ -14,6 +15,32 @@ export function MovieDetails(){
    const [movie,setmovie]=useState(null)
    const [items,setitems]=useState([])
    const [isloading,setisloading]=useState(false)
+
+
+    async function addtowishlist(){
+    try{
+    await axios.post(`${backendUrl}/api/setwishlist`,{id:movie.id,title:movie.title,poster_path:movie.poster_path,overview:movie.overview,isInWishlist:true,isInFavorite:null},{
+        withCredentials:true
+    })
+    }catch(err){
+        console.error(err)
+        toast.error("something went wrong")
+
+    }
+} 
+
+async function addtofavorites(){
+    try{
+    await axios.post(`${backendUrl}/api/setfavorites`,{id:movie.id,title:movie.title,poster_path:movie.poster_path,overview:movie.overview,isInWishlist:null,isInFavorite:true},{
+        withCredentials:true
+    })
+    }catch(err){
+        console.error(err)
+        toast.error("something went wrong")
+    }
+} 
+
+
 
 useEffect(() => {
     async function fetchAll() {
@@ -64,8 +91,8 @@ useEffect(() => {
                         </div>
 
                         <div className="actions">
-                            <button className="btn btn-primary">Favorite</button>
-                            <button className="btn btn-ghost">Wishlist</button>
+                            <button onClick={addtofavorites} className="btn btn-primary">Favorite</button>
+                            <button onClick={addtowishlist} className="btn btn-ghost">Wishlist</button>
                         </div>
                     </div>
                 </div>

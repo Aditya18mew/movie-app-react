@@ -11,5 +11,5 @@ export function useFormdata(){
         const {name,value}=event.target
         setformdata({...formdata,[name]:value})
     }
-        return {formdata,handlechange}
+        return {formdata,setformdata,handlechange}
 }

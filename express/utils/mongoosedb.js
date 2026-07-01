@@ -55,26 +55,4 @@ async function connectdb(){
 }
 
 
-async function verifyotp(email,otp){
-    try{
-     const user=await unverifiedUser.findOne({email:email})
-     if(user.otp===otp){
-         const newuser=new User({
-        email:user.email,
-        password:user.password,
-       })
-       await newuser.save()
-       await unverifiedUser.findByIdAndDelete(user._id)
-        return true
-     }else{
-        return false
-     }
-    }catch(err){
-        console.log(err)
-    }
-}
-
-
-
-
 module.exports={unverifiedUser,connectdb,User}

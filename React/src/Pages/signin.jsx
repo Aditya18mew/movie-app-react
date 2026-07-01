@@ -12,7 +12,7 @@ import {backendUrl} from "../utils/config"
 
 
  export function Signin() {
-    const {formdata,handlechange}=useFormdata()
+    const {formdata,setformdata,handlechange}=useFormdata()
     const navigate=useNavigate()
     const [errors,seterrors]=useState({
         email:{valid:true,message:""},
@@ -20,6 +20,10 @@ import {backendUrl} from "../utils/config"
     })
     const [sMessage,setsMessage]=useState("Sign in")
     const [isloading,setisloading]=useState(false)
+
+    function fillDemo(){
+      setformdata({ email: 'demo@movieapp.com', password: 'Demo24@cycle' })
+    }
 
     async function submit(event){
         event.preventDefault()
@@ -67,5 +71,6 @@ import {backendUrl} from "../utils/config"
         </form>
         <p className='signuptext'>Don,t have an account?</p>
         <Link className='outerlayerbutton' to="/sign-up" >Sign up</Link>
+        <button onClick={fillDemo} className='outerlayerbutton'>try it as guest</button>
     </div>
 }
