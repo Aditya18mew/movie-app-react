@@ -69,8 +69,8 @@ import {backendUrl} from "../utils/config"
              <Link className='formLink' to="/forget-password">Forgot password?</Link>
              <button className='outerlayerbutton' type="submit">{isloading ? <Spinner></Spinner> : sMessage}</button>
         </form>
-        <p className='signuptext'>Don,t have an account?</p>
+        <p className='text'>Don,t have an account?</p>
         <Link className='outerlayerbutton' to="/sign-up" >Sign up</Link>
-        <button onClick={fillDemo} className='outerlayerbutton'>try it as guest</button>
+        <button style={{marginBottom:"10px"}} onClick={fillDemo} className='outerlayerbutton'>try it as guest</button>
     </div>
 }

@@ -27,6 +27,41 @@ const authguard=[refreshtokens,verifyUser]
 const router=express.Router()
 
 
+router.get("/public/posters", async (req,res)=>{
+       const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${key}`
+    try{
+    const cacheKey=`moviesearch:tmdb:trending`
+
+      const cached=await client.get(cacheKey)
+      const posters=JSON.parse(cached)
+
+      if(cached) return res.status(200).json({success:true,arr:posters.map(movie=>({
+        id:movie.id,
+        poster_path:movie.poster_path
+     }))})
+        
+       const data=await fetchFromApi(url)
+       const arr=data.results.map(movie=>({
+         id:movie.id,
+         title:movie.title,
+         poster_path:movie.poster_path,
+         overview:movie.overview,
+         isInWishlist:false,
+         isInFavorite:false
+       }))
+       
+     await client.setEx(cacheKey,1800,JSON.stringify(arr))
+
+     return res.status(200).json({success:true,arr:arr.map(movie=>({
+        id:movie.id,
+        poster_path:movie.poster_path
+     }))})
+    }catch(err){
+        console.error(err)
+        return res.status(500).json({success:false,err})
+    }
+})
+
 
 router.get("/popularmovies",apiLimiter,authguard, async (req,res)=>{
     const randomPage=Math.floor((Math.random()*50)+1)

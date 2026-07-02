@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { Moviecard } from "./MovieCard"
 import { Logout } from "./buttons"
 import { Skeleton } from "./skeleton"
+import toast from "react-hot-toast"
 
 
 
@@ -14,7 +15,6 @@ export function Section({URL}){
        const [items,setitems]=useState([])
        const [isloading,setisloading]=useState(true)
        const [iserror,setiserror]=useState(false)
-       const [message,setmessage]=useState("");
 
      async function fetchData(){
     try{   
@@ -23,13 +23,13 @@ export function Section({URL}){
         const response=await axios.get(URL,{withCredentials:true})
           if(!response.data.success){
              setiserror(true)
-             setmessage("Network error")
+             toast.error("Network error")
           }
           setisloading(false)
          setitems(response.data.arr)
     }catch(err){
        setiserror(true)
-       setmessage(`error:${err.message}`)
+        toast.error(`error:${err.message}`)
        setisloading(false)
     }
    }
@@ -43,9 +43,8 @@ export function Section({URL}){
                <div className="input-with-icon"></div> </div></Navchild>
             {iserror ? (
                <div className="error"><div className='showerror'>
-                    {message && <h4>{message}</h4>}
                     <div className='refreshicon' onClick={fetchData} />
-                </div></div> 
+                </div></div>
             ) : isloading ? (
                  <Skeleton></Skeleton>
             ) : (

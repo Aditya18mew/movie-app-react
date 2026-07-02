@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Spinner } from "./buttons"
 import {backendUrl} from "../utils/config"
+import toast from "react-hot-toast"
 
 
 
@@ -38,7 +39,10 @@ async function handlesubmit(e){
     const url=From===true ? `${backendUrl}/api/verifyotp` : `${backendUrl}/api/verifyresetotp`
      const res=await axios.post(url,{email:email,otp:otp},{withCredentials:true})
     setsMessage(res.data.message)
-     if(res.data.success===false) return;
+     if(res.data.success===false){
+        toast.error("try again")
+         return;
+     }
      
      navigate(From===true ? "/home" : '/resetpassword',{state:{email:email}})
    }catch(err){

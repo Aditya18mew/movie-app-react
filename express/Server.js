@@ -5,7 +5,7 @@ envRequired()
 const express=require("express")
 require("./config/Redis")
 const cookieParser=require("cookie-parser")
-const {connectdb,User}=require("./utils/mongoosedb")
+const {connectdb,User,unverifiedUser}=require("./utils/mongoosedb")
 const {verifyUser,refreshtokens}=require("./middleware/Authmiddleware")
 const authRoutes=require("./routes/authRoutes")
 const moviesRoutes=require("./routes/moviesRoutes")
@@ -24,6 +24,15 @@ server.use(cors({
 }))
 connectdb()
 
+setInterval(async () => {
+    await unverifiedUser.deleteMany(
+        { otpCreatedAt: { $lt: new Date(Date.now() - 10 * 60 * 1000) } }
+    )
+    await User.updateMany(
+        { otpCreatedAt: { $lt: new Date(Date.now() - 10 * 60 * 1000) } },
+        { otp: null, otpCreatedAt: null }
+    )
+}, 60 * 60 * 1000)
 
 server.use("/api",authRoutes)
 server.use("/api",moviesRoutes)

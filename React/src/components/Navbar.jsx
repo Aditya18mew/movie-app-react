@@ -5,12 +5,13 @@ import { useCallback } from "react"
 import { useDebounce } from "../utils/debounce"
 import { Navchild } from "./section"
 import {backendUrl} from "../utils/config"
+import toast from "react-hot-toast"
 
 
 
 
  // eslint-disable-next-line react/prop-types
- function Navbar({setisloading,setmessage,setiserror}){
+ function Navbar({setisloading,setiserror}){
   const [search,setsearch]=useState({
     name:"",
     value:""
@@ -26,7 +27,6 @@ import {backendUrl} from "../utils/config"
     
    const fetchsearch=useCallback(
     async (name)=>{
-        console.log("hello")
         try{
         setisloading(true)
         setiserror(false)
@@ -35,14 +35,14 @@ import {backendUrl} from "../utils/config"
     })
        if(!response.data.success){
           setiserror(true)
-          setmessage("Network error")
+          toast.error("Network error")
           return
        }
         setisloading(false)
         setcurrent(response.data.arr)
         }catch{
             setiserror(true)
-            setmessage(`Network error`)
+            toast.error("Network error")
         }
     },[])
 
@@ -55,7 +55,7 @@ if(debounce){
 },[debounce,fetchsearch])
   
 
-return ( <Navchild><div className="div_input"> <input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
+return ( <Navchild><div className="div_input"><input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
         <div className="input-with-icon"></div></div>
         </Navchild>)
 }

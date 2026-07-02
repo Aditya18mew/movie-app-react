@@ -27,15 +27,37 @@ const userSchema=mongoose.Schema({
        type:String,
        required:true
     },
-    otp:String,
+    otp:{
+        type:String,
+        default:null
+    },
+    otpCreatedAt:{
+        type:Date,
+        default:null
+    },
     wishlist:[movieItemSchema],
     favorites:[movieItemSchema]
 })
 
 const unverifiedUserSchema=mongoose.Schema({
-    email:String,
-    password:String,
-    otp:String
+   email:{
+        type:String,
+        required:true,
+        unique:true,
+        lowercase:true
+    },
+    password:{
+       type:String,
+       required:true
+    },
+    otp:{
+        type:String,
+        default:null
+    },
+    otpCreatedAt:{
+        type:Date,
+        default:null
+    }
 })
 
 

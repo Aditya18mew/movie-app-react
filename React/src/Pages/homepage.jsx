@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Play } from "../utils/playful"
 import {backendUrl} from "../utils/config"
+import toast from "react-hot-toast"
 
 
 
@@ -27,6 +28,7 @@ export function HomePage(){
      } 
     }catch(err){
       console.error(err)
+      toast.error("Network error refresh")
     }
  }
 

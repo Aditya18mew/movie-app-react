@@ -8,9 +8,12 @@ const isproduction=process.env.NODE_ENV==="production"
 const {randomInt}=require("crypto")
 const {logout}=require("../middleware/Authmiddleware")
 const { authLimiter } = require("../middleware/ratelimiter")
+const crypto=require("crypto")
 
 
-
+function hashotp(otp){ 
+ return crypto.createHash("sha256").update(otp).digest("hex")
+}
 
 
 
@@ -39,7 +42,7 @@ router.post("/signup",authLimiter,async (req,res)=>{
 router.post("/verifyotp",async (req,res)=>{
     try{
        const {email,otp}=req.body
-     const {success,AccessToken,RefreshToken}=await verifyotp(email,otp)
+     const {success,reason,AccessToken,RefreshToken}=await verifyotp(email,otp)
      if(success){
      res.cookie("MovieappAccessToken",AccessToken,{
         maxAge:15*60*1000,
@@ -57,7 +60,9 @@ router.post("/verifyotp",async (req,res)=>{
      })
       return res.status(200).json({success:true,message:"sign-up successful"})
      }else{
-      return res.json({success:false,message:"Incorrect otp"})
+        if(reason==="invalid otp")  return res.json({success:false,message:"Incorrect otp"})
+        if(reason==="otp expired")  return res.json({success:false,message:"otp expired"})
+         return res.json({success:false,message:"server error"})   
      }
     }catch(err){
         console.error(err)
@@ -115,10 +120,12 @@ router.post("/signin",authLimiter,async (req,res)=>{
          const user=await User.findOne({email:email})
           if(!user)  return res.json({success:false,message:"invalid email"})
              
-             const otp=randomInt(100000,999999).toString()
+             const num=randomInt(100000,999999).toString()
+             const otp=hashotp(num)
              user.otp=otp
+             user.otpCreatedAt=new Date()
              await user.save()
-             const iserror=await sendresetotpemail(email,otp)
+             const iserror=await sendresetotpemail(email,num)
           if(iserror){
              res.json({success:false,message:"Unable to send a email"})
           }else{
@@ -130,16 +137,15 @@ router.post("/signin",authLimiter,async (req,res)=>{
      }   
      })
 
+
    router.post("/verifyresetotp",authLimiter,async (req,res)=>{
         const {email,otp}=req.body
        try{
         const user=await User.findOne({email:email})
-        if(user.otp===otp){
-           user.otp="";
-         return res.status(200).json({success:true,message:"reset successful"})
-        }else{
-           return res.status(401).json({success:false,message:"Incorrect otp"})
-        }
+        if(user.otp!==hashotp(otp)) return res.status(401).json({success:false,message:"Incorrect otp"})
+        if(Date.now()-user.otpCreatedAt.getTime()>10*60*1000) return res.status(401).json({success:false,message:"otp expired"}) 
+        user.otp="";
+        return res.status(200).json({success:true,message:"reset successful"}) 
        }catch(err){
            console.error(err)
             return res.status(500).json({success:false,message:"verification failed please try again"})

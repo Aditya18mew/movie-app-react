@@ -65,7 +65,7 @@ import {backendUrl} from "../utils/config"
               }} name="password" id='password' placeholder={!errors.password.valid? errors.password.message : "Create Password"}/>
               <button className='outerlayerbutton' type="submit">{isloading ? <Spinner></Spinner> : sMessage}</button>
           </form>
-          <p className='signuptextsignup'>Already have an account?</p>
+          <p className='text'>Already have an account?</p>
           <Link className='outerlayerbutton' to="/sign-in" >Sign in</Link>
       </div>}
     </>

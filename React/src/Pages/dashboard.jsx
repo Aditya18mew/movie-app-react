@@ -9,16 +9,15 @@ export function Dashboard(){
    const navigate=useNavigate()
    const [isloading,setisloading]=useState(true)
    const [iserror,setiserror]=useState(false)
-   const [message,setmessage]=useState("") 
 
 
 
     return <div className='maincotainer' id='mainbody'>
-<MovieProvider {...{setisloading,setiserror,setmessage}}>
-<MemorizedNavbar {...{setisloading,setiserror,setmessage}}></MemorizedNavbar>
+<MovieProvider {...{setisloading,setiserror}}>
+<MemorizedNavbar {...{setisloading,setiserror}}></MemorizedNavbar>
 {iserror ? (
            <div className="error"><div className='showerror'>
-                  {message && <h4>{message}</h4>}<div className='refreshicon' onClick={() => navigate(0)} />
+                  <div className='refreshicon' onClick={() => navigate(0)} />
                   </div></div>
  ) : isloading ? (
                  <Skeleton></Skeleton>

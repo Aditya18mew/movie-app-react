@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 
 
 // eslint-disable-next-line react/prop-types
-export function MovieProvider({setisloading,children,setiserror,setmessage}){
+export function MovieProvider({setisloading,children,setiserror}){
 const [current,setcurrent]=useState([])
 const [isfetching,setisfetching]=useState(false)
 
@@ -28,7 +28,6 @@ const fetchpopularmovies=useCallback(
      setisfetching(false)
     }catch{
      setiserror(true)
-    setmessage(`Network error`)
     toast.error("Network error")
      setisfetching(false)
     }

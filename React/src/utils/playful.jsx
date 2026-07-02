@@ -1,4 +1,6 @@
-import { useEffect, useRef } from 'react'
+import axios from 'axios'
+import { useEffect, useRef, useState } from 'react'
+import { imageBaseUrl,backendUrl } from './config'
 
 
 
@@ -103,9 +105,56 @@ export function Play() {
     return (
         <div id="scene" ref={sceneRef} style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', cursor: 'none' }}>
             <div id="cursor" ref={cursorRef} style={{ position: 'absolute', width: '16px', height: '16px', background: '#a78bfa', borderRadius: '50%', pointerEvents: 'none', transform: 'translate(-50%,-50%)', opacity: 0, zIndex: 10 }} />
-            <div style={{ position: 'relative',zIndex: 5, textAlign: 'center', paddingTop: '8rem' }}>
+            <div style={{ position: 'relative',zIndex: 5, textAlign: 'center', paddingTop: '4rem' }}>
                 <h2 className="sceneh2">Discover movies you`ll love</h2>
+                <div className='scenediv'><Sidehustle></Sidehustle></div>
             </div>
         </div>
+    )
+}
+
+
+
+export function Sidehustle(){
+  
+   const [posters,setposters]=useState([])
+   const [current,setCurrent]=useState(0)
+
+   useEffect(()=>{
+        async function fetchposter(){
+             try{
+                  const response=await axios.get(`${backendUrl}/api/public/posters`,{withCredentials:true})
+                  setposters(response.data.arr)
+             }catch(err){
+                console.error(err)
+             }
+        }
+        fetchposter()
+   },[])
+
+   useEffect(()=>{
+    if(posters.length==0) return;
+    const interval=setInterval(()=>{
+          setCurrent(prev => (prev + 3) % posters.length)
+    },1*20*1000)
+    return ()=>clearInterval(interval)
+   },[])
+
+   const stack=posters.slice(current,current+3)
+
+
+    return (  
+      <div className='sidehustle'>
+            {stack.map((movie)=>{
+               return <div className='side' key={movie.id}>
+                     <img
+                        src={`${imageBaseUrl}${movie.poster_path}`}
+                        alt={movie.title}
+                        width="200"
+                        height="250"
+                    />
+                </div>
+            })}
+      </div>     
     )
 }

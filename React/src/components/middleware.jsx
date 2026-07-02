@@ -2,7 +2,6 @@ import { memo, useEffect,useRef,useState } from "react"
 import { Moviecard } from "./MovieCard"
 import { useCustomcontext } from "./useCustomcontext"
 import { Spinner } from "./buttons"
-import { Skeleton } from "./skeleton"
 
 
 
@@ -38,7 +37,7 @@ import { Skeleton } from "./skeleton"
             return <div key={item.id}><Moviecard  {...item}></Moviecard></div>
         })}
         </div>
-        <div className="nextscroll" ref={loaderRef}>{isfetching && <Skeleton></Skeleton>} </div>
+        <div className="nextscroll" ref={loaderRef}>{isfetching && <Spinner></Spinner> } </div>
     </div>    
 }
 
