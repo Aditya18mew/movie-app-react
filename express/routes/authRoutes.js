@@ -1,13 +1,13 @@
 const express=require("express")
-const {User}=require("../utils/mongoosedb")
+const {User, unverifiedUser}=require("../utils/mongoosedb")
 const {validatemail,validatepassword}=require("../regex/regex")
 const {registerUser,loginUser,verifyotp}=require("../utils/AuthController")
 const bcrypt=require("bcrypt")
-const {sendresetotpemail}=require("../utils/nodemailer")
+const {sendresetotpemail, sendotpemail}=require("../utils/nodemailer")
 const isproduction=process.env.NODE_ENV==="production"
 const {randomInt}=require("crypto")
 const {logout}=require("../middleware/Authmiddleware")
-const { authLimiter } = require("../middleware/ratelimiter")
+const { authLimiter, otplimiter } = require("../middleware/ratelimiter")
 const crypto=require("crypto")
 
 
@@ -67,6 +67,24 @@ router.post("/verifyotp",async (req,res)=>{
     }catch(err){
         console.error(err)
         return res.status(500).json({success:false,message:"server error try again"})
+    }
+})
+
+router.post("/resendsignupotp",otplimiter,async (req,res)=>{
+    const {email}=req.body
+    try{
+        const user = await unverifiedUser.findOne({ email })
+        if (!user) return res.status(404).json({ success: false, message: 'No pending verification found' })
+        const timeSinceLast=Date.now()-user.otpCreatedAt.getTime()  
+        if(timeSinceLast<60*1000) return res.status(429).json({success:false,message:"wait 60 sec"})
+        const num=randomInt(100000,999999).toString()   
+        const otp=hashotp(num)
+        await unverifiedUser.updateOne({email:email},{otp:otp,otpCreatedAt:new Date()});
+        await sendotpemail(email,num)
+return res.status(200).json({success:true,message:"resent"})
+    }catch(err){
+        console.error(err)
+        return res.status(500).json({success:false,message:"server error"}) 
     }
 })
 
@@ -151,6 +169,24 @@ router.post("/signin",authLimiter,async (req,res)=>{
             return res.status(500).json({success:false,message:"verification failed please try again"})
        }
    })
+
+   router.post("/resendresetotp",otplimiter,async (req,res)=>{
+    const {email}=req.body
+    try{
+        const user = await User.findOne({ email })
+        if (!user) return res.status(404).json({ success: false, message: 'No pending verification found' })
+        const timeSinceLast=Date.now()-user.otpCreatedAt.getTime()  
+        if(timeSinceLast<60*1000) return res.status(429).json({success:false,message:"wait 60 sec"})   
+        const num=randomInt(100000,999999).toString()   
+        const otp=hashotp(num)
+        await User.updateOne({email:email},{otp:otp,otpCreatedAt:new Date()});
+        await sendresetotpemail(email,num)
+        return res.status(200).json({success:true,message:"resent"})
+    }catch(err){
+        console.error(err)
+        return res.status(500).json({success:false,message:"server error"}) 
+    }
+})
 
    router.post("/resetpassword",async (req,res)=>{
      const {newpass,confirmnewpass,email}=req.body

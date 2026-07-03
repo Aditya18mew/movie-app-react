@@ -435,9 +435,8 @@ color: white;
 .otpdiv form{
   display: flex;
   flex-direction: column;
-align-items: center;
-margin-top: 40px;
-gap: 20px;
+  margin-top: 40px;
+  gap: 20px;
 }
 
 .resetpassworddiv{

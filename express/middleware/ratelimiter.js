@@ -33,5 +33,21 @@ const authLimiter=ratelimit({
     })
 })
 
+const otplimiter=ratelimit({
+    windowMs:1*60*60*1000,
+    max:9,
+    keyGenerator: (req) => req.body.email,
+    standardHeaders:true,
+    legacyHeaders:false,
+    message:{
+        success:false,
+        message:"Too many request"
+    },
+    store:new RedisStore({
+        sendCommand:(...args)=>client.sendCommand(args),
+        prefix:"movieapp:rl:resendotp"
+    })
+})
 
-module.exports={apiLimiter,authLimiter}
+
+module.exports={apiLimiter,authLimiter,otplimiter}

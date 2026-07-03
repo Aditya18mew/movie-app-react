@@ -15,6 +15,7 @@ const [otp,setotp]=useState("")
 const [error,seterror]=useState(false)
 const [sMessage,setsMessage]=useState("Submit")
 const [loading,setloading]=useState(false)
+const [cooldown,setcooldown]=useState(0)
 
 function handlechange(e){
     setotp(e.target.value)
@@ -33,12 +34,11 @@ async function handlesubmit(e){
     return;
   }
 
-
    try{
-
     const url=From===true ? `${backendUrl}/api/verifyotp` : `${backendUrl}/api/verifyresetotp`
      const res=await axios.post(url,{email:email,otp:otp},{withCredentials:true})
-    setsMessage(res.data.message)
+     setsMessage(res.data.message)
+
      if(res.data.success===false){
         toast.error("try again")
          return;
@@ -47,9 +47,29 @@ async function handlesubmit(e){
      navigate(From===true ? "/home" : '/resetpassword',{state:{email:email}})
    }catch(err){
     console.error(err)
-    setsMessage(err.res.data.message)
+    setsMessage(err.response.data.message)
    }finally{
     setloading(false)
+   }
+}
+
+
+async function handleresend(){
+   try{
+        const url=From===true ? `${backendUrl}/api/resendsignupotp` : `${backendUrl}/api/resendresetotp`
+        await axios.post(url,{email:email},{withCredentials:true})
+        toast.success("OTP resent")
+        setcooldown(60)
+
+       const timer=setInterval(()=>{
+            setcooldown(prev=>{
+                if(prev<=1) {clearInterval(timer); return 0}
+                return prev-1
+            })
+        },1000)
+   }catch(err){
+    console.error(err)
+     toast.error(err.response.data.message)
    }
 }
 
@@ -59,8 +79,9 @@ async function handlesubmit(e){
         <h1>Submit OTP</h1>
         <p>OTP was sent to mail {`${email.slice(0,3)}****@gmail.com`}</p>
         <form onSubmit={handlesubmit}>
-            <input type="text" inputMode="numeric" required className={error.isError ? "formerrorinput":"forminput"} placeholder={"OTP"} maxLength={6} value={otp} onChange={handlechange}/>
+            <input type="text" inputMode="numeric" required className={error ? "formerrorinput":"forminput"} placeholder={"OTP"} maxLength={6} value={otp} onChange={handlechange}/>
             <button className='outerlayerbutton' type="submit">{loading ? <Spinner></Spinner> :sMessage}</button>
-        </form> 
+        </form>
+            <button className='outerlayerbutton'type="button" disabled={cooldown>0} onClick={handleresend}>{cooldown>0 ? `resend in ${cooldown}s`:"resend OTP"}</button>
     </div>
 }
