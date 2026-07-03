@@ -15,6 +15,7 @@ export function MovieDetails(){
    const [movie,setmovie]=useState(null)
    const [items,setitems]=useState([])
    const [isloading,setisloading]=useState(false)
+   const [trailerKey,setTrailerKey]=useState(null)
 
 
     async function addtowishlist(){
@@ -45,12 +46,14 @@ async function addtofavorites(){
 useEffect(() => {
     async function fetchAll() {
         setisloading(true)
-        const [movieRes, recRes] = await Promise.all([
+        const [movieRes, recRes,videoRes] = await Promise.all([
             axios.get(`${backendUrl}/api/movie/${id}`, { withCredentials: true }),
-            axios.get(`${backendUrl}/api/movie/${id}/recommendations`, { withCredentials: true })
+            axios.get(`${backendUrl}/api/movie/${id}/recommendations`, { withCredentials: true }),
+            axios.get(`${backendUrl}/api/movie/${id}/videos`,{withCredentials:true})
         ])
         setmovie(movieRes.data.details)
         setitems(recRes.data.arr)
+        setTrailerKey(videoRes.data.key)
         setisloading(false)
     }
     fetchAll()
@@ -101,6 +104,28 @@ useEffect(() => {
             </>
         )}
              </div></>)}
+
+            {trailerKey && (
+            <div className="trailer" style={{ 
+                width: '89.5vw', 
+                alignSelf: 'center',
+                marginTop: '20px',
+                borderRadius: '12px',
+                overflow: 'hidden'
+             }}>
+            <h3 style={{ color: 'white', marginBottom: '10px' }}>Trailer</h3>
+            <iframe
+                    src={`https://www.youtube.com/embed/${trailerKey}`}
+                    width="100%"
+                    height="450px"
+                    allowFullScreen
+                    style={{ border: 'none', borderRadius: '12px' }}
+            />
+            </div>
+            )}
+
+
+
                 <div className="currentmoviescard">
                     <div className="moviescard">
                       {items.map((item) => (

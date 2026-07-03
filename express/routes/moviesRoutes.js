@@ -143,6 +143,21 @@ router.get("/movie/:id",apiLimiter,authguard,async (req,res)=>{
 })
 
 
+router.get("/movie/:id/videos",authguard, async (req,res)=>{
+    const {id}=req.params
+    const url=`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${key}&language=en-US`
+    try{
+       const data= await fetchFromApi(url)
+       const trailer=data.results?.find(v=>
+        v.type==='Trailer' && v.site==='YouTube' && v.official===true
+       )
+       res.status(200).json({success:true,key: trailer?.key || null})
+    }catch(err){
+       return res.status(500).json({success:false,key:null})
+    }
+})
+
+
 router.get("/movie/:id/recommendations",apiLimiter,authguard,async (req,res)=>{
     const {id}=req.params
     const url=`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${key}&language=en-US`
