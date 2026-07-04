@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { Spinner } from "./buttons"
 import {backendUrl} from "../utils/config"
 import toast from "react-hot-toast"
+import { validateotp } from "../utils/regex"
 
 
 
@@ -19,17 +20,19 @@ const [cooldown,setcooldown]=useState(0)
 
 function handlechange(e){
     setotp(e.target.value)
+    if(error) seterror(false)
 }
 
 async function handlesubmit(e){
  e.preventDefault()
  setloading(true)
  
- const newerror=otp.trim()===""
+ const newerror=!validateotp(otp)
+
   if(newerror){
     setotp("")
     seterror(newerror)
-    setsMessage("OTP is required")
+    setsMessage("6 digits")
     setloading(false)
     return;
   }

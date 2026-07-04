@@ -17,6 +17,7 @@ try {
  req.user=decoded   
     next()
 }catch (error) {
+  console.error(error)
     if(error.name==="TokenExpiredError"){
          return res.status(401).json({success:false,message:"Token expired"})
     }
@@ -69,6 +70,7 @@ const refreshtokens=(req,res,next)=>{
      req.tokenRefreshed=true;
      next()
    }catch(err){
+    console.error(err)
        if(err.name==="TokenExpiredError"){
          return res.status(401).json({success:false,message:"Token expired"})
     }
@@ -88,6 +90,7 @@ const logout= async (req,res,next)=>{
         res.clearCookie("MovieappRefreshToken")
          return res.status(200).json({success:true,message:"logout successful"})
        }catch(err){
+        console.error(err)
         return res.status(500).json({success:false,message:"logout unsuccessful"})
      }
 }

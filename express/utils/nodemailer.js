@@ -1,7 +1,5 @@
-
 const nodemailer=require("nodemailer")
 require("dotenv")
-
 
 
 async function sendotpemail(email,otp){
@@ -28,15 +26,11 @@ const message={
 
 
   const info= await transporter.sendMail(message)
-  console.log(`Email sent ${info.response}`)
 
     }catch(err){
-        console.log(err)
-    }
-   
+        console.error(err)
+    }  
  }
-
-
 
 
  async function sendresetotpemail(email,otp){
@@ -67,7 +61,6 @@ const message={
     if(error){
         return true
     }
-    console.log(`Email sent:`, info.response)
     return false
    })
 

@@ -1,0 +1,18 @@
+services:
+  backend:
+    build: ./express
+    env_file: ./express/.env.docker
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+        context: ./React
+        args:
+            VITE_BACKEND: http://localhost:3000
+            VITE_IMAGE_BASE_URL: https://image.tmdb.org/t/p/w500
+            VITE_BACKDROP_BASE_URL: https://image.tmdb.org/t/p/w1280
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend

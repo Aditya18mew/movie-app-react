@@ -53,7 +53,9 @@ export function Forgetpassword(){
             <h1>Forget password</h1>
             <p>don,t worry reset it with ease</p>
             <form onSubmit={forgetpasswordhandle} className="forgetform">
-            <input type="email" className={!error.valid? "formerrorinput":"forminput"} value={email} onChange={handlechange} name="email" id="email" placeholder={!error.valid? error.message:"Email"}/>
+            <input type="email" className={!error.valid? "formerrorinput":"forminput"} value={email} onChange={(event)=>{
+                handlechange(event); if(!error.valid) seterror({valid:true,message:""})
+            }} name="email" id="email" placeholder={!error.valid? error.message:"Email"}/>
             <button className='outerlayerbutton' type="submit">{isloading?<Spinner></Spinner>:sMessage}</button>
             </form>
              <Link className='outerlayerbutton' to="/">Dashboard</Link>

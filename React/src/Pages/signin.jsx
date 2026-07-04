@@ -33,9 +33,9 @@ import {backendUrl} from "../utils/config"
             password:validatePassword(formdata.password)
         }
         seterrors(newerrors)
-         if(!errors.email.valid || !errors.password.valid){
-          if(!errors.email.valid) formdata.email=""
-          if(!errors.password.valid) formdata.password=""
+         if(!newerrors.email.valid || !newerrors.password.valid){
+          if(!newerrors.email.valid) formdata.email=""
+          if(!newerrors.password.valid) formdata.password=""
           setisloading(false)
             return;
         }
@@ -60,12 +60,12 @@ import {backendUrl} from "../utils/config"
         <h1 className='heading'>Sign in</h1>
         <p>Stay updated</p>
         <form onSubmit={submit} className='form'>
-            <input type='email' className={!errors.email.valid? "formerrorinput":"forminput"} value={formdata.email} onChange={(event)=>{
-                handlechange(event)
-            }} name="email" id="email" placeholder={!errors.email.valid? errors.email.message:"Email"} required />
-            <input type="password" className={!errors.password.valid? "formerrorinput":"forminput"} value={formdata.password} onChange={(event)=>{
-                handlechange(event)
-            }} name="password" id='password' placeholder={!errors.password.valid? errors.password.message : "Password"} />
+            <input type='email' autoFocus className={errors.email.valid? "forminput":"formerrorinput"} value={formdata.email} onChange={(event)=>{
+                handlechange(event); if(!errors.email.valid) seterrors({...errors,email:{valid:true,message:""}})
+            }} name="email" id="email" placeholder={errors.email.valid?"Email": errors.email.message} required />
+            <input type="password"  className={errors.password.valid? "forminput":"formerrorinput"} value={formdata.password} onChange={(event)=>{
+                handlechange(event); if(!errors.password.valid) seterrors({...errors,password:{valid:true,message:""}})
+            }} name="password" id='password'  placeholder={errors.password.valid?"Password": errors.password.message }/>
              <Link className='formLink' to="/forget-password">Forgot password?</Link>
              <button className='outerlayerbutton' type="submit">{isloading ? <Spinner></Spinner> : sMessage}</button>
         </form>

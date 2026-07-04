@@ -153,6 +153,7 @@ router.get("/movie/:id/videos",authguard, async (req,res)=>{
        )
        res.status(200).json({success:true,key: trailer?.key || null})
     }catch(err){
+      console.error(err)
        return res.status(500).json({success:false,key:null})
     }
 })

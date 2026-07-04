@@ -3,10 +3,15 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const PASSWORD_RULES = {
     minLength:      { regex: /.{8,}/,          message: 'At least 8 characters' },
     hasUppercase:   { regex: /[A-Z]/,           message: 'At least one uppercase letter' },
-    hasLowercase:   { regex: /[a-z]/,           message: 'At least one lowercase letter' },
-    hasDigit:       { regex: /\d/,              message: 'At least one number' },
-    hasSpecialChar: { regex: /[@#$!%*?&]/,      message: 'At least one special character (@#$!%*?&)' }
+    hasDigit:       { regex: /\d/,              message: 'At least one number' }
 }
+
+const otpRegex = /^\d{6}$/
+
+export function validateotp(otp){
+   return otpRegex.test(otp)
+}
+
 
 export function validateEmail(email) {
     if (!email || typeof email !== 'string') return { valid: false, message: '❗Email is required' }

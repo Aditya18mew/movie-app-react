@@ -27,17 +27,18 @@ router.post("/signup",authLimiter,async (req,res)=>{
     if(!validatepassword(password))   return res.json({success:false,message:"8 characters,1 uppercase or lowercase and 1 digit"})
 
     const olduser=await User.findOne({email:email})
-    if(!olduser){
-   const {success}=await registerUser(email,password)
-    return res.status(201).json({success:success,message:"check mail"})
-}else{
-    return res.status(409).json({success:false,message:`already in use`})
-}
+    if(olduser)  return res.status(409).json({success:false,message:`already in use`})
+
+     const {success}=await registerUser(email,password)
+     if(!success) return res.status(500).json({success:false,message:"signup failed"})
+     return res.status(201).json({success:success,message:"check mail"})
+
 }catch(err){
     console.error(err)
     return res.status(500).json({success:false,message:"signup failed try again"})
 }
 })
+
 
 router.post("/verifyotp",async (req,res)=>{
     try{
@@ -81,7 +82,7 @@ router.post("/resendsignupotp",otplimiter,async (req,res)=>{
         const otp=hashotp(num)
         await unverifiedUser.updateOne({email:email},{otp:otp,otpCreatedAt:new Date()});
         await sendotpemail(email,num)
-return res.status(200).json({success:true,message:"resent"})
+        return res.status(200).json({success:true,message:"resent"})
     }catch(err){
         console.error(err)
         return res.status(500).json({success:false,message:"server error"}) 
@@ -92,13 +93,13 @@ router.post("/signin",authLimiter,async (req,res)=>{
         const {email,password}=req.body
 
      if(!validatemail(email))  return res.status(401).json({success:false,message:"Email format is incorrect"})
-     if(!validatepassword(password))  return res.json({success:false,message:"Password must have 8 characters including 1 uppercase or lowercase alphabet and 1 digit"})
+     if(!validatepassword(password))  return res.json({success:false,message:"Password must have 8 characters including atleast 1 alphabet and 1 digit"})
      try{
          const olduser=await User.findOne({email:email})
 
       if(!olduser)  return res.status(401).json({success:false,message:"Invalid Email"})
 
-        const  {success,reason,AccessToken,RefreshToken}= await loginUser(email,password,olduser.password)
+        const {success,reason,AccessToken,RefreshToken}= await loginUser(email,password,olduser.password)
           
         if(success){
              res.cookie("MovieappAccessToken",AccessToken,{
@@ -132,6 +133,9 @@ router.post("/signin",authLimiter,async (req,res)=>{
 
  router.post("/forgetpassword",async (req,res)=>{
       const {email}=req.body
+     const DEMO_EMAIL="demo@movieapp.com"
+     if(email===DEMO_EMAIL) return res.status(403).json({success:false,message:"Demo account cannot be modified"})
+
       if(!validatemail)  return res.json({success:false,message:"invalid email"})
       try{
         

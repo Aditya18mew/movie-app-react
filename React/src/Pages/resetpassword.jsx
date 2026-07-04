@@ -40,9 +40,10 @@ export const Resetpassword=()=>{
         confirmnewpass:validatePassword(newpassword.confirmnewpass),
         issame: newpassword.newpass===newpassword.confirmnewpass
       }
-
+       seterrors(newerrors)
       if(!newerrors.confirmnewpass.valid || !newerrors.newpass.valid){
-            seterrors(newerrors)
+           if(!newerrors.newpass.valid) newpassword.newpass=""
+           if(!newerrors.confirmnewpass.valid) newpassword.confirmnewpass=""    
             setisloading(false)
             return;
 
@@ -77,11 +78,11 @@ export const Resetpassword=()=>{
       <h1>Reset password</h1>
        <form onSubmit={handlesubmit} className="resetform">
       <input type="password" className={!errors.newpass.valid?"formerrorinput":"forminput"} name="newpass" value={newpassword.newpass} onChange={(event)=>{
-        handlechange(event)
+        handlechange(event);if(!errors.newpass.valid) seterrors({...errors,newpass:{valid:true,message:""}})
       }} placeholder={!errors.newpass.valid? errors.newpass.message : "New Password"} />
 
       <input type="password" className={!errors.confirmnewpass.valid?"formerrorinput":"forminput"} name="confirmnewpass" value={newpassword.confirmnewpass} onChange={(event)=>{
-         handlechange(event)
+         handlechange(event); if(!errors.newpass.valid) seterrors({...errors,confirmnewpass:{valid:true,message:""}})
       }} placeholder={!errors.confirmnewpass.valid? errors.confirmnewpass.message :"Confirm New Password"} />
       <span>Minimum 8 characters with atleast one letter and one digit</span>
       <button className="outerlayerbutton" type="submit">{isloading ? <Spinner></Spinner> : sMessage}</button>

@@ -138,7 +138,7 @@ export function Sidehustle(){
           setCurrent(prev => (prev + 3) % posters.length)
     },1*20*1000)
     return ()=>clearInterval(interval)
-   },[])
+   },[posters])
 
    const stack=posters.slice(current,current+3)
 

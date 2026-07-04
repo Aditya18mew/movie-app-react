@@ -69,9 +69,9 @@ const unverifiedUser=mongoose.model("unverifieduser",unverifiedUserSchema)
 
 async function connectdb(){
     try{
-   await mongoose.connect("mongodb://localhost:27017/moviedatabase")
+   await mongoose.connect(process.env.MONGO_DB_URL)
     }catch(err){
-        console.log(err)
+        console.error(err)
         process.exit(1)
     }
 }

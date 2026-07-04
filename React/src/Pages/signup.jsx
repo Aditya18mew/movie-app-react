@@ -33,9 +33,9 @@ import {backendUrl} from "../utils/config"
 
         seterrors(newerrors)
 
-        if(!errors.email.valid || !errors.password.valid){
-          if(!errors.email.valid) formdata.email=""
-          if(!errors.password.valid) formdata.password=""
+        if(!newerrors.email.valid || !newerrors.password.valid){
+          if(!newerrors.email.valid) formdata.email=""
+          if(!newerrors.password.valid) formdata.password=""
           setisloading(false)
           return;
         }
@@ -57,11 +57,11 @@ import {backendUrl} from "../utils/config"
           <p>Stay updated</p>
           <form onSubmit={submit} className='form'>
               <input type="text" className={!errors.email.valid? "formerrorinput":"forminput"} value={formdata.email} onChange={(event)=>{
-                handlechange(event)
+                handlechange(event); if(!errors.email.valid) seterrors({...errors,email:{valid:true,message:""}})
               }} name="email" id="email" placeholder={!errors.email.valid? errors.email.message : "Email"} required/>
 
               <input type="password"  className={!errors.password.valid? "formerrorinput":"forminput"} value={formdata.password} onChange={(event)=>{
-                handlechange(event)
+                handlechange(event);if(!errors.password.valid) seterrors({...errors,email:{valid:true,message:""}})
               }} name="password" id='password' placeholder={!errors.password.valid? errors.password.message : "Create Password"}/>
               <button className='outerlayerbutton' type="submit">{isloading ? <Spinner></Spinner> : sMessage}</button>
           </form>
