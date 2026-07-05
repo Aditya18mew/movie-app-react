@@ -56,7 +56,7 @@ const refreshtokens=(req,res,next)=>{
         path:"/",
         secure:isproduction,
         httpOnly:true,
-        sameSite:"lax"
+        sameSite:isproduction ? "none":"lax"
      })
 
         res.cookie("MovieappRefreshToken",newRefreshToken,{
@@ -64,7 +64,7 @@ const refreshtokens=(req,res,next)=>{
         path:"/",
         secure:isproduction,
         httpOnly:true,
-        sameSite:"lax"
+        sameSite:isproduction ? "none":"lax"
      })  
      req.user={id:decoded._id,email:decoded.Email}
      req.tokenRefreshed=true;

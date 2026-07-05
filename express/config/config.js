@@ -4,7 +4,11 @@ const required=[
     "ACCESS_TOKEN_SECRET",
     "REFRESH_TOKEN_SECRET",
     "EMAIL_ADMIN",
-    "EMAIL_APP_PASS"
+    "EMAIL_APP_PASS",
+    "MONGO_DB_URL",
+    "REDIS_HOST",
+    "REDIS_PORT",
+    "REDIS_PASSWORD"
 ]
 
 const envRequired=()=>{

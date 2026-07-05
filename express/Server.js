@@ -34,6 +34,11 @@ setInterval(async () => {
     )
 }, 60 * 60 * 1000)
 
+server.get("/health",(req,res)=>{
+    return res.status(200).json({status:"ok"})
+})
+
+
 server.use("/api",authRoutes)
 server.use("/api",moviesRoutes)
 

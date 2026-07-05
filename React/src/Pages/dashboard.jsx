@@ -1,29 +1,54 @@
-import { useState } from "react"
-import { MovieProvider } from "../components/MovieProvider"
-import { MemorizedNavbar } from "../components/Navbar"
-import { MemorizedMiddleware } from "../components/middleware"
+import axios from "axios"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Skeleton } from "../components/skeleton"
+import { Play } from "../utils/playful"
+import {backendUrl} from "../utils/config"
+import toast from "react-hot-toast"
+
+
+
 
 export function Dashboard(){
    const navigate=useNavigate()
-   const [isloading,setisloading]=useState(true)
-   const [iserror,setiserror]=useState(false)
+    function navigatetologin(){
+      navigate("/sign-in")
+    }
+   
+    
+    async function checkauthorization(){
+    try{
+     const res=await axios.get(`${backendUrl}/api/checkauthorization`, {
+     withCredentials:true
+     })
+     if(res.data.success===true){
+      navigate("/home")
+     } 
+    }catch(err){
+      console.error(err)
+      toast.error("Network error refresh")
+    }
+ }
 
+ useEffect(()=>{
+   checkauthorization()
+ },[])
 
-
-    return <div className='maincotainer' id='mainbody'>
-<MovieProvider {...{setisloading,setiserror}}>
-<MemorizedNavbar {...{setisloading,setiserror}}></MemorizedNavbar>
-{iserror ? (
-           <div className="error"><div className='showerror'>
-                  <div className='refreshicon' onClick={() => navigate(0)} />
-                  </div></div>
- ) : isloading ? (
-                 <Skeleton></Skeleton>
-                ) : (
-                   <MemorizedMiddleware></MemorizedMiddleware>
-                )}
-</MovieProvider>
- </div>
+   return (
+    <>
+     <nav className="dashboardnavbar">
+    <div className="dashboardheader">
+      <div className="title">Movie Search</div>
+      <div className="bar">
+        <div>about</div>
+        <div className="loginbutton" onClick={navigatetologin}>Login</div> 
+      </div>
+    </div>
+  </nav>
+  <div className="dashboardbody">
+    <Play></Play>
+  </div>
+  </>
+    )
+       
+    
 }

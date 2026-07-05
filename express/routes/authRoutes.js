@@ -50,14 +50,14 @@ router.post("/verifyotp",async (req,res)=>{
         path:"/",
         secure:isproduction,
         httpOnly:true,
-        sameSite:"lax"
+        sameSite:isproduction ? "none":"lax"
      })
      res.cookie("MovieappRefreshToken",RefreshToken,{
         maxAge:7*24*60*60*1000,
         path:"/",
         secure:isproduction,
         httpOnly:true,
-        sameSite:"lax"
+        sameSite:isproduction ? "none":"lax"
      })
       return res.status(200).json({success:true,message:"sign-up successful"})
      }else{
@@ -107,14 +107,14 @@ router.post("/signin",authLimiter,async (req,res)=>{
             path:"/",
             secure:isproduction,
             httpOnly:true,
-            sameSite:"lax"
+            sameSite:isproduction ? "none":"lax"
         })
         res.cookie("MovieappRefreshToken",RefreshToken,{
             maxAge:7*24*60*60*1000,
             path:"/",
             secure:isproduction,
             httpOnly:true,
-            sameSite:"lax"
+            sameSite:isproduction ? "none":"lax"
         })
         return res.status(200).json({success:true,message:"login succesful"})
          }else{

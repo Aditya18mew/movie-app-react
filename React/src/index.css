@@ -32,9 +32,9 @@ button {
   border-radius: 25px;
 }
 
-/* homepage */
+/* dashboard */
 
-.homepage{
+.dashboardpage{
     width: 100%;
  min-height: 100vh;
   background-color:#141414;
@@ -44,12 +44,12 @@ button {
    font-family:'Inter','Segoe UI',sans-serif;
 }
 
-.homenavbar{
+.dashboardnavbar{
     width: 100%;
     flex-shrink: 0;
 }
 
-.homeheader{
+.dashboardheader{
    display: flex;
     flex-direction: row;
     align-items: center; 
@@ -81,7 +81,7 @@ button {
   color:#7c3aed;
 }
 
-.homebody{
+.dashboardbody{
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -161,6 +161,17 @@ button {
 
 .scenediv {
    justify-self: center;
+}
+
+.playfulfooter{
+  padding-top: 40px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items:last baseline;
+  gap: 4px;
+  color: #6b7280;
+  font-size: 12px;
 }
 
 .sidehustle{
