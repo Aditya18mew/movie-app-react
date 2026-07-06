@@ -159,7 +159,7 @@ router.get("/movie/:id/videos",authguard, async (req,res)=>{
 })
 
 
-router.get("/movie/:id/recommendations",apiLimiter,authguard,async (req,res)=>{
+router.get("/movie/:id/recommendations",authguard,async (req,res)=>{
     const {id}=req.params
     const url=`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${key}&language=en-US`
     try{
@@ -207,14 +207,14 @@ router.post("/setwishlist",authguard, async (req,res)=>{
                 {email:Email},
                 {$push:{wishlist:{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:isInWishlist,isInFavorite:isInFavorite}}}
             )
-             return  res.status(200).json({success:true,message:"added to Wishlist"})
+             return  res.status(200).json({success:true,message:"added to wishlist"})
 
              }else{
                 await User.updateOne(
                     {email:Email},
                     {$pull:{wishlist:{id:id}}}
             )
-             return  res.status(200).json({success:true,message:"removed from Wishlist"})
+             return  res.status(200).json({success:true,message:"removed from wishlist"})
             }
         }
      catch(err){

@@ -21,6 +21,7 @@ const apiLimiter=ratelimit({
 const authLimiter=ratelimit({
     windowMs:10*60*1000,
     max:10,
+    keyGenerator: (req) => req.body.email,
     standardHeaders:true,
     legacyHeaders:false,
     message:{

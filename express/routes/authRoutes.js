@@ -27,12 +27,11 @@ router.post("/signup",authLimiter,async (req,res)=>{
     if(!validatepassword(password))   return res.json({success:false,message:"8 characters,1 uppercase or lowercase and 1 digit"})
 
     const olduser=await User.findOne({email:email})
-    if(olduser)  return res.status(409).json({success:false,message:`already in use`})
+    if(olduser)  return res.status(409).json({success:false,message:`account exist sign-in`})
 
      const {success}=await registerUser(email,password)
-     if(!success) return res.status(500).json({success:false,message:"signup failed"})
+     if(!success) return res.status(500).json({success:false,message:"sign-up failed try again"})
      return res.status(201).json({success:success,message:"check mail"})
-
 }catch(err){
     console.error(err)
     return res.status(500).json({success:false,message:"signup failed try again"})
@@ -131,7 +130,7 @@ router.post("/signin",authLimiter,async (req,res)=>{
  router.post("/logout", logout)
 
 
- router.post("/forgetpassword",async (req,res)=>{
+ router.post("/forgetpassword",authLimiter,async (req,res)=>{
       const {email}=req.body
      const DEMO_EMAIL="demo@movieapp.com"
      if(email===DEMO_EMAIL) return res.status(403).json({success:false,message:"Demo account cannot be modified"})
@@ -147,20 +146,18 @@ router.post("/signin",authLimiter,async (req,res)=>{
              user.otp=otp
              user.otpCreatedAt=new Date()
              await user.save()
-             const iserror=await sendresetotpemail(email,num)
-          if(iserror){
-             res.json({success:false,message:"Unable to send a email"})
-          }else{
-            res.json({success:true,message:`Email with a reset otp has been sent`})
-          }
-     }catch(err){
+             const {success}=await sendresetotpemail(email,num)
+             if(!success) return res.json({success:false,message:"Unable to send a email"})
+             return res.json({success:true,message:`Email with a reset otp has been sent`})
+
+    } catch(err){
            console.error(err)
            return res.status(500).json({success:false,message:"reset failed"})
-     }   
-     })
+        }   
+    })
 
 
-   router.post("/verifyresetotp",authLimiter,async (req,res)=>{
+   router.post("/verifyresetotp",async (req,res)=>{
         const {email,otp}=req.body
        try{
         const user=await User.findOne({email:email})

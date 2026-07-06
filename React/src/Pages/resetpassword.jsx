@@ -4,14 +4,14 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { validatePassword } from "../utils/regex"
 import { Spinner } from "../components/buttons"
 import {backendUrl} from "../utils/config"
+import { useEffect } from "react"
 
 
 
 export const Resetpassword=()=>{
 
       const navigate=useNavigate()
-      const location=useLocation()
-      const {email}=location.state
+      const {state}=useLocation()
 
       const [newpassword,setnewpassword]=useState({
         newpass:"",
@@ -56,7 +56,7 @@ export const Resetpassword=()=>{
       }
      
     try {
-      const response=await axios.post(`${backendUrl}/api/resetpassword`,{newpass:newpassword.newpass,confirmnewpass:newpassword.confirmnewpass,email:email})
+      const response=await axios.post(`${backendUrl}/api/resetpassword`,{newpass:newpassword.newpass,confirmnewpass:newpassword.confirmnewpass,email:state?.email})
         setsMessage(response.data.message)
           if(response.data.success){
             navigate("/sign-in")
@@ -69,8 +69,9 @@ export const Resetpassword=()=>{
     }
     }
 
-
-
+    useEffect(()=>{
+      if(!state?.email) navigate("/")
+    },[])
 
 
 

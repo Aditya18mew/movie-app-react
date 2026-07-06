@@ -10,11 +10,15 @@ import toast from "react-hot-toast"
 
 
 // eslint-disable-next-line react/prop-types
-export function Section({URL}){
+export function Section({URL,page}){
        const navigate=useNavigate() 
        const [items,setitems]=useState([])
        const [isloading,setisloading]=useState(true)
        const [iserror,setiserror]=useState(false)
+
+    function removeItem(id){
+        setitems(prev=>prev.filter(item=>item.id!==id))
+    }
 
      async function fetchData(){
     try{   
@@ -51,7 +55,7 @@ export function Section({URL}){
                 <div className="currentmoviescard">
                     <div className="moviescard">
                         {items.map((item) => (
-                            <Moviecard key={item.id} {...item} />
+                            <Moviecard key={item.id} {...item} removeItem={removeItem} page={page} />
                         ))}
                     </div>
                 </div>

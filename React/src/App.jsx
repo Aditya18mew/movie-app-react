@@ -10,6 +10,7 @@ import { Trending } from './Pages/trending';
 import { MovieDetails } from './Pages/moviedetails';
 import { Dashboard } from './Pages/dashboard';
 import { Home } from './Pages/home';
+import { useEffect } from 'react';
 
 
 
@@ -22,6 +23,18 @@ import { Home } from './Pages/home';
 
 
 function App() {
+
+useEffect(()=>{
+  const channel=new BroadcastChannel("movie-app-sync")
+
+   channel.onmessage=(e)=>{
+    if(e.data.type=='LOGOUT'){
+      window.location.href="/"
+    }
+   }
+   return ()=> channel.close()
+}) 
+
  
  return (
 <Router>

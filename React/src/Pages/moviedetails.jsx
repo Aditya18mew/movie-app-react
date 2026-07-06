@@ -26,7 +26,6 @@ export function MovieDetails(){
     }catch(err){
         console.error(err)
         toast.error("something went wrong")
-
     }
 } 
 

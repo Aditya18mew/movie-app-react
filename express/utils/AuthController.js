@@ -25,8 +25,8 @@ async function registerUser(email,password){
        }) 
 
        await newuser.save()
-       await sendotpemail(email,num)
-       return {success:true}
+       const {success}= await sendotpemail(email,num)
+        return {success:success}
     }catch(err){
         console.error(err)
         return {success:false}

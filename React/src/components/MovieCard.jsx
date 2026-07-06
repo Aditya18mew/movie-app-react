@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 
 
 
-export function Moviecard({id,title,poster_path,overview,isInWishlist,isInFavorite}){
+export function Moviecard({id,title,poster_path,overview,isInWishlist,isInFavorite,removeItem,page}){
     const navigate=useNavigate()
     const [isexpanded,setisexpanded]=useState(false)
     const [isfavorite,setisfavorite]=useState(isInFavorite)
@@ -29,24 +29,29 @@ const img=`${imageBaseUrl}${poster_path}`
 const istoolong=overview.length>90
 
 async function addtowishlist(){
-    setiswishlist(!iswishlist)
     try{
-    await axios.post(`${backendUrl}/api/setwishlist`,{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:!iswishlist,isInFavorite:isfavorite},{
+   const res=await axios.post(`${backendUrl}/api/setwishlist`,{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:!iswishlist,isInFavorite:isfavorite},{
         withCredentials:true
     })
+     if(res.data.message==="removed from wishlist" && page==="wishlist"){
+            removeItem && removeItem(id)
+     }
+    setiswishlist(prev=>!prev)
     }catch(err){
         console.error(err)
         toast.error("something went wrong")
-
     }
 }
 
 async function addtofavorites(){
-    setisfavorite(!isfavorite)
     try{
-    await axios.post(`${backendUrl}/api/setfavorites`,{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:iswishlist,isInFavorite:!isfavorite},{
+   const res= await axios.post(`${backendUrl}/api/setfavorites`,{id:id,title:title,poster_path:poster_path,overview:overview,isInWishlist:iswishlist,isInFavorite:!isfavorite},{
         withCredentials:true
     })
+    if(res.data.message==="removed from favorites" && page==="favorites"){
+            removeItem && removeItem(id)
+     }
+    setisfavorite(!isfavorite)
     }catch(err){
         console.error(err)
         toast.error("something went wrong")

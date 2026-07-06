@@ -20,6 +20,9 @@ export function Logout(){
         withCredentials:true
       })
       if(res.data.success){
+      const channel=new BroadcastChannel("movie-app-sync")
+       channel.postMessage({type:'LOGOUT'})
+       channel.close()
         navigate("/")
       }
     }catch(err){
