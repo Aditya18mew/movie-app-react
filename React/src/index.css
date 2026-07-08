@@ -581,14 +581,6 @@ animation: rotate 1.5s ease-in-out infinite ;
   cursor: pointer;
 }
 
-.refreshicon{
-  display: block;
-  background: url("../src//assets/rotate.svg");
-  background-repeat: no-repeat;
-  background-size: 28px;
-  background-position: center;
-}
-
 /* navbar */
 
 .navbar{
@@ -655,7 +647,7 @@ cursor: pointer;
 .div_input div{
   position: absolute;
    bottom: 0;
-  width: 24%;
+  width: 26%;
   height: 33px;
   right: 0;
   align-content: center;
@@ -665,16 +657,10 @@ cursor: pointer;
   border-bottom-right-radius: 16px;
   background-color: #1a1a1a;
   z-index: 2;
-}
-
-.input-with-icon {
-  display: block;
-  background: url('./assets/searchicon.svg');
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-position: center center;
-  padding-left: 10px;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .div_input input:focus{

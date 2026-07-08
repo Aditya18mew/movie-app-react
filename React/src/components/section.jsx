@@ -5,6 +5,7 @@ import { Moviecard } from "./MovieCard"
 import { Logout } from "./buttons"
 import { Skeleton } from "./skeleton"
 import toast from "react-hot-toast"
+import { RefreshCw } from "lucide-react"
 
 
 
@@ -47,7 +48,7 @@ export function Section({URL,page}){
                <div className="input-with-icon"></div> </div></Navchild>
             {iserror ? (
                <div className="error"><div className='showerror'>
-                    <div className='refreshicon' onClick={fetchData} />
+                    <div onClick={fetchData}><RefreshCw size={25} color="#9ca3af"/></div>
                 </div></div>
             ) : isloading ? (
                  <Skeleton></Skeleton>

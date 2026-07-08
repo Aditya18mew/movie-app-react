@@ -9,7 +9,7 @@ services:
     build:
         context: ./React
         args:
-            VITE_BACKEND: http://localhost:3000
+            VITE_BACKEND: http://localhost:5173
             VITE_IMAGE_BASE_URL: https://image.tmdb.org/t/p/w500
             VITE_BACKDROP_BASE_URL: https://image.tmdb.org/t/p/w1280
     ports:

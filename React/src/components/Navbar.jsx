@@ -6,6 +6,7 @@ import { useDebounce } from "../utils/debounce"
 import { Navchild } from "./section"
 import {backendUrl} from "../utils/config"
 import toast from "react-hot-toast"
+import { Search } from "lucide-react"
 
 
 
@@ -56,7 +57,7 @@ if(debounce){
   
 
 return ( <Navchild><div className="div_input"><input type="search" value={search.value} id="search" onChange={handlechange} name="search" placeholder="Search"/>
-        <div className="input-with-icon"></div></div>
+        <div><Search size={20} color="#9ca3af"/></div></div>
         </Navchild>)
 }
 

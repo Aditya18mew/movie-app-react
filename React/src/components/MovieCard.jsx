@@ -2,12 +2,9 @@
 import axios from "axios";
 import { useState} from "react";
 import {backendUrl,imageBaseUrl} from "../utils/config"
-import wishlist from "./../assets/wishlist.svg"
-import wishlist2 from "./../assets/wishlist2.svg"
-import favorite from "./../assets/favorite.svg"
-import favorite2 from "./../assets/favorite2.svg"
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Heart,Bookmark,BookmarkCheck } from "lucide-react";
 
 
 
@@ -73,11 +70,11 @@ async function addtofavorites(){
                 <button className="wishlist_btn" onClick={(e)=>{
                      e.stopPropagation()
                      addtowishlist()
-                }}><img src={iswishlist ? wishlist2 : wishlist}  width={20} height={30}></img></button>
+                }}>{iswishlist ? <BookmarkCheck size={25} color="#a78bfa"/> : <Bookmark size={25} color="#9ca3af"/>}</button>
                 <button className="favorite_btn" onClick={(e)=>{
                      e.stopPropagation()
                      addtofavorites()
-                }}><img src={isfavorite ? favorite2 :favorite}  width={20} height={30}></img></button>
+                }}>{isfavorite ? <Heart size={25} fill="#ef4444" color="#ef4444"/> : <Heart size={25} color="#9ca3af"/>}</button>
             </div>
     </div>
 }
