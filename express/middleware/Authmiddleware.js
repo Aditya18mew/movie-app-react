@@ -86,8 +86,14 @@ const logout= async (req,res,next)=>{
             return res.status(401).json({success:false,message:"Unauthorized:No token provided"})
         }
        try{
-         res.clearCookie("MovieappAccessToken")
-        res.clearCookie("MovieappRefreshToken")
+        const cookieOptions={
+         path:"/",
+         secure:isproduction,
+         httpOnly:true,
+         sameSite:isproduction ? "none":"lax"
+         }
+        res.clearCookie("MovieappAccessToken",cookieOptions)
+        res.clearCookie("MovieappRefreshToken",cookieOptions)
          return res.status(200).json({success:true,message:"logout successful"})
        }catch(err){
         console.error(err)
