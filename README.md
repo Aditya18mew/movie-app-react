@@ -2,6 +2,7 @@
 
 A full-stack movie discovery web application built with React, Express, MongoDB, and Redis. Search for movies, save favorites, build a watchlist, and watch trailers — all in one place.
 
+**Live Demo:** [demo-link](https://movie-app-react-angrybird.vercel.app)
 
 **Best viewed on desktop** — not optimized for mobile
 
@@ -120,6 +121,7 @@ REDIS_HOST=your_redis_host
 REDIS_PORT=your_redis_port
 REDIS_PASSWORD=your_redis_password
 NODE_ENV=development
+FRONTEND=http://localhost:5173
 ```
 
 **`React/.env`**
